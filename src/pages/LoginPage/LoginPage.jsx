@@ -1,0 +1,102 @@
+import React, { useRef } from "react";
+import whiteLogo from "../../assets/images/whiteLogo.png";
+import registerImage from "../../assets/images/registerImage.png";
+import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
+import googleLogo from "../../assets/images/googleLogo.png";
+function LoginPage() {
+  let emailRef = useRef(null);
+  let passwordRef = useRef(null);
+
+  const handleLoginButton = () => {
+    let email = emailRef.value;
+    let password = passwordRef.value;
+
+    const userData = {
+      email: email,
+      password: password,
+    };
+    console.log(userData);
+  };
+  return (
+    <div className="flex flex-col md:flex-row">
+      {/* Left Part */}
+
+      <div
+        className="w-full md:w-1/3 px-2"
+        style={{ height: "120vh", backgroundColor: "#043BA0" }}
+      >
+        <div>
+          <img
+            src={whiteLogo}
+            alt=""
+            style={{ width: "210px", height: "60px" }}
+          />
+        </div>
+        <p className="text-center mt-32 mb-20 registerLeftSideText">
+          Send money to Lebanon, anytime, instantly
+        </p>
+        <div className="flex items-center justify-center mt-10 text-center">
+          <img src={registerImage} alt="" />
+        </div>
+      </div>
+
+      {/* Right Part */}
+      <div
+        className="w-full md:w-2/3 flex items-center justify-center p-2"
+        style={{ height: "100vh", backgroundColor: "#FFFFFF" }}
+      >
+        <div className="w-3/4 md:w-3/5 sm:w-2/5 lg:w-2/5">
+          <p className="registerHeadingText">Login</p>
+          <p className="registerNormalText">Enter Your Credential</p>
+          <div className="flex flex-col md:flex-row md:justify-between md:gap-x-32">
+            <div className="w-full md:w-2/2 ">
+              <div className="mb-4">
+                <label className="registerPagelabel">Email</label>
+                <br />
+                <input
+                  type="email"
+                  placeholder="email"
+                  className="registerPageInput"
+                  ref={(input) => (emailRef = input)}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="registerPagelabel">Password</label>
+                <br />
+                <input
+                  type="password"
+                  placeholder="password"
+                  className="registerPageInput"
+                  ref={(input) => (passwordRef = input)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center mb-5 gap-2">
+            <input type="checkbox" className="registerPageCheckBox" />
+            <label className="registerPageCheckBoxLabel">Remember me</label>
+          </div>
+
+          <div className="flex flex-col sm:flex-row md:flex-col lg:flex-col xl:flex-col gap-4 justify-center mt-10">
+            <button
+              className="registerCreateAccount sm:w-full md:w-full lg:w-full xl:w-full"
+              onClick={handleLoginButton}
+            >
+              Log in
+            </button>{" "}
+            <button className="flex items-center justify-center gap-2 registerGoogle sm:w-full md:w-full lg:w-full xl:w-full mt-4 sm:mt-0 text-center">
+              <img src={googleLogo} alt="" />
+              <span>Log in with Google</span>
+            </button>
+          </div>
+          <p className="registerLogin text-center pt-2 pb-5">
+            Don’t have an account? <span>Sign Up</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default LoginPage;

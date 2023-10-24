@@ -1,0 +1,28 @@
+.securityCodeHeadingText {
+  color: var(--Black, #1d1d1d);
+  text-align: center;
+  font-size: 29px;
+  font-weight: 600;
+}
+
+.securityCodeNormalText {
+  color: var(--Body-text, #2d3748);
+  font-size: 15.88px;
+  font-weight: 400;
+  margin-bottom: 50px;
+}
+
+.securityCodeSmallText {
+  color: var(--Body-text, #2d3748);
+  font-size: 12.88px;
+  font-weight: 400;
+  margin-top: 10px;
+}
+.securityCodeButton {
+  background: #043ba0;
+  margin-top: 50px;
+  padding: 10px 16px;
+  color: white;
+  width: 100%;
+  border-radius: 12px;
+}

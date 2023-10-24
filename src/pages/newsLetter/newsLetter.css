@@ -1,0 +1,40 @@
+.newsLetterMain {
+  text-align: center;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #043ba0;
+}
+.newsLetterHeadingText {
+  color: var(--White, #fff);
+  font-size: 54px;
+  font-weight: 700;
+  text-align: center;
+}
+.newsLetterSecondHeadingText {
+  color: var(--White, #fff);
+  font-weight: 400;
+}
+.newsLetterInputField {
+  padding: 16px;
+  border-radius: 4px;
+  background: var(--White, #fff);
+}
+
+.newsLetterButton {
+  border-radius: 10px;
+  background: var(--besic-app-fbaf-5-b, #fbaf5b);
+  padding: 16px 24px;
+  color: var(--label-color-dark-primary, #fff);
+}
+.newsLetterNormalText {
+  color: var(--White, #fff);
+  font-weight: 400;
+}
+.newsLetterCondition {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration-line: underline;
+}

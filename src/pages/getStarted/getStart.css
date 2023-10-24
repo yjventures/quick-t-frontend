@@ -1,0 +1,27 @@
+.getStartMain {
+  background: #043ba0;
+}
+.getStartHeadingText {
+  color: #fff;
+}
+
+.getStartSecondHeadingText {
+  color: #fff;
+}
+
+.getStartNormalText {
+  color: #f3f4f6;
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.getStartButton {
+  padding: 16px 28px;
+  border-radius: 10px;
+  background: var(--besic-app-fbaf-5-b, #fbaf5b);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}

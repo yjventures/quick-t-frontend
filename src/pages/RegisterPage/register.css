@@ -1,0 +1,88 @@
+.registerLeftSideText {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #000;
+  text-align: center;
+  color: white;
+}
+
+.registerHeadingText {
+  color: var(--Black, #1d1d1d);
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.318px;
+}
+
+.registerNormalText {
+  color: var(--Body-text, #2d3748);
+  font-size: 15.88px;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+
+.registerPageInput {
+  padding: 12px 16px;
+  border-radius: 12px;
+  width: 100%;
+  background-color: rgb(228, 231, 234);
+  color: black;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.registerPagelabel {
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.registerPageCheckBox {
+  height: 18px;
+  width: 24px;
+}
+
+/* Hide the default checkbox appearance */
+.registerPageCheckBox input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #fff; /* Set the border color to white */
+  border-radius: 4px; /* Optional: add border-radius for rounded corners */
+}
+
+.registerPageCheckBox input[type="checkbox"]:checked {
+  background-color: #fff;
+}
+.registerPageCheckBoxLabel {
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.registerCreateAccount {
+  background-color: #043ba0;
+  border-radius: 10px;
+  color: white;
+  padding: 16px 50px;
+}
+
+.registerGoogle {
+  background: var(--Body-text, #2d3748);
+  border-radius: 10px;
+  color: white;
+  padding: 16px 50px;
+}
+
+.registerLogin {
+  color: #2d3748;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.registerLogin span {
+  color: var(--Blue, #007aff);
+  font-size: 16px;
+  font-weight: 400;
+}

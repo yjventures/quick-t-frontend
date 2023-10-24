@@ -1,0 +1,21 @@
+.receivedHeadingText {
+  color: #111827;
+  font-size: 45px;
+  font-weight: 700;
+}
+.receivedPartnerName {
+  color: var(--gray-900, #101828);
+  font-size: 18px;
+  font-weight: 300;
+}
+.receivedPartnerOwner {
+  color: var(--gray-600, #475467);
+  font-size: 12px;
+  font-weight: 400;
+}
+.receivedNormalText {
+  margin-top: 28px;
+  color: #6b7280;
+  font-size: 22px;
+  font-weight: 400;
+}
