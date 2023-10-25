@@ -115,17 +115,35 @@ function HeroSection() {
           >
             Send From
           </p>
-
+          <Select
+            defaultValue={selectedOption}
+            options={options}
+            formatOptionLabel={(country) => (
+              <div className="flex">
+                <img
+                  src={country.image}
+                  alt="country-image"
+                  style={{
+                    height: "24px",
+                    width: "24px",
+                    borderRadius: "50%",
+                    marginRight: "10px",
+                  }}
+                />
+                <span>{country.label}</span>
+              </div>
+            )}
+          />
           <select
             id="countries"
             className="sendingInputField w-full"
             onChange={setSelectedOption}
           >
-            <option selected>Send From</option>
-            <option value="NL">🇳🇱&emsp;Netherlands</option>
-            <option value="DE">🇩🇪&emsp;Germany</option>
-            <option value="FR">🇫🇷&emsp;France</option>
-            <option value="ES">🇪🇸&emsp;Spain</option>
+            <option selected>Select saved contact</option>
+            <option value="United States">United States</option>
+            <option value="Canada">Canada</option>
+            <option value="France">France</option>
+            <option value="Germany">Germany</option>
           </select>
           <p className="heroSectionSendTo">Send To</p>
           <input
