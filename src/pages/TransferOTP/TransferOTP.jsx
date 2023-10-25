@@ -39,46 +39,42 @@ function TransferOTP() {
         style={divStyle}
         className="flex flex-col justify-cneter items-center"
       >
-        <div className="w-3/6 flex mt-5 mb-5">
-          <ol className="progressBar flex items-center w-full justify-center text-center xl:ps-30 md:ps-32">
+        <div className="w-5/6 flex flex-col mt-5 mb-5">
+          <ol className="progressBar flex items-center w-full justify-center text-center xl:ps-40 md:ps-40 ps-10">
             <li className="flex w-full items-center text-orange-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-orange-400">
-              <span className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-12 lg:w-12 dark:bg-orange-400 shrink-0">
-                <svg
-                  className="w-3.5 h-3.5 text-blue-600 lg:w-4 lg:h-4 dark:text-gray-100"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 16 12"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M1 5.917 5.724 10.5 15 1.5"
-                  />
+              <span className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-12 lg:w-12 dark:bg-orange-500 shrink-0">
+                <svg width="35" height="35" xmlns="http://www.w3.org/2000/svg">
+                  <text
+                    x="50%"
+                    y="50%"
+                    fill="white"
+                    fontSize="16"
+                    textAnchor="middle"
+                    alignmentBaseline="central"
+                  >
+                    1
+                  </text>
                 </svg>
               </span>
             </li>
-            <li className="flex w-full items-center text-orange-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-orange-400">
-              <span className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-12 lg:w-12 dark:bg-orange-400 shrink-0">
-                <svg
-                  className="w-3.5 h-3.5 text-blue-600 lg:w-4 lg:h-4 dark:text-gray-100"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 16 12"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M1 5.917 5.724 10.5 15 1.5"
-                  />
+            <li className="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-orange-500">
+              <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-orange-500 shrink-0">
+                <svg width="35" height="35" xmlns="http://www.w3.org/2000/svg">
+                  <text
+                    x="50%"
+                    y="50%"
+                    fill="white"
+                    fontSize="16"
+                    textAnchor="middle"
+                    alignmentBaseline="central"
+                  >
+                    2
+                  </text>
                 </svg>
               </span>
             </li>
             <li className="flex items-center w-full">
-              <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-orange-300 shrink-0">
+              <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-orange-500 shrink-0">
                 <svg width="35" height="35" xmlns="http://www.w3.org/2000/svg">
                   <text
                     x="50%"
@@ -92,6 +88,18 @@ function TransferOTP() {
                   </text>
                 </svg>
               </span>
+            </li>
+          </ol>
+
+          <ol className="mt-2 progressBar flex items-center w-full justify-center text-center xl:ps-40 md:ps-40 ps-10">
+            <li className="flex w-full items-center after:content-[''] after:w-full after:inline-block text-xs ">
+              <span className="text-orange-500"> Receiver Info</span>
+            </li>
+            <li className="flex w-full items-center after:content-[''] after:w-full after:inline-block text-xs">
+              <span className="text-orange-500">Review</span>
+            </li>
+            <li className="flex items-center w-full text-xs">
+              <span className="text-orange-500">Payment</span>
             </li>
           </ol>
         </div>
@@ -110,7 +118,10 @@ function TransferOTP() {
 
               <img src={securityTick} alt="" />
             </div>
-            <button className="flex justify-center items-center w-2/3 pt-2 pb-2 ps-5 pe-5 rounded-xl text-white bg-blue-600 mt-5 mx-auto">
+            <button
+              className="flex justify-center items-center w-2/3 pt-2 pb-2 ps-5 pe-5 rounded-xl text-white mt-5 mx-auto"
+              style={{ backgroundColor: "#043BA0" }}
+            >
               Send
             </button>
           </form>

@@ -67,10 +67,10 @@ function SendingMoney() {
         style={divStyle}
         className="flex flex-col justify-cneter items-center"
       >
-        <div className="w-3/6 flex mt-5 mb-5">
-          <ol className="progressBar flex items-center w-full justify-center text-center xl:ps-30 md:ps-32">
+        <div className="w-5/6 flex flex-col mt-5 mb-5">
+          <ol className="progressBar flex items-center w-full justify-center text-center xl:ps-40 md:ps-40 ps-10">
             <li className="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-orange-200">
-              <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-orange-300 shrink-0">
+              <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-orange-500 shrink-0">
                 <svg width="35" height="35" xmlns="http://www.w3.org/2000/svg">
                   <text
                     x="50%"
@@ -117,6 +117,16 @@ function SendingMoney() {
                 </svg>
               </span>
             </li>
+          </ol>
+
+          <ol className="mt-2 progressBar flex items-center w-full justify-center text-center xl:ps-40 md:ps-40 ps-10">
+            <li className="flex w-full items-center after:content-[''] after:w-full after:inline-block text-xs ">
+              <span className="text-orange-500"> Receiver Info</span>
+            </li>
+            <li className="flex w-full items-center after:content-[''] after:w-full after:inline-block text-xs">
+              Review
+            </li>
+            <li className="flex items-center w-full text-xs">Payment</li>
           </ol>
         </div>
         <div className="card">
@@ -258,8 +268,9 @@ function SendingMoney() {
 
             <NavLink to="/sendingMoneyInfo">
               <button
-                className="w-full pt-2 pb-2 ps-5 pe-5 rounded-xl text-white bg-blue-600 mt-5"
+                className="w-full pt-2 pb-2 ps-5 pe-5 rounded-xl text-white mt-5"
                 onClick={handleSelectChange}
+                style={{ backgroundColor: "#043BA0" }}
               >
                 Continue
               </button>
