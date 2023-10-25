@@ -103,7 +103,7 @@ function HeroSection() {
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div
-          className="card shadow-xl w-full sm:w-3/3 md:w-4/5 lg:w-2/4 sm:h-2/3 md:h-4/4 lg:h-3/5"
+          className="card shadow-xl w-full sm:w-3/3 md:w-4/5 lg:w-3/4 md:h-2/3 lg:h-3/5 xl:h-3/5"
           style={{
             backgroundColor: "#FFF",
             padding: "24px",
@@ -208,7 +208,6 @@ function HeroSection() {
             <button
               className="heroSectionRightSideButton"
               onClick={handleCardButton}
-              
             >
               Send Money
             </button>
