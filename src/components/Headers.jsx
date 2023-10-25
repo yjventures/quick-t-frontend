@@ -7,7 +7,7 @@ export default function Headers() {
   const jwt = localStorage.getItem("jwt");
   return (
     <Navbar
-      className="fixed w-full "
+      className="fixed w-full flex-row"
       style={{ backgroundColor: "#EEE", zIndex: "2" }}
     >
       <Navbar.Brand href="/">
@@ -56,7 +56,9 @@ export default function Headers() {
       ) : (
         <div className="flex md:order-2">
           <div className="hidden md:flex">
-            <button className="headerSignUp">Sign Up </button>
+            <NavLink to="/register">
+              <button className="headerSignUp">Sign Up </button>
+            </NavLink>
           </div>
           <Navbar.Toggle />
         </div>
@@ -110,7 +112,9 @@ export default function Headers() {
           </div>
         ) : (
           <div className="md:hidden py-4">
-            <button className="headerSignUp">Sign Up </button>
+            <NavLink to="/register">
+              <button className="headerSignUp">Sign Up</button>
+            </NavLink>
           </div>
         )}
       </Navbar.Collapse>

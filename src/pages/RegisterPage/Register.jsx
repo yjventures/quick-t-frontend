@@ -4,6 +4,7 @@ import whiteLogo from "../../assets/images/whiteLogo.png";
 import registerImage from "../../assets/images/registerImage.png";
 import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
 import googleLogo from "../../assets/images/googleLogo.png";
+import { NavLink } from "react-router-dom";
 function Register() {
   /////////////////////////////////////
   //photo upload handling
@@ -251,7 +252,8 @@ function Register() {
             <div className="flex items-center mb-5 gap-2">
               <input type="checkbox" className="registerPageCheckBox" />
               <label className="registerPageCheckBoxLabel">
-                I agree to the Terms and Conditions
+                I agree to the <span>Terms</span> and{" "}
+                <span>Privacy Policy</span>
               </label>
             </div>
           </div>
@@ -270,7 +272,10 @@ function Register() {
             </button>
           </div>
           <p className="registerLogin text-center pt-2 pb-5">
-            have an account? <span>Log In</span>
+            have an account?{" "}
+            <NavLink to="/login">
+              <span>Log In</span>
+            </NavLink>
           </p>
         </div>
       </div>

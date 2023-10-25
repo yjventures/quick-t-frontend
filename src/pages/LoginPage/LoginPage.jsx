@@ -3,6 +3,7 @@ import whiteLogo from "../../assets/images/whiteLogo.png";
 import registerImage from "../../assets/images/registerImage.png";
 import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
 import googleLogo from "../../assets/images/googleLogo.png";
+import { NavLink } from "react-router-dom";
 function LoginPage() {
   let emailRef = useRef(null);
   let passwordRef = useRef(null);
@@ -91,7 +92,10 @@ function LoginPage() {
             </button>
           </div>
           <p className="registerLogin text-center pt-2 pb-5">
-            Don’t have an account? <span>Sign Up</span>
+            Don’t have an account?{" "}
+            <NavLink to="/register">
+              <span>Sign Up</span>
+            </NavLink>
           </p>
         </div>
       </div>

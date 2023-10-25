@@ -90,3 +90,8 @@
   font-size: 16px;
   font-weight: 400;
 }
+.registerPageCheckBoxLabel span {
+  color: var(--Blue, #007aff);
+  font-size: 16px;
+  font-weight: 400;
+}
