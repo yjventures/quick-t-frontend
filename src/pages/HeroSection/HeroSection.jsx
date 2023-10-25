@@ -137,9 +137,9 @@ function HeroSection() {
 
           <p className="heroSectionSendTo">Send To</p>
           <Select
-            defaultValue={selectedOption}
-            options={options}
+            defaultValue={options[2]}
             isDisabled
+            options={options}
             formatOptionLabel={(country) => (
               <div className="flex">
                 <img

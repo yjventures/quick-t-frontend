@@ -1,6 +1,4 @@
-import React from "react";
-import appStore from "../../assets/images/appStore.png";
-import playStore from "../../assets/images/playStore.png";
+
 import "./footer.css";
 function Footer() {
   return (

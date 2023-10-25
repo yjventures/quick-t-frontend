@@ -9,7 +9,7 @@ function NewsLetter() {
       <p className="newsLetterSecondHeadingText py-5 sm:py-5 md:py-10 lg:py-10 xl:py-10 text-base md:text-xl xl:text-xl lg:text-xl text-center">
         Be the first to know about releases and QuickT news and insights.
       </p>
-      <div className="flex items-center justify-center gap-5">
+      <div className="flex flex-col md:flex-row xl:flex-row items-center justify-center gap-5">
         <input
           type="email"
           placeholder="Enter your email"
