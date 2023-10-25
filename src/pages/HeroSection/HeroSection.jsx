@@ -103,7 +103,7 @@ function HeroSection() {
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div
-          className="card shadow-xl w-full sm:w-2/3 md:w-3/4 lg:w-3/4 sm:h-2/3 md:h-1/2 lg:h-3/5"
+          className="card shadow-xl w-full sm:w-2/3 md:w-4/5 lg:w-2/4 sm:h-2/3 md:h-1/2 lg:h-3/5"
           style={{
             backgroundColor: "#FFF",
             padding: "24px",
@@ -115,26 +115,18 @@ function HeroSection() {
           >
             Send From
           </p>
-          <Select
-            defaultValue={selectedOption}
+
+          <select
+            id="countries"
+            className="sendingInputField w-full"
             onChange={setSelectedOption}
-            options={options}
-            formatOptionLabel={(country) => (
-              <div className="flex">
-                <img
-                  src={country.image}
-                  alt="country-image"
-                  style={{
-                    height: "24px",
-                    width: "24px",
-                    borderRadius: "50%",
-                    marginRight: "10px",
-                  }}
-                />
-                <span>{country.label}</span>
-              </div>
-            )}
-          />
+          >
+            <option selected>Send From</option>
+            <option value="NL">🇳🇱&emsp;Netherlands</option>
+            <option value="DE">🇩🇪&emsp;Germany</option>
+            <option value="FR">🇫🇷&emsp;France</option>
+            <option value="ES">🇪🇸&emsp;Spain</option>
+          </select>
           <p className="heroSectionSendTo">Send To</p>
           <input
             disabled

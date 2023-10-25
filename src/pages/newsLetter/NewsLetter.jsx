@@ -19,7 +19,10 @@ function NewsLetter() {
       </div>
       <p className="newsLetterNormalText text-xs md:text-base lg:text-base xl:text-base pt-5">
         By clicking Subscribe you're confirming that you agree with our{" "}
-        <span className="newsLetterCondition"> Terms and Conditions.</span>
+        <span className="newsLetterCondition text-xs md:text-base lg:text-base xl:text-base pt-5">
+          {" "}
+          Terms and Conditions.
+        </span>
       </p>
     </div>
   );

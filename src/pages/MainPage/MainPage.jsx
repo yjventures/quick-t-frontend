@@ -8,6 +8,7 @@ import ChooseUs from "../chooseUs/ChooseUs";
 import HowTransfer from "../howTransfer/HowTransfer";
 import SendFrom from "../sendFrom/SendFrom";
 import ReceiveFrom from "../receiveFrom/ReceiveFrom";
+import Footer from "../Footer/Footer";
 
 function MainPage() {
   return (
@@ -22,6 +23,7 @@ function MainPage() {
       <SendFrom />
       <ReceiveFrom />
       <NewsLetter />
+      <Footer />
     </div>
   );
 }

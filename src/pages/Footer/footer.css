@@ -1,0 +1,17 @@
+.footerHeading {
+  color: var(--base-white, #fff);
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 32px;
+}
+
+.footerText {
+  color: var(--gray-200, #e4e4e7);
+  font-size: 16.8px;
+  font-weight: 400;
+  margin-bottom: 28px;
+}
+
+.footerMain {
+  background: var(--blue-gray-900, #0f172a);
+}
