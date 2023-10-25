@@ -12,7 +12,7 @@ function Footer() {
         <p className="footerText">Works</p>
         <p className="footerText">Career</p>
       </div>
-      <div className="hidden sm:block">
+      <div className="">
         <p className="footerHeading">Help</p>
         <p className="footerText">Customer Support</p>
         <p className="footerText">Delivery Details</p>
@@ -25,11 +25,6 @@ function Footer() {
         <p className="footerText">Development Tutorial</p>
         <p className="footerText">How to - Blog</p>
         <p className="footerText">Youtube PlayList</p>
-      </div>
-      <div>
-        <p className="footerHeading">Install App</p>
-        <img src={appStore} alt="" style={{ marginBottom: "12px" }} />
-        <img src={playStore} alt="" />
       </div>
     </div>
   );
