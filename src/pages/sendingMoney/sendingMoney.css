@@ -9,16 +9,76 @@
   align-items: center;
   justify-content: center;
 }
+
+.progressBar {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
 .card {
   width: 90%;
   max-width: 600px;
   margin: 0 auto;
   background: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
+  border-radius: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-top: 50px;
   padding: 40px 20px;
+  z-index: 1;
+}
+
+/* .react-tel-input .form-control {
+  width: 43% !important;
+  padding: 12px !important;
+  border-radius: 12px !important;
+  background-color: #eee !important;
+  border: none !important;
+  position: absolute !important;
+  left: 20px !important;                                      
+  margin-left: 40px !important ;
+}
+
+.react-tel-input .form-control:focus {
+  background-color: white !important;
+  border: 1px solid black !important;
+}
+
+.react-tel-input .selected-flag .flag {
+  position: absolute !important;
+  top: 20px !important;
+  border: none !important;
+}
+
+.react-tel-input .selected-flag {
+  width: 100px !important;
+}
+.react-tel-input .selected-flag .flag:focus {
+  border: 1px solid black !important;
+}
+
+.selected-flag::before {
+  padding: 22px !important;
+  border-radius: 12px !important;
+  background-color: #eee !important;
+} */
+.react-tel-input .form-control {
+  width: 100% !important;
+  padding: 10px 58px !important;
+  border-radius: 12px !important;
+  background-color: #eee !important;
+}
+
+.react-tel-input .form-control:focus {
+  background-color: white !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  border-color: black !important;
+}
+
+.react-tel-input .country-list .search-box {
+  width: 90% !important;
+  border-radius: 8px !important;
+  padding: 5px !important;
 }
 
 .form {
@@ -35,7 +95,9 @@ button {
   border: 1px solid #e4ecf1;
   background-color: #eee;
 }
-
+.sendingInputField:focus {
+  background-color: white;
+}
 .inputselectSaved {
   padding-top: 10px;
   padding-bottom: 10px;

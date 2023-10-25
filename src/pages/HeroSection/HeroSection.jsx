@@ -103,7 +103,7 @@ function HeroSection() {
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div
-          className="card shadow-xl w-full sm:w-3/3 md:w-4/5 lg:w-3/4 md:h-2/3  xl:h-3/5"
+          className="heroSectionCard shadow-xl w-full sm:w-3/3 md:w-4/5 xl:w-2/4 md:h-3/3 xl:h-3/3"
           style={{
             backgroundColor: "#FFF",
             padding: "24px",
@@ -217,15 +217,17 @@ function HeroSection() {
           <input
             ref={(input) => (customAmmountRef = input)}
             placeholder="or custom ammount"
-            className="p-4 mt-6 bg-gray-100 rounded-xl border-none text-black heroSectionCustommunt"
+            className="mt-6 rounded-xl border-none text-black heroSectionCustommunt"
           />
           {jwt ? (
-            <button
-              className="heroSectionRightSideButton"
-              onClick={handleCardButton}
-            >
-              Send Money
-            </button>
+            <NavLink to="/sendingMoney">
+              <button
+                className="heroSectionRightSideButton"
+                onClick={handleCardButton}
+              >
+                Send Money
+              </button>
+            </NavLink>
           ) : (
             <NavLink to="/register">
               <button
