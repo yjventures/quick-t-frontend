@@ -9,7 +9,7 @@ function ReceiveFrom() {
 
       {/* hidden sm:flex md:flex lg:flex xl:flex here add for the hide image in the small device */}
       <div
-        className="w-full md:w-1/2 flex items-center sm:items-start md:items-center xl:items-center lg:items-cneter justify-center hidden sm:flex md:flex lg:flex xl:flex"
+        className="w-full md:w-1/2 flex items-center sm:items-start md:items-center xl:items-center lg:items-cneter justify-center "
         style={{ height: "90vh", backgroundColor: "#FFFFFF" }}
       >
         <div>

@@ -25,7 +25,7 @@ function SendFrom() {
         {/* Right Part */}
         {/* hidden sm:flex md:flex lg:flex xl:flex here add for the hide image in the small device */}
         <div
-          className="w-full md:w-1/2 flex items-center sm:items-start md:items-center xl:items-center lg:items-cneter justify-center container px-2 hidden sm:flex md:flex lg:flex xl:flex"
+          className="w-full md:w-1/2 flex items-center sm:items-start md:items-center xl:items-center lg:items-cneter justify-center container px-2 "
           style={{ height: "90vh" }}
         >
           <div>
