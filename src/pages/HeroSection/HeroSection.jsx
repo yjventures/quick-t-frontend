@@ -103,7 +103,7 @@ function HeroSection() {
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div
-          className="card shadow-xl w-full sm:w-3/3 md:w-4/5 lg:w-3/4 md:h-2/3 lg:h-3/5 xl:h-3/5"
+          className="card shadow-xl w-full sm:w-3/3 md:w-4/5 lg:w-3/4 md:h-2/3  xl:h-3/5"
           style={{
             backgroundColor: "#FFF",
             padding: "24px",
@@ -136,10 +136,25 @@ function HeroSection() {
           />
 
           <p className="heroSectionSendTo">Send To</p>
-          <input
-            disabled
-            value={"Lebanon"}
-            className="herosectionRightSideInput text-black"
+          <Select
+            defaultValue={selectedOption}
+            options={options}
+            isDisabled
+            formatOptionLabel={(country) => (
+              <div className="flex">
+                <img
+                  src={country.image}
+                  alt="country-image"
+                  style={{
+                    height: "24px",
+                    width: "24px",
+                    borderRadius: "50%",
+                    marginRight: "10px",
+                  }}
+                />
+                <span>{country.label}</span>
+              </div>
+            )}
           />
           <br />
           <p className="heroSectionQuickTransfer">Quick Transfer</p>
