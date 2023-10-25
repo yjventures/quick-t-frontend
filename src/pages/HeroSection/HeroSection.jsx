@@ -103,7 +103,7 @@ function HeroSection() {
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div
-          className="card shadow-xl w-full sm:w-2/3 md:w-4/5 lg:w-2/4 sm:h-2/3 md:h-1/2 lg:h-3/5"
+          className="card shadow-xl w-full sm:w-3/3 md:w-4/5 lg:w-2/4 sm:h-2/3 md:h-4/4 lg:h-3/5"
           style={{
             backgroundColor: "#FFF",
             padding: "24px",
@@ -134,17 +134,7 @@ function HeroSection() {
               </div>
             )}
           />
-          <select
-            id="countries"
-            className="sendingInputField w-full"
-            onChange={setSelectedOption}
-          >
-            <option selected>Select saved contact</option>
-            <option value="United States">United States</option>
-            <option value="Canada">Canada</option>
-            <option value="France">France</option>
-            <option value="Germany">Germany</option>
-          </select>
+
           <p className="heroSectionSendTo">Send To</p>
           <input
             disabled
@@ -218,6 +208,7 @@ function HeroSection() {
             <button
               className="heroSectionRightSideButton"
               onClick={handleCardButton}
+              
             >
               Send Money
             </button>
