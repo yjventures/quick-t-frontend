@@ -26,7 +26,11 @@
   padding-bottom: 30px;
   width: 325.849px;
   height: 247.592px;
-  box-shadow: 54px 15px 18px 10px #edf0f6;
+  background-color: white;
+}
+
+.backgroundImageShow {
+  background-image: url("data:image/svg+xml,%3Csvg width='342' height='299' viewBox='0 0 342 299' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0.369141' y='17.5835' width='327.616' height='281.919' rx='6.69167' transform='rotate(-3 0.369141 17.5835)' fill='%23EDF0F6'/%3E%3C/svg%3E%0A");
 }
 
 .chooseUsCard::after {
@@ -39,6 +43,7 @@
   border-radius: 6.692px;
   transform: rotate(-3deg);
 }
+
 .chooseUsCardHeadingText {
   color: #333;
   font-size: 26.767px;

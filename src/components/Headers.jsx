@@ -1,123 +1,137 @@
-import { Avatar, Dropdown, Navbar } from "flowbite-react";
-import logo from "../assets/images/logo.png";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import "./Headers.css";
+import logo from "../assets/images/logo.png";
 
-export default function Headers() {
-  const jwt = localStorage.getItem("jwt");
+const Navbar = () => {
+  const [showDropdown, setShowDropdown] = useState(false); // State to handle the dropdown visibility
+  const [showMobileMenu, setShowMobileMenu] = useState(false); // State to handle the mobile menu visibility
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 768); // Adjust the value based on your breakpoint
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleDropdownToggle = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleMobileMenuToggle = () => {
+    setShowMobileMenu(!showMobileMenu);
+  };
+
   return (
-    <Navbar
-      className="fixed w-full flex-row"
-      style={{ backgroundColor: "#EEE", zIndex: "2" }}
-    >
-      <Navbar.Brand href="/">
+    <nav className="navbar">
+      <div className="navbar-left">
+        {/* Website Logo */}
         <img
           src={logo}
+          alt="Logo"
+          className="logo"
           style={{ width: "208px", height: "66px" }}
-          className="mr-3 h-6 sm:h-9 rounded-full"
-          alt=""
         />
-      </Navbar.Brand>
-      {jwt ? (
-        <div className="flex md:order-2">
-          <div className="hidden md:flex">
-            {/* Dropdown section for large and medium screens */}
-            <Dropdown
-              arrowIcon={true}
-              inline
-              label={
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Avatar
-                    alt="User settings"
-                    img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                    rounded
-                    height="40"
-                    width="40"
-                  />
-                  <span style={{ marginLeft: "5px" }}>Usernamed</span>
-                </div>
-              }
-            >
-              <Dropdown.Header>
-                <span className="block text-sm">Bonnie Green</span>
-                <span className="block truncate text-sm font-medium">
-                  name@flowbite.com
-                </span>
-              </Dropdown.Header>
-              <Dropdown.Item>Dashboard</Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
-              <Dropdown.Item>Earnings</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item>Sign out</Dropdown.Item>
-            </Dropdown>
-          </div>
-          <Navbar.Toggle />
-        </div>
-      ) : (
-        <div className="flex md:order-2">
-          <div className="hidden md:flex">
-            <NavLink to="/register">
-              <button className="headerSignUp">Sign Up </button>
-            </NavLink>
-          </div>
-          <Navbar.Toggle />
+      </div>
+
+      {/* Middle section with Nav Links for Large Screens */}
+      {!isSmallScreen && (
+        <div className="navbar-middle">
+          <ul className="nav-links">
+            <li>
+              <a href="/how-it-works">How It Works</a>
+            </li>
+            <li>
+              <a href="/about">Pricing</a>
+            </li>
+            <li>
+              <a href="/works">Help Center</a>
+            </li>
+            <li>
+              <a href="/">News</a>
+            </li>
+          </ul>
         </div>
       )}
-      <Navbar.Collapse>
-        {/* Links in collapsed section */}
-        <NavLink to="/hello">
-          <p className="active-link py-4">how it works</p>
-        </NavLink>
-        <NavLink to="/pricing">
-          <p className="active-link  py-4">Pricing</p>
-        </NavLink>
 
-        <NavLink to="/hello">
-          <p className="active-link  py-4">Help Center</p>
-        </NavLink>
+      <div className="navbar-right">
+        {/* User Profile */}
+        <div
+          className="user-profile hidingUserProfile"
+          onClick={handleDropdownToggle}
+        >
+          <img
+            src="https://www.w3schools.com/howto/img_avatar.png"
+            alt="User"
+            className="user-image"
+          />
+          <span className="user-name">Username</span>
+          <span className="arrow-icon">
+            {showDropdown ? "\u25B2" : "\u25BC"}
+          </span>
+        </div>
 
-        <NavLink to="/hello">
-          <p className="active-link  py-4">News</p>
-        </NavLink>
-        {/* End of links */}
-        {/* Dropdown section for small screens */}
-        {jwt ? (
-          <div className="md:hidden  py-4">
-            <Dropdown
-              arrowIcon={true}
-              inline
-              label={
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Avatar
-                    alt="User settings"
-                    img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                    rounded
-                  />
-                  <span style={{ marginLeft: "5px" }}>Usernamed</span>
-                </div>
-              }
-            >
-              <Dropdown.Header>
-                <span className="block text-sm">Bonnie Green</span>
-                <span className="block truncate text-sm font-medium">
-                  name@flowbite.com
-                </span>
-              </Dropdown.Header>
-              <Dropdown.Item>Dashboard</Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
-              <Dropdown.Item>Earnings</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item>Sign out</Dropdown.Item>
-            </Dropdown>
-          </div>
-        ) : (
-          <div className="md:hidden py-4">
-            <NavLink to="/register">
-              <button className="headerSignUp">Sign Up</button>
-            </NavLink>
+        {/* Dropdown */}
+        {showDropdown && (
+          <div className="dropdown mobile-dropdown">
+            <ul>
+              <li>Settings</li>
+              <li>Logout</li>
+            </ul>
           </div>
         )}
-      </Navbar.Collapse>
-    </Navbar>
+
+        {/* Mobile Menu Icon for Small Devices */}
+        {isSmallScreen && (
+          <div className="menu-icon" onClick={handleMobileMenuToggle}>
+            {showMobileMenu ? (
+              <span style={{ fontSize: "30px" }}>&times;</span> // Cross icon
+            ) : (
+              <span style={{ fontSize: "20px" }}>&#9776;</span> // Three-line icon
+            )}
+          </div>
+        )}
+
+        {/* Mobile Menu Dropdown */}
+        {showMobileMenu && isSmallScreen && (
+          <div className="mobile-menu" onClick={handleDropdownToggle}>
+            <ul className="nav-links">
+              <li>
+                <a href="/how-it-works">How It Works</a>
+              </li>
+              <li>
+                <a href="/about">Pricing</a>
+              </li>
+              <li>
+                <a href="/works">Help Center</a>
+              </li>
+              <li>
+                <a href="/">News</a>
+              </li>
+              <li>
+                <div className="user-profile " onClick={handleDropdownToggle}>
+                  <img
+                    src="https://www.w3schools.com/howto/img_avatar.png"
+                    alt="User"
+                    className="user-image"
+                  />
+                  <span className="user-name">Username</span>
+                  <span className="arrow-icon">
+                    {showDropdown ? "\u25B2" : "\u25BC"}
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
+    </nav>
   );
-}
+};
+
+export default Navbar;

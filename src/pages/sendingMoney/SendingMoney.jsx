@@ -13,7 +13,7 @@ function SendingMoney() {
     backgroundAttachment: "fixed",
     backgroundSize: "cover",
     minHeight: "100vh",
-    paddingTop: "100px",
+    paddingTop: "20px",
   };
   const [phone, setPhone] = useState("");
 

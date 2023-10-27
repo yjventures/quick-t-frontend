@@ -1,40 +1,154 @@
+/* Navbar.css */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;500;700&display=swap");
 
 body {
   font-family: "Inter", sans-serif;
 }
-.active-link {
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eee;
+  padding: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.navbar-left {
+  flex: 1;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+}
+
+.nav-links li {
+  margin: 0 10px;
+}
+
+.nav-links a {
+  text-decoration: none;
   color: #06113c;
   font-size: 18px;
   font-weight: 400;
-  position: relative;
-  transition: all 0.4s;
+  padding-right: 10px;
 }
 
-.active-link:hover {
-  color: black;
+.navbar-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.active-link::after {
-  content: "";
-  height: 2px;
-  width: 100%;
-  background-color: rgb(0, 183, 255);
+.user-profile {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.user-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.arrow-icon {
+  margin-left: 5px;
+}
+
+.dropdown {
   position: absolute;
-  left: 0;
-  bottom: -8px;
-  opacity: 0;
-  transition: all 0.2s;
-  pointer-events: none;
+  top: 50px; /* Adjust this value based on your design */
+  right: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  background-color: #eee !important;
 }
 
-.active-link:hover::after {
-  opacity: 1;
+.dropdown ul {
+  list-style: none;
+  padding: 0;
 }
 
-.headerSignUp {
-  border-radius: 50px;
-  background: #043ba0;
-  color: white;
-  padding: 14px 40px;
+.dropdown li {
+  padding: 5px 0;
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .nav-links a {
+    padding-right: 5px;
+  }
+
+  .navbar-left {
+    display: flex;
+
+    align-items: center;
+  }
+
+  .menu-icon {
+    margin-left: auto;
+    margin-right: 20px;
+  }
+
+  .navbar-middle {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px; /* Add padding to adjust spacing */
+  }
+
+  .nav-links {
+    position: absolute;
+    left: 0;
+    top: 70px;
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #eee;
+    align-items: center;
+    width: 100%;
+    transition: all 0.5 ease-in-out;
+    padding-top: 10px;
+  }
+
+  .nav-links li {
+    margin: 0 10px;
+    padding: 5px;
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .hidingUserProfile {
+    display: none;
+  }
+  .dropdown {
+    position: absolute;
+    top: 256px; /* Adjust this value based on your design */
+    right: 30px;
+    width: 150px;
+    background-color: #eee !important;
+    border-radius: 12px;
+    z-index: 100;
+  }
 }

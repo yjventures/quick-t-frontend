@@ -14,9 +14,7 @@ function MainPage() {
   return (
     <div>
       <Headers />
-      <div style={{ paddingTop: "85px" }}>
-        <HeroSection />
-      </div>
+      <HeroSection />
       <GetStart />
       <ChooseUs />
       <HowTransfer />
