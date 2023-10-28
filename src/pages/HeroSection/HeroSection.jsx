@@ -99,7 +99,7 @@ function HeroSection() {
 
       {/* Right Part */}
       <div
-        className="w-full md:w-1/2 flex items-center justify-center container pl-5 pr-5 md:pl-1 md:pr-1"
+        className="w-full md:w-1/2 flex items-center justify-center pl-5 pr-5 md:pl-1 md:pr-1"
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div
