@@ -6,6 +6,10 @@ body {
 }
 
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,6 +17,7 @@ body {
   padding: 10px;
   padding-left: 50px;
   padding-right: 50px;
+  z-index: 1000; /* Set the z-index appropriately to ensure it's above other elements */
 }
 
 .navbar-left {
