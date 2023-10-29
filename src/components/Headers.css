@@ -88,6 +88,14 @@ body {
   padding: 5px 0;
 }
 
+.headerSignUp {
+  border-radius: 50px;
+  background: #043ba0;
+  color: white;
+  padding: 14px 40px;
+}
+
+
 /* Media Queries for Responsive Design */
 @media screen and (max-width: 768px) {
   .navbar {

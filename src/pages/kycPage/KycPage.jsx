@@ -1,12 +1,21 @@
 import React, { useRef, useState } from "react";
 import whiteLogo from "../../assets/images/whiteLogo.png";
 import registerImage from "../../assets/images/registerImage.png";
-import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
-import googleLogo from "../../assets/images/googleLogo.png";
+import "./kyc.css";
 import Select from "react-select";
 import frontPlaceholder from "../../assets/images/frontPlaceholder.png";
 import backPlaceholder from "../../assets/images/backPlaceHolder.png";
 function KycPage() {
+  const style = {
+    control: (base, state) => ({
+      ...base,
+      border: 0,
+      boxShadow: "none",
+      "&:focus": {
+        border: "1px solid black",
+      },
+    }),
+  };
   const options = [
     {
       value: "Driver's licence",
@@ -171,6 +180,7 @@ function KycPage() {
                   onChange={setSelectedOption}
                   options={options}
                   className="mt-3 mb-6"
+                  styles={style}
                 />
               </div>
               <div

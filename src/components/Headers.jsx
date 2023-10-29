@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Headers.css";
 import logo from "../assets/images/logo.png";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false); // State to handle the dropdown visibility
@@ -27,6 +28,7 @@ const Navbar = () => {
     setShowMobileMenu(!showMobileMenu);
   };
 
+  const jwt = localStorage.getItem("jwt");
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -61,20 +63,28 @@ const Navbar = () => {
 
       <div className="navbar-right">
         {/* User Profile */}
-        <div
-          className="user-profile hidingUserProfile"
-          onClick={handleDropdownToggle}
-        >
-          <img
-            src="https://www.w3schools.com/howto/img_avatar.png"
-            alt="User"
-            className="user-image"
-          />
-          <span className="user-name">Username</span>
-          <span className="arrow-icon">
-            {showDropdown ? "\u25B2" : "\u25BC"}
-          </span>
-        </div>
+        {jwt ? (
+          <div
+            className="user-profile hidingUserProfile"
+            onClick={handleDropdownToggle}
+          >
+            <img
+              src="https://www.w3schools.com/howto/img_avatar.png"
+              alt="User"
+              className="user-image"
+            />
+            <span className="user-name">Username</span>
+            <span className="arrow-icon">
+              {showDropdown ? "\u25B2" : "\u25BC"}
+            </span>
+          </div>
+        ) : (
+          <div className="user-profile hidingUserProfile">
+            <NavLink to="/register">
+              <button className="headerSignUp">Sign Up</button>
+            </NavLink>
+          </div>
+        )}
 
         {/* Dropdown */}
         {showDropdown && (
@@ -114,17 +124,25 @@ const Navbar = () => {
                 <a href="/">News</a>
               </li>
               <li>
-                <div className="user-profile " onClick={handleDropdownToggle}>
-                  <img
-                    src="https://www.w3schools.com/howto/img_avatar.png"
-                    alt="User"
-                    className="user-image"
-                  />
-                  <span className="user-name">Username</span>
-                  <span className="arrow-icon">
-                    {showDropdown ? "\u25B2" : "\u25BC"}
-                  </span>
-                </div>
+                {jwt ? (
+                  <div className="user-profile " onClick={handleDropdownToggle}>
+                    <img
+                      src="https://www.w3schools.com/howto/img_avatar.png"
+                      alt="User"
+                      className="user-image"
+                    />
+                    <span className="user-name">Username</span>
+                    <span className="arrow-icon">
+                      {showDropdown ? "\u25B2" : "\u25BC"}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="user-profile ">
+                    <NavLink to="/register">
+                      <button className="headerSignUp">Sign Up</button>
+                    </NavLink>
+                  </div>
+                )}
               </li>
             </ul>
           </div>

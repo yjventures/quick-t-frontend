@@ -7,6 +7,16 @@ import tickCircle from "../../assets/images/tick-circle.png";
 import { NavLink } from "react-router-dom";
 
 function HeroSection() {
+  const style = {
+    control: (base, state) => ({
+      ...base,
+      border: 0,
+      boxShadow: "none",
+      "&:focus": {
+        border: "1px solid black",
+      },
+    }),
+  };
   const jwt = localStorage.getItem("jwt");
   const options = [
     {
@@ -118,6 +128,7 @@ function HeroSection() {
           <Select
             defaultValue={selectedOption}
             options={options}
+            styles={style}
             formatOptionLabel={(country) => (
               <div className="flex">
                 <img

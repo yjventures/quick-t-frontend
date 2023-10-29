@@ -79,8 +79,16 @@
   position: relative !important;
   background-color: #f1f5f8 !important;
   padding: 8px 16px !important;
-  border-radius: 12px !important;
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
   width: 100% !important;
+}
+
+.css-4xgw5l-IndicatorsContainer2 {
+  background-color: #f1f5f8 !important;
+  padding-left: 20px !important;
+  border-top-right-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
 }
 .css-1u9des2-indicatorSeparator {
   display: none !important;
@@ -89,7 +97,8 @@
   position: absolute !important;
   background-color: #f1f5f8 !important;
   padding: 15px 10px !important;
-  border-radius: 12px !important;
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
   right: 10px;
 }
 
