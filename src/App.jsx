@@ -9,6 +9,8 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import SendingMoney from "./pages/sendingMoney/SendingMoney";
 import SendingMoneyInfo from "./pages/SendingMoneyInfo/SendingMoneyInfo";
 import TransferOTP from "./pages/TransferOTP/TransferOTP";
+import PaymentProcessing from "./pages/PaymentProcessing/PaymentProcessing";
+import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/kyc" element={<KycPage />} />
           <Route path="/securityCode" element={<SecurityCode />} />
           <Route path="/confirmSecurityCode" element={<ConfirmCode />} />
+          <Route path="/paymentProcessing" element={<PaymentProcessing />} />
+          <Route path="/paymentSuccess" element={<PaymentSuccess />} />
           <Route path="/hello" element={<HowWorks />} />
           <Route path="/pricing" element={<HowWorks />} />
         </Routes>

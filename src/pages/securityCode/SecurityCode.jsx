@@ -93,7 +93,6 @@ function SecurityCode() {
           <div className="flex flex-row items-center justify-between gap-10">
             <div>
               <ReactCodeInput
-                type="number"
                 inputStyle={defaultInputStyle}
                 fields={4}
                 onChange={handleInputChange}

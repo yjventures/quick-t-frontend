@@ -1,0 +1,31 @@
+.paymentSuccessHeaderSectionFrontText {
+  color: #474747;
+  font-size: 26.646px;
+  font-weight: 400;
+  margin-top: 28px;
+  margin-bottom: 14px;
+}
+.paymentSuccessHeaderSectionSecondText {
+  color: #121212;
+  font-size: 39.969px;
+  font-weight: 500;
+}
+.paymentSuccessStarting {
+  color: #707070;
+  font-size: 21.65px;
+  font-weight: 400;
+  margin-bottom: 22px;
+}
+
+.paymentSuccessEnding {
+  color: #121212;
+  font-size: 21.65px;
+  font-weight: 500;
+  margin-bottom: 22px;
+}
+
+.paymentSuccessButton:hover {
+  border: 1px solid black;
+  padding: 10px 16px;
+  border-radius: 12px;
+}

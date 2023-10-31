@@ -81,7 +81,7 @@ function HeroSection() {
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div className="container-fluid">
-          <p className="font-bold text-5xl sm:md:text-6xl lg:text-6xl xl:text-6xl herosectionLeftSideHeadingText">
+          <p className="font-bold text-5xl md:text-3xl lg:text-6xl xl:text-6xl herosectionLeftSideHeadingText">
             Fastest way to send <br /> money to Lebanon,
             <br /> instantly.
           </p>
@@ -109,7 +109,7 @@ function HeroSection() {
 
       {/* Right Part */}
       <div
-        className="w-full md:w-1/2 flex items-center justify-center pl-5 pr-5 md:pl-1 md:pr-1"
+        className="w-full md:w-2/3 flex items-center justify-center pl-5 pr-5 md:pl-1 md:pr-1"
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div

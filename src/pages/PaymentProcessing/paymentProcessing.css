@@ -1,0 +1,17 @@
+.paymentProcessingHeadingText {
+  font-weight: 700;
+  color: #000;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.paymentProcessingImage {
+  height: 90px;
+  width: 90px;
+}
+
+
+.paymentProcessingNormalText{
+    font-weight: 400;
+    color: #000;
+}

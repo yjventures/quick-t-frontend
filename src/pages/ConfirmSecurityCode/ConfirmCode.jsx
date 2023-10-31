@@ -89,7 +89,7 @@ function ConfirmCode() {
           <div className="flex flex-row items-center justify-between">
             <div>
               <ReactCodeInput
-                type="number"
+                
                 inputStyle={defaultInputStyle}
                 fields={4}
                 onChange={handleOnChange}
