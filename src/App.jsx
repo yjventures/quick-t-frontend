@@ -11,6 +11,8 @@ import SendingMoneyInfo from "./pages/SendingMoneyInfo/SendingMoneyInfo";
 import TransferOTP from "./pages/TransferOTP/TransferOTP";
 import PaymentProcessing from "./pages/PaymentProcessing/PaymentProcessing";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess";
+import Settings from "./components/settings/Settings";
+import PersonalInformationPage from "./pages/PersonalInformationPage/PersonalInformationPage";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/paymentSuccess" element={<PaymentSuccess />} />
           <Route path="/hello" element={<HowWorks />} />
           <Route path="/pricing" element={<HowWorks />} />
+          <Route path="/setting" element={<Settings />} />
+          <Route path="/personalInfo" element={<PersonalInformationPage />} />
         </Routes>
       </BrowserRouter>
     </>
