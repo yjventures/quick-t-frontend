@@ -13,6 +13,8 @@ import PaymentProcessing from "./pages/PaymentProcessing/PaymentProcessing";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess";
 import Settings from "./components/settings/Settings";
 import PersonalInformationPage from "./pages/PersonalInformationPage/PersonalInformationPage";
+import TransactionHistory from "./components/TransactionHistory/TransactionHistory";
+import TransactionHistoryPage from "./pages/TransactionHistory/TransactionHistoryPage";
 
 function App() {
   return (
@@ -34,6 +36,10 @@ function App() {
           <Route path="/pricing" element={<HowWorks />} />
           <Route path="/setting" element={<Settings />} />
           <Route path="/personalInfo" element={<PersonalInformationPage />} />
+          <Route
+            path="/transactionHistory"
+            element={<TransactionHistoryPage />}
+          />
         </Routes>
       </BrowserRouter>
     </>

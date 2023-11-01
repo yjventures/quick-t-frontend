@@ -1,3 +1,11 @@
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
 .sidebar {
   height: 100%;
   width: 200px;
@@ -48,19 +56,21 @@
 
 .line1 {
   position: absolute;
-  width: 6px;
+  width: 5px;
   height: 50%;
   background-color: #d5c9c9;
   left: 20px;
   top: 0;
   border-radius: 12px;
+  opacity: 0.4;
 }
 
 .line2 {
   position: absolute;
-  width: 6px;
+  width: 5px;
   height: 50%;
   background-color: #d5c9c9;
+  opacity: 0.4;
   left: 20px;
   bottom: 0;
   border-radius: 12px;
@@ -74,7 +84,7 @@
   background: #e2eaf5;
   text-align: start;
   color: var(--Primary-crypto, #2f80ed);
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 500;
   letter-spacing: 0.15px;
 }
@@ -88,7 +98,7 @@
   padding: 14px 16px;
   width: 100%;
   text-align: start;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 500;
 }
 
@@ -200,8 +210,8 @@
 }
 
 .nav-logo {
-  width: auto;
-  height: 30px;
+  width: 208px;
+  height: 66px;
 }
 
 .side-bar-item {
@@ -250,7 +260,7 @@
     overflow-x: hidden;
   }
   .side-nav-close {
-    width: 180px;
+    width: 240px;
     position: fixed;
     top: 0;
     left: 0;
@@ -275,7 +285,7 @@
     overflow-x: hidden;
   }
   .side-nav-close {
-    width: 180px;
+    width: 240px;
     position: fixed;
     top: 0;
     left: 0;
@@ -300,7 +310,7 @@
     overflow-x: hidden;
   }
   .side-nav-close {
-    width: 180px;
+    width: 240px;
     position: fixed;
     top: 0;
     left: 0;
@@ -325,7 +335,7 @@
     overflow-x: hidden;
   }
   .side-nav-close {
-    width: 180px;
+    width: 240px;
     position: fixed;
     top: 0;
     left: 0;
@@ -350,7 +360,7 @@
     overflow-x: hidden;
   }
   .side-nav-close {
-    width: 180px;
+    width: 240px;
     position: fixed;
     top: 0;
     left: 0;

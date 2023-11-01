@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./settings.css";
 import logo from "../../assets/images/logo.png";
 const Settings = (props) => {
@@ -69,18 +69,22 @@ const Settings = (props) => {
     }
   };
 
+  const [isChildActive, setIsChildActive] = useState(null);
+
   const handleProfileClick = () => {
     toggleDropdown();
     setActive("Profile");
   };
 
   const handleTransactionClick = () => {
-    setActive("transaction");
+    setIsChildActive("transaction");
+    setActive("Profile");
     setLineActive(1);
   };
 
   const handlePersonalInfoClick = () => {
-    setActive("PersonalInfo");
+    setIsChildActive("PersonalInfo");
+    setActive("Profile");
     setLineActive(2);
   };
 
@@ -135,30 +139,32 @@ const Settings = (props) => {
               {active === "Profile" ? (
                 <button
                   className={`settingProfileButton flex justify-between ${
-                    active === "Profile" ? "active" : ""
+                    active === "Profile" ? "active open" : ""
                   }`}
                 >
                   <div className="flex gap-2">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g opacity="0.9" clip-path="url(#clip0_514_873)">
-                        <path
-                          d="M6.81154 6.11106C6.81154 4.34905 8.23842 2.92217 10.0004 2.92217C11.7624 2.92217 13.1893 4.34905 13.1893 6.11106C13.1893 7.87307 11.7624 9.29995 10.0004 9.29995C8.23842 9.29995 6.81154 7.87307 6.81154 6.11106ZM2.92266 14.8611C2.92266 14.4716 3.11218 14.0787 3.54765 13.6768C3.98788 13.2705 4.63116 12.904 5.39842 12.5966C6.93407 11.9814 8.79002 11.6722 10.0004 11.6722C11.2108 11.6722 13.0668 11.9814 14.6024 12.5966C15.3697 12.904 16.013 13.2705 16.4532 13.6768C16.8887 14.0787 17.0782 14.4716 17.0782 14.8611V17.0777H2.92266V14.8611Z"
-                          stroke="#2F80ED"
-                          stroke-width="1.4"
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_514_873">
-                          <rect width="20" height="20" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
+                    <div className="pt-1">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g opacity="0.9" clip-path="url(#clip0_514_873)">
+                          <path
+                            d="M6.81154 6.11106C6.81154 4.34905 8.23842 2.92217 10.0004 2.92217C11.7624 2.92217 13.1893 4.34905 13.1893 6.11106C13.1893 7.87307 11.7624 9.29995 10.0004 9.29995C8.23842 9.29995 6.81154 7.87307 6.81154 6.11106ZM2.92266 14.8611C2.92266 14.4716 3.11218 14.0787 3.54765 13.6768C3.98788 13.2705 4.63116 12.904 5.39842 12.5966C6.93407 11.9814 8.79002 11.6722 10.0004 11.6722C11.2108 11.6722 13.0668 11.9814 14.6024 12.5966C15.3697 12.904 16.013 13.2705 16.4532 13.6768C16.8887 14.0787 17.0782 14.4716 17.0782 14.8611V17.0777H2.92266V14.8611Z"
+                            stroke="#2F80ED"
+                            stroke-width="1.4"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_514_873">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </div>
                     <p>Profile</p>
                   </div>
 
@@ -184,26 +190,28 @@ const Settings = (props) => {
                   }`}
                 >
                   <div className="flex gap-2">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g opacity="0.9" clip-path="url(#clip0_514_873)">
-                        <path
-                          d="M6.81154 6.11106C6.81154 4.34905 8.23842 2.92217 10.0004 2.92217C11.7624 2.92217 13.1893 4.34905 13.1893 6.11106C13.1893 7.87307 11.7624 9.29995 10.0004 9.29995C8.23842 9.29995 6.81154 7.87307 6.81154 6.11106ZM2.92266 14.8611C2.92266 14.4716 3.11218 14.0787 3.54765 13.6768C3.98788 13.2705 4.63116 12.904 5.39842 12.5966C6.93407 11.9814 8.79002 11.6722 10.0004 11.6722C11.2108 11.6722 13.0668 11.9814 14.6024 12.5966C15.3697 12.904 16.013 13.2705 16.4532 13.6768C16.8887 14.0787 17.0782 14.4716 17.0782 14.8611V17.0777H2.92266V14.8611Z"
-                          stroke="gray"
-                          stroke-width="1.4"
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_514_873">
-                          <rect width="20" height="20" fill="gray" />
-                        </clipPath>
-                      </defs>
-                    </svg>
+                    <div className="pt-1">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g opacity="0.9" clip-path="url(#clip0_514_873)">
+                          <path
+                            d="M6.81154 6.11106C6.81154 4.34905 8.23842 2.92217 10.0004 2.92217C11.7624 2.92217 13.1893 4.34905 13.1893 6.11106C13.1893 7.87307 11.7624 9.29995 10.0004 9.29995C8.23842 9.29995 6.81154 7.87307 6.81154 6.11106ZM2.92266 14.8611C2.92266 14.4716 3.11218 14.0787 3.54765 13.6768C3.98788 13.2705 4.63116 12.904 5.39842 12.5966C6.93407 11.9814 8.79002 11.6722 10.0004 11.6722C11.2108 11.6722 13.0668 11.9814 14.6024 12.5966C15.3697 12.904 16.013 13.2705 16.4532 13.6768C16.8887 14.0787 17.0782 14.4716 17.0782 14.8611V17.0777H2.92266V14.8611Z"
+                            stroke="gray"
+                            stroke-width="1.4"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_514_873">
+                            <rect width="20" height="20" fill="gray" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </div>
                     <p>Profile</p>
                   </div>
 
@@ -226,30 +234,79 @@ const Settings = (props) => {
             </a>
             <div className="dropdown-content sub-options flex flex-col">
               <div>
-                <NavLink to="" onClick={handleTransactionClick}>
-                  <button
-                    className={`${
-                      active === "transaction"
-                        ? "subSettingMenuItem mt-2 mb-2"
-                        : "mt-2 mb-2"
-                    }`}
-                  >
-                    Transaction History
-                  </button>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? "subSettingMenuItem mt-2" : " mt-2"
+                  }
+                  to="/transactionHistory"
+                  end
+                >
+                  {({ isActive }) => (
+                    <React.Fragment>
+                      {isActive ? (
+                        <button
+                          className={
+                            active === "Profile" &&
+                            isChildActive === "transaction"
+                              ? "subSettingMenuItem mt-2 mb-2"
+                              : "mt-2 mb-2"
+                          }
+                        >
+                          Transaction History
+                        </button>
+                      ) : (
+                        <button
+                          className={
+                            active === "Profile" &&
+                            isChildActive === "transaction"
+                              ? "mt-2 mb-2"
+                              : "mt-2 mb-2"
+                          }
+                        >
+                          Transaction History
+                        </button>
+                      )}
+                    </React.Fragment>
+                  )}
                 </NavLink>
               </div>
               <div>
-                <NavLink to="" onClick={handlePersonalInfoClick}>
-                  <button
-                    className={`${
-                      active === "PersonalInfo"
-                        ? "subSettingMenuItem mt-2 mb-2"
-                        : "mt-2 mb-2"
-                    }`}
-                  >
-                    Personal Information
-                  </button>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? "subSettingMenuItem mt-2" : " mt-2"
+                  }
+                  to="/personalInfo"
+                  end
+                >
+                  {({ isActive }) => (
+                    <React.Fragment>
+                      {isActive ? (
+                        <button
+                          className={
+                            active === "Profile" &&
+                            isChildActive === "PersonalInfo"
+                              ? "subSettingMenuItem mt-2 mb-2"
+                              : "mt-2 mb-2"
+                          }
+                        >
+                          Transaction History
+                        </button>
+                      ) : (
+                        <button
+                          className={
+                            active === "Profile" &&
+                            isChildActive === "PersonalInfo"
+                              ? "mt-2 mb-2"
+                              : "mt-2 mb-2"
+                          }
+                        >
+                          Transaction History
+                        </button>
+                      )}
+                    </React.Fragment>
+                  )}
                 </NavLink>
+                
               </div>
               <div className="line-container">
                 <div className="line1"></div>
@@ -258,37 +315,75 @@ const Settings = (props) => {
             </div>
           </div>
           <div className="">
-            <NavLink to="" onClick={handleLiveChatClick}>
-              <button
-                className={`settingProfileButton flex justify-between ${
-                  active === "Live Chat" ? "active" : ""
-                }`}
-              >
-                <div className="flex gap-2">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g opacity="0.7" clip-path="url(#clip0_514_864)">
-                      <path
-                        d="M4.99935 14.3H4.7094L4.50437 14.505L2.36602 16.6433V3.33329C2.36602 2.80323 2.80261 2.36663 3.33268 2.36663H16.666C17.1961 2.36663 17.6327 2.80323 17.6327 3.33329V13.3333C17.6327 13.8634 17.1961 14.3 16.666 14.3H4.99935Z"
-                        stroke="#333333"
-                        stroke-width="1.4"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_514_864">
-                        <rect width="20" height="20" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  <p>Live Chat</p>
-                </div>
-              </button>
-            </NavLink>
+            {active === "Live Chat" ? (
+              <NavLink to="" onClick={handleLiveChatClick}>
+                <button
+                  className={`settingProfileButton flex justify-between ${
+                    active === "Live Chat" ? "active" : ""
+                  }`}
+                >
+                  <div className="flex gap-2">
+                    <div className="pt-1">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g opacity="0.7" clip-path="url(#clip0_514_864)">
+                          <path
+                            d="M4.99935 14.3H4.7094L4.50437 14.505L2.36602 16.6433V3.33329C2.36602 2.80323 2.80261 2.36663 3.33268 2.36663H16.666C17.1961 2.36663 17.6327 2.80323 17.6327 3.33329V13.3333C17.6327 13.8634 17.1961 14.3 16.666 14.3H4.99935Z"
+                            stroke="#2F80ED"
+                            stroke-width="1.4"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_514_864">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </div>
+                    <p>Live Chat</p>
+                  </div>
+                </button>
+              </NavLink>
+            ) : (
+              <NavLink to="" onClick={handleLiveChatClick}>
+                <button
+                  className={`settingProfileButton flex justify-between ${
+                    active === "Live Chat" ? "active" : ""
+                  }`}
+                >
+                  <div className="flex gap-2">
+                    <div className="pt-1">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g opacity="0.7" clip-path="url(#clip0_514_864)">
+                          <path
+                            d="M4.99935 14.3H4.7094L4.50437 14.505L2.36602 16.6433V3.33329C2.36602 2.80323 2.80261 2.36663 3.33268 2.36663H16.666C17.1961 2.36663 17.6327 2.80323 17.6327 3.33329V13.3333C17.6327 13.8634 17.1961 14.3 16.666 14.3H4.99935Z"
+                            stroke="#333333"
+                            stroke-width="1.4"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_514_864">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </div>
+                    <p>Live Chat</p>
+                  </div>
+                </button>
+              </NavLink>
+            )}
           </div>
         </div>
       </div>
