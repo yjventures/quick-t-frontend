@@ -1,26 +1,59 @@
 import React, { useRef } from "react";
 import "./PaymentSuccess.css";
+import Copy from "../../assets/images/Copy.png";
 import html2pdf from "html2pdf.js";
 function PaymentSuccess() {
   const cardRef = useRef();
+  const imgRef = useRef();
 
   const downloadAsPdf = () => {
     const element = cardRef.current;
     const button = element.querySelector(".paymentSuccessButton");
-    button.style.display = "none"; // Hide the button before generating the PDF
+    const img = imgRef.current;
+
+    if (button) {
+      button.style.display = "none"; // Hide the button before generating the PDF
+    }
+
+    if (img) {
+      img.style.display = "none"; // Hide the image before generating the PDF
+    }
+
+    const opt = {
+      margin: 1,
+      filename: "payment_success.pdf",
+      image: { type: "jpeg", quality: 0.98 }, // Adjust quality here
+      html2canvas: { scale: 2 }, // Adjust scale here
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
 
     html2pdf()
       .from(element)
-      .save("payment_success.pdf")
+      .set(opt)
+      .save()
       .then(() => {
-        button.style.display = "block";
+        button.style.display = "block"; // Show the button again after generating the PDF
+
+        img.style.display = "block"; // Show the image again after generating the PDF
+
         window.location.reload();
       });
   };
+
+  ////////////////////////////////////////////////////////////////
+  //copy transfer number
+  ////////////////////////////////////////////////////////////////
+  const handleCopyText = () => {
+    const textToCopy = document
+      .querySelector(".transfernumber")
+      .textContent.trim();
+    navigator.clipboard.writeText(textToCopy);
+  };
+
   return (
     <div>
       <div
-        className="card ps-7 pe-7"
+        className="card pl-7 pr-10"
         ref={cardRef}
         style={{ backgroundColor: "#fff" }}
       >
@@ -51,31 +84,70 @@ function PaymentSuccess() {
           <p className="paymentSuccessHeaderSectionSecondText">US$ 4000</p>
         </div>
 
+        <p className="paymentSuccessLine mx-auto"></p>
+
         <div className="flex justify-between items-center ">
           <div>
-            <p className="paymentSuccessStarting">Transfer Number</p>
-            <p className="paymentSuccessStarting">Payment Time</p>
-            <p className="paymentSuccessStarting">Payment Method</p>
-            <p className="paymentSuccessStarting">Sender Name</p>
-            <p className="paymentSuccessStarting">Receiver Name</p>
+            <p className="paymentSuccessStarting text-base lg:text-xl">
+              Transfer Number
+            </p>
+            <p className="paymentSuccessStarting text-base lg:text-xl">
+              Payment Time
+            </p>
+            <p className="paymentSuccessStarting text-base lg:text-xl">
+              Payment Method
+            </p>
+            <p className="paymentSuccessStarting text-base lg:text-xl">
+              Sender Name
+            </p>
+            <p className="paymentSuccessStarting text-base lg:text-xl">
+              Receiver Name
+            </p>
           </div>
           <div className="text-end">
-            <p className="paymentSuccessEnding">QT-100</p>
-            <p className="paymentSuccessEnding">25-02-2023, 13:22:16</p>
-            <p className="paymentSuccessEnding">Card</p>
-            <p className="paymentSuccessEnding">Antonio Roberto</p>
-            <p className="paymentSuccessEnding">John Roberto</p>
+            <div style={{ position: "relative" }}>
+              <p className="paymentSuccessEnding transfernumber text-base lg:text-xl">
+                QT-102
+              </p>
+              <div
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  right: "-25px",
+                  height: "24px",
+                  width: "24px",
+                  cursor: "pointer",
+                }}
+                onClick={handleCopyText}
+              >
+                <img ref={imgRef} src={Copy} alt="" />
+              </div>
+            </div>
+            <p className="paymentSuccessEnding text-base lg:text-xl">
+              25-02-2023, 13:22:16
+            </p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">Card</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">
+              Antonio Roberto
+            </p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">
+              John Roberto
+            </p>
           </div>
         </div>
 
         <div className="flex justify-between items-center mt-7">
           <div>
-            <p className="paymentSuccessStarting">Amount</p>
-            <p className="paymentSuccessStarting">Transfer Fee</p>
+            <p className="paymentSuccessStarting text-base lg:text-xl">
+              Amount
+            </p>
+            <p className="paymentSuccessStarting text-base lg:text-xl">
+              Transfer Fee
+            </p>
           </div>
           <div className="text-end">
-            <p className="paymentSuccessEnding">$ 4000</p>
-            <p className="paymentSuccessEnding">$ 700</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ 4000</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ 700</p>
           </div>
         </div>
 
