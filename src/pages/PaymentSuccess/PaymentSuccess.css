@@ -21,16 +21,16 @@
   font-weight: 500;
   margin-bottom: 22px;
 }
-
-.paymentSuccessButton:hover {
-  border: 1px solid black;
+.paymentSuccessButton {
   padding: 10px 16px;
   border-radius: 12px;
+}
+.paymentSuccessButton:hover {
+  border: 1px solid black;
 }
 
 .paymentSuccessLine {
   width: 70%;
   border: 0.1px solid #ededed;
   margin-bottom: 54px;
-  
 }
