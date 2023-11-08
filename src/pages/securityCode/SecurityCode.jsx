@@ -4,7 +4,7 @@ import registerImage from "../../assets/images/registerImage.png";
 import ReactCodeInput from "react-code-input";
 import "./securityCode.css";
 import securityTick from "../../assets/images/securityTick.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 function SecurityCode() {
   const defaultInputStyle = {
     fontFamily: "monospace",
@@ -25,10 +25,11 @@ function SecurityCode() {
 
   const [inputValue, setInputValue] = useState("");
   const [shouldShowImage, setShouldShowImage] = useState(true);
-
-  const birthDate = "1999-09-28";
+  const navigate = useNavigate();
+  const birthDate = localStorage.getItem("dob");
   const birthYear = birthDate.split("-")[0];
-
+  const birthMonth = birthDate.split("-")[1];
+  const birthDay = birthDate.split("-")[2];
   const handleInputChange = (value) => {
     if (
       [
@@ -42,7 +43,9 @@ function SecurityCode() {
         "8888",
         "9999",
       ].includes(value) ||
-      birthYear === value
+      birthYear == value ||
+      birthDay + birthMonth == value ||
+      birthMonth + birthDay == value
     ) {
       setShouldShowImage(false);
     } else {
@@ -55,7 +58,25 @@ function SecurityCode() {
   //handle on click
   ////////////////////////////
   const handleOnClick = () => {
-    localStorage.setItem("securityCode", inputValue);
+    // if (/^(\d)\1{3}$/.test(inputValue)) {
+    //   console.log("All four digits cannot be the same");
+    //   alert("All four digits cannot be the same");
+    //   return;
+    // }
+    // // security code cannot be the same as the user's birthday in different formats
+    // if (birthDate) {
+    //   // const ddmm = birthDate.slice(0, 4);
+    //   // const mmdd = birthDate.slice(2) + birthDate.slice(0, 2);
+    //   console.log(birthDay + birthMonth)
+    //   if (inputValue === birthDay + birthMonth || inputValue === birthMonth + birthDay || inputValue === birthYear) {
+    //     console.log("Security code cannot be the same as user's birthday");
+    //     alert("Security code cannot be the same as user's birthday, please try a different code");
+    //     return;
+    //   }
+    // }
+    localStorage.setItem("security_code", inputValue);
+    navigate("/confirmSecurityCode");
+
   };
   return (
     <div className="flex flex-col md:flex-row">
@@ -93,6 +114,7 @@ function SecurityCode() {
           <div className="flex flex-row items-center justify-between gap-10">
             <div>
               <ReactCodeInput
+                type="number"
                 inputStyle={defaultInputStyle}
                 fields={4}
                 onChange={handleInputChange}
@@ -145,21 +167,17 @@ function SecurityCode() {
           <br />
 
           {shouldShowImage ? (
-            <NavLink to="/confirmSecurityCode">
-              <button className="securityCodeButton" onClick={handleOnClick}>
-                Continue
-              </button>
-            </NavLink>
+            <button className="securityCodeButton" onClick={handleOnClick}>
+              Continue
+            </button>
           ) : (
-            <NavLink to="/confirmSecurityCode">
-              <button
-                disabled
-                className="securityCodeButton"
-                onClick={handleOnClick}
-              >
-                Continue
-              </button>
-            </NavLink>
+            <button
+              disabled
+              className="securityCodeButton"
+              onClick={handleOnClick}
+            >
+              Continue
+            </button>
           )}
           <p className="securityCodeSmallText">
             *Pin will be required for all transfers and recievers

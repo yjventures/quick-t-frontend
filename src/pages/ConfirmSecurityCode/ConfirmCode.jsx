@@ -4,7 +4,8 @@ import registerImage from "../../assets/images/registerImage.png";
 import ReactCodeInput from "react-code-input";
 
 import securityTick from "../../assets/images/securityTick.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 function ConfirmCode() {
   let defaultInputStyle = {
     fontFamily: "monospace",
@@ -23,23 +24,25 @@ function ConfirmCode() {
     textAlign: "center",
   };
 
-  const securityCode = localStorage.getItem("securityCode");
-
+  const securityCode = localStorage.getItem("security_code");
+  const navigate = useNavigate();
   const [showImage, setShowImage] = useState(false);
   let securityCodeRef = useRef();
-
-  useEffect(() => {
-    const confirmSecurityCode = securityCodeRef.value;
-    if (securityCode === confirmSecurityCode) {
-      setShowImage(true);
-    } else {
-      setShowImage(false);
-    }
-  }, [securityCode]);
+  // console.log(securityCodeRef.value)
+  // get 
+  // useEffect(() => {
+  //   const confirmSecurityCode = securityCodeRef.value;
+  //   if (securityCode === confirmSecurityCode) {
+  //     setShowImage(true);
+  //   } else {
+  //     setShowImage(false);
+  //   }
+  // }, [securityCode]);
 
   const handleOnChange = (value) => {
     const confirmSecurityCode = value;
-    if (securityCode === confirmSecurityCode) {
+    // console.log(confirmSecurityCode)
+    if (securityCode == confirmSecurityCode) {
       setShowImage(true);
     } else {
       setShowImage(false);
@@ -50,8 +53,60 @@ function ConfirmCode() {
   // Continue Button
   /////////////////////////
   const handleContinueButton = () => {
-    localStorage.removeItem("securityCode");
+    const mySecurityCode = securityCodeRef.value;
+    console.log(securityCode, mySecurityCode);
+    // if (securityCode == mySecurityCode) {
+    //   // localStorage.removeItem("security_code");
+    //   navigate('/')
+    // } else {
+    //   alert("Wrong Security Code")
+    //   // navigate('/securityCode')
+    // }
+    confirmSecurityCode();
   };
+  // if matches both code then do this
+  const confirmSecurityCode = async () => {
+    const res = await axios.post('http://localhost:1337/api/security-codes', {
+      "data": {
+        "code": securityCode
+      }
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+      }
+    });
+
+    if (res.data.error) {
+      alert('Something went wrong, please try again')
+      return
+    } else {
+      const securityCodeID = res?.data?.data?.id;
+      // relate security code to user
+      const userResponse = await axios.put(`http://localhost:1337/api/users/${localStorage.getItem("user_id")}`, {
+        "security_code": securityCodeID,
+        "security_complete": true
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+        }
+      });
+      if (userResponse.data.error) {
+        alert('Something went wrong, please try again')
+        return
+      }
+      localStorage.removeItem("security_code");
+      alert('Security Code added successfully')
+      // check amount data is available in local storage or not
+      if(localStorage.getItem('amountData')){
+        navigate('/sendingMoney');
+      }else{
+        navigate('/');
+      }
+    }
+
+  }
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -89,7 +144,7 @@ function ConfirmCode() {
           <div className="flex flex-row items-center justify-between">
             <div>
               <ReactCodeInput
-                
+                type="number"
                 inputStyle={defaultInputStyle}
                 fields={4}
                 onChange={handleOnChange}
@@ -141,23 +196,12 @@ function ConfirmCode() {
             </div>
           </div>
           <br />
-
-          {showImage ? (
-            <NavLink to="/">
-              <button
-                className="securityCodeButton"
-                onClick={handleContinueButton}
-              >
-                Continue
-              </button>
-            </NavLink>
-          ) : (
-            <NavLink to="/">
-              <button className="securityCodeButton" disabled>
-                Continue
-              </button>
-            </NavLink>
-          )}
+          <button
+            className="securityCodeButton"
+            onClick={handleContinueButton}
+          >
+            Continue
+          </button>
           <p className="securityCodeSmallText">
             *Pin will be required for all transfers and recievers
           </p>

@@ -4,8 +4,13 @@ import whiteLogo from "../../assets/images/whiteLogo.png";
 import registerImage from "../../assets/images/registerImage.png";
 import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
 import googleLogo from "../../assets/images/googleLogo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 function Register() {
+  const [error, setError] = useState(null);
+  const [warning, setWarning] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   /////////////////////////////////////
   //photo upload handling
   /////////////////////////////////////
@@ -41,7 +46,7 @@ function Register() {
   let confirmPasswordRef = useRef(null);
   let dobRef = useRef(null);
 
-  const registerHandler = () => {
+  const registerHandler = async () => {
     let firstName = firstNameRef.value;
     let lastName = lastNameRef.value;
     let email = emailRef.value;
@@ -49,17 +54,64 @@ function Register() {
     let password = passwordRef.value;
     let confirmPassword = confirmPasswordRef.value;
     let dob = dobRef.value;
-    const userData = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phoneNumber: phoneNumber,
-      password: password,
-      confirmPassword: confirmPassword,
-      dob: dob,
-    };
 
-    console.log(userData);
+    if (!firstName || !lastName || !email || !phoneNumber || !password || !confirmPassword || !dob) {
+      alert('Please fill all the fields');
+      setError('Please fill all the fields');
+      return;
+    } else if (!checkedTerms) {
+      alert('Please accept the terms and conditions to proceed further');
+      setError('Please accept the terms and conditions to proceed further');
+      return;
+    } else if (password.length < 8) {
+      alert('Password must be atleast 8 characters long');
+      setError('Password must be atleast 8 characters long');
+      return;
+    } else if (password !== confirmPassword) {
+      alert('Password does not match');
+      setWarning('Password does not match');
+      return;
+    } else {
+      setLoading(true);
+      const userData = {
+        username: firstName + ' ' + lastName,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password,
+        phone: phoneNumber,
+        dob: dob,
+      };
+
+      // stringify the data
+      const data = JSON.stringify(userData);
+
+      fetch("http://localhost:1337/api/auth/local/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      })
+        .then(response => response.json())
+        .then(result => {
+          // console.log(result)
+          if (result.jwt) {
+            localStorage.setItem('jwt', result.jwt);
+            localStorage.setItem('dob', result.user.dob);
+            localStorage.setItem('user_id', result.user.id);
+            // window.location.href = "/dashboard";
+            navigate('/kyc');
+          } else {
+            alert(result.error.message);
+            setError(result.error.message);
+          }
+        })
+        .catch(error => {
+          console.log('error', error)
+        })
+        .finally(() => setLoading(false));
+    }
   };
 
   /////////////////////////////////////
@@ -73,6 +125,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [inputClicked, setinputClicked] = useState(false);
   const [rememberMeChecked, setRememberMeChecked] = useState(false);
+  const [checkedTerms, setCheckedTerms] = useState(false);
 
   useEffect(() => {
     const getCookie = (cookieName) => {
@@ -113,6 +166,10 @@ function Register() {
     document.cookie = `password=; path=${currentPath}`;
   }
   ////////////////////////////////////////////////////////////////
+
+  // ahad please show error and warning message using react toastify 
+  // for now i am using alert 
+
   return (
     <div className="flex flex-col md:flex-row">
       {/* Left Part */}
@@ -249,10 +306,17 @@ function Register() {
               />
               <label className="registerPageCheckBoxLabel">Remember me</label>
             </div>
+
             <div className="flex items-center mb-5 gap-2">
-              <input type="checkbox" className="registerPageCheckBox" />
+              <input type="checkbox"
+                className="registerPageCheckBox"
+                checked={checkedTerms}
+                onChange={() => {
+                  setCheckedTerms(!checkedTerms);
+                }}
+              />
               <label className="registerPageCheckBoxLabel">
-                I agree to the <span>Terms</span> and{" "}
+                I agree to the <span>Terms</span> and
                 <span>Privacy Policy</span>
               </label>
             </div>
@@ -263,7 +327,10 @@ function Register() {
               className="registerCreateAccount sm:w-full"
               onClick={registerHandler}
             >
-              Create Account
+              {
+                loading ? 'Creating Account...' : 'Create Account'
+              }
+
             </button>
 
             <button className="flex items-center gap-2 registerGoogle sm:w-full mt-4 sm:mt-0">
