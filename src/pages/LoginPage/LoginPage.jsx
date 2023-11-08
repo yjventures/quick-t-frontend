@@ -3,20 +3,76 @@ import whiteLogo from "../../assets/images/whiteLogo.png";
 import registerImage from "../../assets/images/registerImage.png";
 import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
 import googleLogo from "../../assets/images/googleLogo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, redirect, useNavigate } from "react-router-dom";
+import axios from "axios";
 function LoginPage() {
   let emailRef = useRef(null);
   let passwordRef = useRef(null);
-
-  const handleLoginButton = () => {
+  const navigate = useNavigate();
+  const handleLoginButton = async () => {
     let email = emailRef.value;
     let password = passwordRef.value;
 
     const userData = {
-      email: email,
+      identifier: email,
       password: password,
     };
-    console.log(userData);
+
+    // Make the axios request
+    const res = axios.post("http://localhost:1337/api/auth/local", userData)
+      .then(response => {
+        console.log(response.data)
+        if (response.data) {
+          localStorage.setItem("jwt", response.data.jwt);
+          localStorage.setItem("user_id", response.data.user.id);
+          localStorage.setItem("first_name", response.data.user?.first_name);
+          localStorage.setItem("last_name", response.data.user?.last_name);
+          localStorage.setItem("phone", response.data.user?.phone);
+          localStorage.setItem("dob", response.data.user?.dob);
+          localStorage.setItem("jwt", response.data.jwt);
+          if (response.data.user?.kyc_complete == false) {
+            navigate("/kyc");
+          }else if (localStorage.getItem("amountData")) {
+            navigate("/sendingMoney");
+          } else {
+            navigate("/");
+          }
+        } else {
+          alert("Invalid Credentials");
+        }
+      })
+      .catch(error => console.log('Error:', error));
+    // const res = fetch("http://localhost:1337/auth/local", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     identifier: email,
+    //     password: password,
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     if (data.user) {
+    //       localStorage.setItem("user_id", data.user.id);
+    //       localStorage.setItem("first_name", data.user?.first_name);
+    //       localStorage.setItem("last_name", data.user?.last_name);
+    //       localStorage.setItem("phone", data.user?.phone);
+    //       localStorage.setItem("jwt", data.jwt);
+    //       if (localStorage.getItem("amountData")) {
+    //         redirect("/sendingMoney");
+    //       } else {
+    //         redirect("/");
+    //       }
+    //     } else {
+    //       alert("Invalid Credentials");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
   return (
     <div className="flex flex-col md:flex-row">

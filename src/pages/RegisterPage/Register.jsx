@@ -98,8 +98,11 @@ function Register() {
           // console.log(result)
           if (result.jwt) {
             localStorage.setItem('jwt', result.jwt);
-            localStorage.setItem('dob', result.user.dob);
             localStorage.setItem('user_id', result.user.id);
+            localStorage.setItem('dob', result.user?.dob);
+            localStorage.setItem('first_name',result.user?.first_name);
+            localStorage.setItem('last_name',result.user?.last_name);
+            localStorage.setItem('phone',result.user?.phone);
             // window.location.href = "/dashboard";
             navigate('/kyc');
           } else {

@@ -4,6 +4,7 @@ import Rectangle from "../../assets/images/Rectangle.png";
 import Headers from "../../components/Headers";
 import secondStepper from "../../assets/images/secondStepper.png";
 import { NavLink } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 function SendingMoneyInfo() {
   const divStyle = {
     backgroundImage: `url(${Rectangle})`,
@@ -17,9 +18,29 @@ function SendingMoneyInfo() {
   const receiverDataInfo = JSON.parse(localStorage.getItem("receiverData"));
   const amountDataInfo = JSON.parse(localStorage.getItem("amountData"));
 
-  console.log(receiverDataInfo);
-  console.log(amountDataInfo);
-  const fullName = receiverDataInfo.firstName + " " + receiverDataInfo.lastName;
+  const fetchIUserData = async () => {
+    const user_id = localStorage.getItem("user_id");
+    const response = await fetch(`http://localhost:1337/api/kycs?filters[user][id][$eq]=${user_id}&fields[0]=city&fields[1]=country&fields[2]=street_address`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    });
+    const res = await response.json();
+    console.log(res.data);
+    return res.data;
+  }
+  const { isPending, error, data: userData } = useQuery({
+    queryKey: 'userData',
+    queryFn: fetchIUserData,
+  })
+  console.log(userData)
+  const userFullName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
+  const userPhone = localStorage.getItem("phone");
+  // const userAddress = ;
+  const fullName = receiverDataInfo.first_name + " " + receiverDataInfo.last_name;
+  const phone = receiverDataInfo.phone;
   const address = receiverDataInfo.city + ", " + receiverDataInfo.country;
   console.log(address);
 
@@ -106,14 +127,14 @@ function SendingMoneyInfo() {
                   <p className="font-normal text-sm pb-1">Transfer fee</p>
                   <p className="font-normal text-sm pb-1">Toal Receiver gets</p>
                 </div>
-                <div>
+                <div style={{textAlign: 'right'}}>
                   <p className="font-bold font-bold pb-1">
-                    {amountDataInfo.defaultAmount} AED
+                    {amountDataInfo.transfer_amount} USD
                   </p>
                   <p className="font-normal text-sm pb-1">
-                    {amountDataInfo.transferFee} AUD
+                    {amountDataInfo.transfer_fees} USD
                   </p>
-                  <p className="font-bold font-bold pb-1">230 AUD</p>
+                  <p className="font-bold font-bold pb-1">{amountDataInfo.transfer_total} AUD</p>
                 </div>
               </div>
             </div>
@@ -126,9 +147,9 @@ function SendingMoneyInfo() {
                   <p className="font-normal text-sm pb-1">Phone Number</p>
                   <p className="font-normal text-sm pb-1">Address</p>
                 </div>
-                <div>
+                <div style={{textAlign: 'right'}}>
                   <p className="font-normal text-sm pb-1">{fullName}</p>
-                  <p className="font-normal text-sm pb-1">01728704205</p>
+                  <p className="font-normal text-sm pb-1">{phone}</p>
                   <p className="font-normal text-sm pb-1">{address}</p>
                 </div>
               </div>
@@ -142,10 +163,10 @@ function SendingMoneyInfo() {
                   <p className="font-normal text-sm pb-1">Phone Number</p>
                   <p className="font-normal text-sm pb-1">Address</p>
                 </div>
-                <div>
-                  <p className="font-normal text-sm pb-1">Rafiqur Rahman</p>
-                  <p className="font-normal text-sm pb-1">01728704205</p>
-                  <p className="font-normal text-sm pb-1">Sydney, Australia</p>
+                <div style={{textAlign: 'right'}}>
+                  <p className="font-normal text-sm pb-1">{userFullName}</p>
+                  <p className="font-normal text-sm pb-1">{userPhone}</p>
+                  <p className="font-normal text-sm pb-1">{userData && userData[0].attributes.street_address + ", " + userData[0].attributes.city + ", " + userData[0].attributes.country}</p>
                 </div>
               </div>
             </div>
