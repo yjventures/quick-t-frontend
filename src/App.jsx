@@ -12,6 +12,10 @@ import TransferOTP from "./pages/TransferOTP/TransferOTP";
 import PaymentProcessing from "./pages/PaymentProcessing/PaymentProcessing";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import PersonalInformationPage from "./pages/PersonalInformationPage/PersonalInformationPage";
+
+import Settings from "./components/settings/Settings";
+import TransactionHistoryPage from "./pages/TransactionHistory/TransactionHistoryPage";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -35,6 +39,12 @@ function App() {
           <Route path="/paymentSuccess" element={<PaymentSuccess />} />
           <Route path="/hello" element={<HowWorks />} />
           <Route path="/pricing" element={<HowWorks />} />
+          <Route path="/setting" element={<Settings />} />
+          <Route path="/personalInfo" element={<PersonalInformationPage />} />
+          <Route
+            path="/transactionHistory"
+            element={<TransactionHistoryPage />}
+          />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
