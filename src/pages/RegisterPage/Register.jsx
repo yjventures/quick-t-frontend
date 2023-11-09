@@ -6,6 +6,7 @@ import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
 import googleLogo from "../../assets/images/googleLogo.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { showFailedAlert } from "../../utils/Tooast.Utils";
 function Register() {
   const [error, setError] = useState(null);
   const [warning, setWarning] = useState(null);
@@ -16,10 +17,10 @@ function Register() {
   /////////////////////////////////////
 
   const [image, setImage] = useState(imagePlaceholder);
+  const [strapiImage, setStrapiImage] = useState(null);
   console.log(image);
 
   const handleImageClick = () => {
-    // Code to handle image click and trigger file upload
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
@@ -28,6 +29,24 @@ function Register() {
       const reader = new FileReader();
       reader.onload = (event) => {
         setImage(event.target.result);
+
+        const formData = new FormData();
+        formData.append("files", file);
+
+        axios
+          .post("http://localhost:1337/api/upload", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((response) => {
+            console.log("File uploaded successfully: ", response.data);
+            console.log(response.data[0].url);
+            setStrapiImage(response.data[0].url);
+          })
+          .catch((error) => {
+            console.error("Error uploading file: ", error.message);
+          });
       };
       reader.readAsDataURL(file);
     };
@@ -55,32 +74,40 @@ function Register() {
     let confirmPassword = confirmPasswordRef.value;
     let dob = dobRef.value;
 
-    if (!firstName || !lastName || !email || !phoneNumber || !password || !confirmPassword || !dob) {
-      alert('Please fill all the fields');
-      setError('Please fill all the fields');
+    if (
+      !firstName ||
+      !lastName ||
+      !phoneNumber ||
+      !password ||
+      !confirmPassword ||
+      !dob
+    ) {
+      showFailedAlert("Please fill all the fields");
       return;
     } else if (!checkedTerms) {
-      alert('Please accept the terms and conditions to proceed further');
-      setError('Please accept the terms and conditions to proceed further');
+      showFailedAlert(
+        "Please accept the terms and conditions to proceed further"
+      );
+
       return;
     } else if (password.length < 8) {
-      alert('Password must be atleast 8 characters long');
-      setError('Password must be atleast 8 characters long');
+      showFailedAlert("Password must be atleast 8 characters long");
+
       return;
     } else if (password !== confirmPassword) {
-      alert('Password does not match');
-      setWarning('Password does not match');
+      showFailedAlert("Password does not match");
+
       return;
     } else {
       setLoading(true);
       const userData = {
-        username: firstName + ' ' + lastName,
+        username: firstName + " " + lastName,
         first_name: firstName,
         last_name: lastName,
-        email: email,
         password: password,
         phone: phoneNumber,
         dob: dob,
+        image: strapiImage,
       };
 
       // stringify the data
@@ -93,25 +120,25 @@ function Register() {
         },
         body: data,
       })
-        .then(response => response.json())
-        .then(result => {
+        .then((response) => response.json())
+        .then((result) => {
           // console.log(result)
           if (result.jwt) {
-            localStorage.setItem('jwt', result.jwt);
-            localStorage.setItem('user_id', result.user.id);
-            localStorage.setItem('dob', result.user?.dob);
-            localStorage.setItem('first_name',result.user?.first_name);
-            localStorage.setItem('last_name',result.user?.last_name);
-            localStorage.setItem('phone',result.user?.phone);
+            localStorage.setItem("jwt", result.jwt);
+            localStorage.setItem("user_id", result.user.id);
+            localStorage.setItem("dob", result.user?.dob);
+            localStorage.setItem("first_name", result.user?.first_name);
+            localStorage.setItem("last_name", result.user?.last_name);
+            localStorage.setItem("phone", result.user?.phone);
             // window.location.href = "/dashboard";
-            navigate('/kyc');
+            navigate("/kyc");
           } else {
             alert(result.error.message);
             setError(result.error.message);
           }
         })
-        .catch(error => {
-          console.log('error', error)
+        .catch((error) => {
+          console.log("error", error);
         })
         .finally(() => setLoading(false));
     }
@@ -170,8 +197,8 @@ function Register() {
   }
   ////////////////////////////////////////////////////////////////
 
-  // ahad please show error and warning message using react toastify 
-  // for now i am using alert 
+  // ahad please show error and warning message using react toastify
+  // for now i am using alert
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -202,97 +229,100 @@ function Register() {
       >
         <div className="mt-32">
           <p className="registerHeadingText">Create account</p>
-          <p className="registerNormalText">Enter Your basic information</p>
-          <div className="flex flex-col md:flex-row md:justify-between md:gap-x-14">
-            <div className="md:w-1/2">
-              <div className="mb-4">
-                <label className="registerPagelabel">First name</label>
-                <br />
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  className="registerPageInput"
-                  ref={(input) => (firstNameRef = input)}
-                />
+
+          <p className="registerNormalText mb-6 mt-6">
+            Upload your profile picture
+          </p>
+          <div
+            onClick={handleImageClick}
+            style={{
+              height: "161px",
+              width: "252px",
+            }}
+          >
+            <img
+              src={image}
+              alt=""
+              style={{
+                height: "100%",
+                width: "100%",
+                borderRadius: "10px",
+              }}
+            />
+          </div>
+          <p className="registerNormalText mt-6">
+            Enter Your basic information
+          </p>
+          <div>
+            <div className="">
+              <div className="flex flex-col lg:flex-row gap-x-10">
+                <div className="mb-4">
+                  <label className="registerPagelabel">First name</label>
+                  <br />
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    className="registerPageInput"
+                    ref={(input) => (firstNameRef = input)}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="registerPagelabel">Last name</label>
+                  <br />
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    className="registerPageInput"
+                    ref={(input) => (lastNameRef = input)}
+                  />
+                </div>
               </div>
-              <div className="mb-4">
-                <label className="registerPagelabel">Email</label>
-                <br />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="registerPageInput"
-                  ref={(input) => (emailRef = input)}
-                />
+
+              <div className="flex flex-col lg:flex-row gap-x-10">
+                <div className="mb-4">
+                  <label className="registerPagelabel">Phone Number</label>
+                  <br />
+                  <input
+                    type="text"
+                    placeholder="Phone Number"
+                    className="registerPageInput"
+                    ref={(input) => (phoneNumberRef = input)}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="registerPagelabel">Date of Birth</label>
+                  <br />
+                  <input
+                    type="date"
+                    placeholder="Date of Birth"
+                    className="registerdateofBirthInput"
+                    style={{ width: "100%" }} // Adding custom width to make it consistent
+                    ref={(input) => (dobRef = input)}
+                  />
+                </div>
               </div>
-              <div className="registerPagelabel">
-                <label htmlFor="phone1">Password</label>
-                <br />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="registerPageInput"
-                  ref={(input) => (passwordRef = input)}
-                />
-              </div>
-              <div>
-                <label className="registerPagelabel">Date of Birth</label>
-                <br />
-                <input
-                  type="date"
-                  placeholder="Date of Birth"
-                  className="registerPageInput"
-                  ref={(input) => (dobRef = input)}
-                />
-              </div>
-            </div>
-            <div className="md:w-1/2 mt-4 md:mt-0">
-              <div className="mb-4">
-                <label className="registerPagelabel">Last name</label>
-                <br />
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  className="registerPageInput"
-                  ref={(input) => (lastNameRef = input)}
-                />
-              </div>
-              <div className="mb-4">
-                <label className="registerPagelabel">Phone Number</label>
-                <br />
-                <input
-                  type="text"
-                  placeholder="Phone Number"
-                  className="registerPageInput"
-                  ref={(input) => (phoneNumberRef = input)}
-                />
-              </div>
-              <div className="mb-4">
-                <label className="registerPagelabel">Confirm Password</label>
-                <br />
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="registerPageInput"
-                  ref={(input) => (confirmPasswordRef = input)}
-                />
-              </div>
-              <div
-                onClick={handleImageClick}
-                style={{
-                  height: "161px",
-                  width: "252px",
-                }}
-              >
-                <img
-                  src={image}
-                  alt=""
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    borderRadius: "10px",
-                  }}
-                />
+
+              <div className="flex flex-col lg:flex-row gap-x-10">
+                <div className="registerPagelabel">
+                  <label htmlFor="phone1">Password</label>
+                  <br />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    className="registerPageInput"
+                    ref={(input) => (passwordRef = input)}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="registerPagelabel">Confirm Password</label>
+                  <br />
+                  <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    className="registerPageInput"
+                    ref={(input) => (confirmPasswordRef = input)}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -311,7 +341,8 @@ function Register() {
             </div>
 
             <div className="flex items-center mb-5 gap-2">
-              <input type="checkbox"
+              <input
+                type="checkbox"
                 className="registerPageCheckBox"
                 checked={checkedTerms}
                 onChange={() => {
@@ -330,10 +361,7 @@ function Register() {
               className="registerCreateAccount sm:w-full"
               onClick={registerHandler}
             >
-              {
-                loading ? 'Creating Account...' : 'Create Account'
-              }
-
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
 
             <button className="flex items-center gap-2 registerGoogle sm:w-full mt-4 sm:mt-0">

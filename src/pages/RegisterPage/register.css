@@ -95,3 +95,23 @@
   font-size: 16px;
   font-weight: 400;
 }
+
+.registerdateofBirthInput {
+  padding: 12px 16px;
+  border-radius: 12px;
+  width: 251.667px !important;
+  background-color: #f1f5f8;
+  color: black;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.registerdateofBirthInput:focus {
+  background-color: white;
+}
+
+@media only screen and (max-width: 600px) {
+  .registerdateofBirthInput {
+    width: 321.97px !important;
+  }
+}
