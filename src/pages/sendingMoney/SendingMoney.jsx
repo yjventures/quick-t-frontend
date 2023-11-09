@@ -2,11 +2,13 @@ import React, { useRef, useState } from "react";
 import Rectangle from "../../assets/images/Rectangle.png";
 import "./sendingMoney.css";
 import Headers from "../../components/Headers";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
+import { useQuery } from "@tanstack/react-query";
 
 function SendingMoney() {
+  const navigate = useNavigate();
   const divStyle = {
     backgroundImage: `url(${Rectangle})`,
     backgroundRepeat: "no-repeat",
@@ -17,12 +19,47 @@ function SendingMoney() {
   };
   const [phone, setPhone] = useState("");
 
+  const fetchReceivers = async () => {
+    const user_id = localStorage.getItem('user_id');
+    const res = await fetch(`http://localhost:1337/api/saved-receivers?filters[users_permissions_user][id][$eq]=${user_id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    })
+    const data = await res.json()
+    return data?.data;
+  }
+
+  const { isPending: pendingReceiver, error: receiverstError, data: receivers } = useQuery({
+    queryKey: ['receivers'],
+    queryFn: fetchReceivers,
+  })
+
+  const fetchAreas = async () => {
+    const res = await fetch(`http://localhost:1337/api/areas`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    })
+    const data = await res.json()
+    return data?.data;
+  }
+
+  const { isPending: pendingAreas, error: areasError, data: areas } = useQuery({
+    queryKey: ['areas'],
+    queryFn: fetchAreas,
+  })
+
+  // console.log(areas)
+  // console.log(pendingReceiver)
+  // console.log(receivers)
+  // console.log(receiverstError)
   /////////////////////////////
   //for select saved contact
   /////////////////////////////
   const contactSelectRef = useRef(null);
   const receiverAreaSelectRef = useRef(null);
-  const purposeSelectRef = useRef(null);
+  // const purposeSelectRef = useRef(null);
 
   let firstNameRef = useRef(null);
   let lastNameRef = useRef(null);
@@ -31,12 +68,45 @@ function SendingMoney() {
   let streetAddressRef = useRef(null);
   let cityRef = useRef(null);
   let noteRef = useRef(null);
+  let purposeRef = useRef(null);
+  const [selectedContact, setSelectedContact] = useState(false);
 
-  const handleSelectChange = () => {
-    const contactCelectedValue = contactSelectRef.current.value;
-    const receiverAreaCelectedValue = receiverAreaSelectRef.current.value;
-    const purposeCelectedValue = purposeSelectRef.current.value;
-
+  console.log()
+  const showData = () => {
+    const contactCelectedId = contactSelectRef.current.value;
+    if (contactCelectedId == 'Select saved contact') {
+      setSelectedContact(false);
+      // make all fields empty
+      firstNameRef.value = '';
+      lastNameRef.value = '';
+      countryRef.value = '';
+      zipCodeRef.value = '';
+      streetAddressRef.value = '';
+      cityRef.value = '';
+      setPhone('');
+      return;
+    } else {
+      setSelectedContact(true);
+    }
+    const selectedReceiver = receivers.find((receiver) => Number(receiver.id) === Number(contactCelectedId));
+    // console.log(selectedReceiver)
+    if (selectedReceiver) {
+      const { first_name, last_name, phone, country, zip_code, street_address, city } = selectedReceiver.attributes;
+      // console.log(selectedReceiver.attributes)
+      firstNameRef.value = first_name;
+      lastNameRef.value = last_name;
+      countryRef.value = country;
+      zipCodeRef.value = zip_code;
+      streetAddressRef.value = street_address;
+      cityRef.value = city;
+      setPhone(phone);
+    }
+  }
+  const handleSelectChange = async () => {
+    const contactSelectedValue = contactSelectRef.current.value;
+    const receiverAreaSelectedValue = receiverAreaSelectRef.current.value;
+    // const purposeCelectedValue = purposeSelectRef.current.value;
+    console.log(contactSelectedValue, receiverAreaSelectedValue)
     const firstName = firstNameRef.value;
     const lastName = lastNameRef.value;
     const country = countryRef.value;
@@ -44,21 +114,61 @@ function SendingMoney() {
     const streetAddress = streetAddressRef.value;
     const city = cityRef.value;
     const note = noteRef.value;
-
+    const purpose = purposeRef.value;
+    if (!contactSelectedValue || !receiverAreaSelectedValue || receiverAreaSelectedValue == 'Select Reciever’s Area' || !firstName || !lastName || !country || !zipCode || !streetAddress || !city) { //!note || !purpose
+      alert('Please fill all the fields correctly')
+      return;
+    }
     const receiverData = {
-      firstName: firstName,
-      lastName: lastName,
-      contactCelectedValue: contactCelectedValue,
-      receiverAreaCelectedValue: receiverAreaCelectedValue,
-      purposeCelectedValue: purposeCelectedValue,
+      first_name: firstName,
+      last_name: lastName,
+      phone: phone,
       country: country,
-      zipCode: zipCode,
-      streetAddress: streetAddress,
+      zip_code: Number(zipCode),
+      street_address: streetAddress,
       city: city,
+      receiverAreaSelectedValue: receiverAreaSelectedValue,
+      purpose: purpose,
       note: note,
     };
-    console.log(receiverData);
+    // console.log(receiverData);
     localStorage.setItem("receiverData", JSON.stringify(receiverData));
+    if (!selectedContact) {
+      console.log('save this receiver')
+      const saveReceiver = async () => {
+        const user_id = localStorage.getItem('user_id');
+        const res = await fetch(`http://localhost:1337/api/saved-receivers`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+          },
+          body: JSON.stringify({
+            "data": {
+              first_name: firstName,
+              last_name: lastName,
+              phone: phone,
+              country: country,
+              zip_code: Number(zipCode),
+              street_address: streetAddress,
+              city: city,
+              area: receiverAreaSelectedValue,
+              users_permissions_user: user_id,
+            }
+          }),
+        })
+        const data = await res.json()
+        return data;
+      }
+      const res = await saveReceiver();
+      if(res.data){
+        navigate('/sendingMoneyInfo')
+      }else{
+        alert('Something went wrong')
+      }
+    }else{
+      navigate('/sendingMoneyInfo')
+    }
   };
   return (
     <div>
@@ -130,7 +240,7 @@ function SendingMoney() {
           </ol>
         </div>
         <div className="card">
-          <form className="form">
+          <div className="form" onSubmit={handleSelectChange}>
             <div className="relative flex flex-col sm:flex-row z-0 w-full mb-6 group items-center">
               <div className="w-full sm:w-2/3">
                 <p className="headTextOfSendingInfo text-base sm:text-base md:text-xl lg:text-xl xl:text-xl">
@@ -142,12 +252,20 @@ function SendingMoney() {
                   id="countries"
                   className="sendingInputField w-full"
                   ref={contactSelectRef}
+                  onChange={showData}
                 >
-                  <option selected>Select saved contact</option>
-                  <option value="United States">United States</option>
-                  <option value="Canada">Canada</option>
-                  <option value="France">France</option>
-                  <option value="Germany">Germany</option>
+                  <option>Select saved contact</option>
+                  {/* show saved receivers */}
+                  {
+                    pendingReceiver ? <option>Loading...</option> : receivers?.map(receiver => {
+                      // console.log(receiver)
+                      const { id, attributes } = receiver;
+                      return (
+                        <option key={id} value={id}>{attributes.first_name} {attributes.last_name}</option>
+                      )
+                    })
+                  }
+
                 </select>
               </div>
             </div>
@@ -223,27 +341,28 @@ function SendingMoney() {
                 className="block w-full sendingInputField"
                 ref={receiverAreaSelectRef}
               >
-                <option selected>Select Reciever’s Area</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
+                <option>Select Reciever’s Area</option>
+                {
+                  pendingAreas ? <option>Loading...</option> : areas?.map(area => {
+                    const { id, attributes } = area;
+                    return (
+                      <option key={id} value={id}>{attributes.name}</option>
+                    )
+                  })
+
+                }
               </select>
             </div>
             <div className="relative z-0 w-full mb-6 group">
               <label className="transectionLabel">Purpose for Transfer</label>
               <br />
-              <select
-                id="countries"
+              <textarea
+                id="message"
+                rows="1"
                 className="block w-full sendingInputField"
-                ref={purposeSelectRef}
-              >
-                <option selected>Choose a Area</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
-              </select>
+                placeholder="Write the purpose for transfer..."
+                ref={(input) => (purposeRef = input)}
+              ></textarea>
             </div>
 
             <div className="relative z-0 w-full mb-6 group">
@@ -257,25 +376,30 @@ function SendingMoney() {
                 ref={(input) => (noteRef = input)}
               ></textarea>
             </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <div className="flex items-center">
-                <input type="checkbox" value="" className="w-4" />
-                <label className="transectionLabel ms-1">
-                  Save this receiver
-                </label>
+            {/* save this receiver */}
+            {
+              selectedContact === false &&
+              <div className="relative z-0 w-full mb-6 group">
+                <div className="flex items-center">
+                  <input type="checkbox" onCanPlay={() => {
+                    console.log('checked')
+                  }} className="w-4" />
+                  <label className="transectionLabel ms-1">
+                    Save this receiver
+                  </label>
+                </div>
               </div>
-            </div>
-
-            <NavLink to="/sendingMoneyInfo">
-              <button
-                className="w-full pt-2 pb-2 ps-5 pe-5 rounded-xl text-white mt-5"
-                onClick={handleSelectChange}
-                style={{ backgroundColor: "#043BA0" }}
-              >
-                Continue
-              </button>
-            </NavLink>
-          </form>
+            }
+            {/* continue button */}
+            <button
+              type="submit"
+              onClick={handleSelectChange}
+              className="w-full pt-2 pb-2 ps-5 pe-5 rounded-xl text-white mt-5"
+              style={{ backgroundColor: "#043BA0" }}
+            >
+              Continue
+            </button>
+          </div>
         </div>
       </div>
     </div>

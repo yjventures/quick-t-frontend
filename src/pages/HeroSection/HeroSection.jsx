@@ -4,44 +4,48 @@ import verifiedtick from "../../assets/images/verifiedtick.png";
 import Select from "react-select";
 import stopCircle from "../../assets/images/stop-circle.png";
 import tickCircle from "../../assets/images/tick-circle.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
-function HeroSection() {
-  const style = {
-    control: (base, state) => ({
-      ...base,
-      border: 0,
-      boxShadow: "none",
-      "&:focus": {
-        border: "1px solid black",
-      },
-    }),
-  };
+function HeroSection({ transfer_percentage }) {
+  const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
+  const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
+
+  // get countries api using react query
+  const { isPending: pendingCountries, error: countriesError, data: countries } = useQuery({
+    queryKey: ['countries'],
+    queryFn: () =>
+      fetch('http://localhost:1337/api/countries')
+        .then(res => res.json())
+        .then(data => data?.data),
+  })
+  // console.log(pendingGeneralSettings)
+  // console.log(generalSettingsError)
+  console.log(countries)
+  // get quick transfer api using react query
+  const { isPending: pendingQuickTransfers, error: transfersError, data: quickTransfers } = useQuery({
+    queryKey: ['quick-transfers'],
+    queryFn: () =>
+      fetch('http://localhost:1337/api/quick-transfers')
+        .then(res => res.json())
+        .then(data => data?.data),
+  })
+  // console.log(pendingQuickTransfers)
+  // console.log(transfersError)
+  console.log(quickTransfers)
+
   const options = [
     {
-      value: "chocolate",
-      label: "Chocolate",
-      image:
-        "https://i0.wp.com/nufdiran.org/wp-content/uploads/2022/07/shir-o-khorshid-flag-1024x586-1.png?w=1024&ssl=1",
-    },
-    {
-      value: "strawberry",
-      label: "Strawberry",
-      image:
-        "https://i0.wp.com/nufdiran.org/wp-content/uploads/2022/07/shir-o-khorshid-flag-1024x586-1.png?w=1024&ssl=1",
-    },
-    {
-      value: "vanilla",
-      label: "Vanilla",
-      image:
-        "https://i0.wp.com/nufdiran.org/wp-content/uploads/2022/07/shir-o-khorshid-flag-1024x586-1.png?w=1024&ssl=1",
-    },
-  ];
+      value: "lebanon",
+      label: "Lebanon",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_Lebanon.svg/1200px-Flag_of_Lebanon.svg.png?20190109154742"
 
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [defaultAmount, setDefaultAmount] = useState(null);
-  const [transferFee, setTransferFee] = useState(null);
+    }
+  ]
+  const [selectedCard, setSelectedCard] = useState(1);
+  const [defaultAmount, setDefaultAmount] = useState(quickTransfers ? quickTransfers[0]?.attributes?.amount : 100);
+  const [transferFee, setTransferFee] = useState(quickTransfers ? quickTransfers[0]?.attributes?.fee : 4);
 
   const handleCardClick = (index, amount, transferfee) => {
     setSelectedCard(index);
@@ -58,19 +62,39 @@ function HeroSection() {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const sentTo = "lebanon";
-  const sendFrom = selectedOption?.value;
-
+  const sendFrom = selectedOption?.attributes?.name;
+  console.log(sendFrom)
   const handleCardButton = () => {
     let customAmount = customAmmountRef.value;
+    if (clickedCustomAmount == true && customAmount == "") {
+      alert("Please enter amount");
+      return;
+    }
     const data = {
       sendFrom: sendFrom,
       sendTo: sentTo,
-      customAmount: customAmount,
-      defaultAmount: defaultAmount,
-      transferFee: transferFee,
     };
+    // if custom amount is clicked then take custom amount else take default amount
+    if (clickedCustomAmount) {
+      data.transfer_amount = Number(customAmount);
+      data.transfer_fees = Number(customAmount) * Number(transfer_percentage) / 100;
+      data.transfer_total = Number(customAmount) + Number(data.transfer_fees);
+    } else {
+      data.transfer_amount = Number(defaultAmount);
+      data.transfer_fees = Number(transferFee);
+      data.transfer_total = Number(defaultAmount) + Number(transferFee);
+    }
     localStorage.setItem("amountData", JSON.stringify(data));
-    console.log(data);
+    if (data.sendFrom) {
+      if (jwt) {
+        navigate('/sendingMoney')
+      } else {
+        navigate('/register')
+      }
+    }else{
+      alert("Please select send from country")
+    }
+
   };
 
   return (
@@ -81,7 +105,7 @@ function HeroSection() {
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div className="container-fluid">
-          <p className="font-bold text-5xl md:text-3xl lg:text-6xl xl:text-6xl herosectionLeftSideHeadingText">
+          <p className="font-bold text-5xl sm:md:text-6xl lg:text-6xl xl:text-6xl herosectionLeftSideHeadingText">
             Fastest way to send <br /> money to Lebanon,
             <br /> instantly.
           </p>
@@ -109,7 +133,7 @@ function HeroSection() {
 
       {/* Right Part */}
       <div
-        className="w-full md:w-2/3 flex items-center justify-center pl-5 pr-5 md:pl-1 md:pr-1"
+        className="w-full md:w-1/2 flex items-center justify-center pl-5 pr-5 md:pl-1 md:pr-1"
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div
@@ -127,12 +151,12 @@ function HeroSection() {
           </p>
           <Select
             defaultValue={selectedOption}
-            options={options}
-            styles={style}
+            options={countries}
+            onChange={setSelectedOption}
             formatOptionLabel={(country) => (
               <div className="flex">
                 <img
-                  src={country.image}
+                  src={country.attributes.icon}
                   alt="country-image"
                   style={{
                     height: "24px",
@@ -141,14 +165,14 @@ function HeroSection() {
                     marginRight: "10px",
                   }}
                 />
-                <span>{country.label}</span>
+                <span>{country.attributes.name}</span>
               </div>
             )}
           />
 
           <p className="heroSectionSendTo">Send To</p>
           <Select
-            defaultValue={options[2]}
+            defaultValue={options[0]}
             isDisabled
             options={options}
             formatOptionLabel={(country) => (
@@ -168,87 +192,53 @@ function HeroSection() {
             )}
           />
           <br />
+          {/* quick transfer */}
           <p className="heroSectionQuickTransfer">Quick Transfer</p>
-          <div className="flex gap-2 mt-5">
-            <div
-              className={`flex items-center w-1/3 gap-4 p-3 cursor-pointer ${
-                selectedCard === 0 ? "bg-gray-200 rounded-xl" : ""
-              }`}
-              onClick={() => handleCardClick(0, 100, 4)}
-            >
-              <div>
-                <p className="heroSectionRightSideUSD">USD 100</p>
-                <p className="heroSectionRightSideFee">fees: USD 4</p>
-              </div>
-              <div>
-                {selectedCard === 0 ? (
-                  <img src={tickCircle} alt="" />
-                ) : (
-                  <img src={stopCircle} alt="" />
-                )}
-              </div>
-            </div>
-            <div
-              className={`flex items-center w-1/3 p-3 gap-4 cursor-pointer ${
-                selectedCard === 1 ? "bg-gray-200 rounded-xl" : ""
-              }`}
-              onClick={() => handleCardClick(1, 200, 7)}
-            >
-              <div>
-                <p className="heroSectionRightSideUSD">USD 200</p>
-                <p className="heroSectionRightSideFee">fees: USD 7</p>
-              </div>
-              <div>
-                {selectedCard === 1 ? (
-                  <img src={tickCircle} alt="" />
-                ) : (
-                  <img src={stopCircle} alt="" />
-                )}
-              </div>
-            </div>
-            <div
-              className={`flex items-center w-1/3 p-3 gap-4 cursor-pointer ${
-                selectedCard === 2 ? "bg-gray-200 rounded-xl" : ""
-              }`}
-              onClick={() => handleCardClick(2, 500, 13)}
-            >
-              <div>
-                <p className="heroSectionRightSideUSD">USD 500</p>
-                <p className="heroSectionRightSideFee">fees: USD 13</p>
-              </div>
-              <div>
-                {selectedCard === 2 ? (
-                  <img src={tickCircle} alt="" />
-                ) : (
-                  <img src={stopCircle} alt="" />
-                )}
-              </div>
-            </div>
+          <div className="flex gap-2 mt-5 justify-evenly">
+            {
+              pendingQuickTransfers ? <p>Loading...</p> : quickTransfers?.map((transfer, index) => (
+                transfer?.attributes?.enabled == true &&
+                <div
+                  key={index}
+                  className={`flex items-center w-1/3 gap-4 p-3 cursor-pointer ${clickedCustomAmount == false && selectedCard === index + 1 ? "bg-gray-200 rounded-xl" : ""}`}
+                  onClick={() => {
+                    customAmmountRef.value = "";
+                    handleCardClick(index + 1, transfer?.attributes?.amount, transfer?.attributes?.fee);
+                    setClickedCustomAmount(false);
+                  }}
+                >
+                  <div>
+                    <p className="heroSectionRightSideUSD">{transfer?.attributes?.amount}</p>
+                    <p className="heroSectionRightSideFee">fees: {transfer?.attributes?.fee}</p>
+                  </div>
+                  <div>
+                    {clickedCustomAmount == false && selectedCard === index + 1 ? (
+                      <img src={tickCircle} alt="" />
+                    ) : (
+                      <img src={stopCircle} alt="" />
+                    )}
+                  </div>
+                </div>
+              ))
+            }
           </div>
+          {/* custom amount */}
           <input
+            onClick={() => setClickedCustomAmount(true)}
             ref={(input) => (customAmmountRef = input)}
             placeholder="or custom ammount"
             className="mt-6 rounded-xl border-none text-black heroSectionCustommunt"
           />
-          {jwt ? (
-            <NavLink to="/sendingMoney">
-              <button
-                className="heroSectionRightSideButton"
-                onClick={handleCardButton}
-              >
-                Send Money
-              </button>
-            </NavLink>
-          ) : (
-            <NavLink to="/register">
-              <button
-                className="heroSectionRightSideButton"
-                onClick={handleCardButton}
-              >
-                Sign Up/Login to transfer
-              </button>
-            </NavLink>
-          )}
+          {
+            <button
+              className="heroSectionRightSideButton"
+              onClick={handleCardButton}
+            >{
+                jwt ? "Send Money" : "Sign Up/Login to transfer"
+              }
+
+            </button>
+          }
         </div>
       </div>
     </div>

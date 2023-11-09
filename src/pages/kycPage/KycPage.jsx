@@ -5,6 +5,8 @@ import "./kyc.css";
 import Select from "react-select";
 import frontPlaceholder from "../../assets/images/frontPlaceholder.png";
 import backPlaceholder from "../../assets/images/backPlaceHolder.png";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function KycPage() {
   const style = {
     control: (base, state) => ({
@@ -37,6 +39,9 @@ function KycPage() {
   //////////////////////////
   const [frontImage, setFrontImage] = useState(frontPlaceholder);
   const [backImage, setBackImage] = useState(backPlaceholder);
+  const [checkedTerms, setCheckedTerms] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const frontImageUploader = () => {
     // Code to handle image click and trigger file upload
@@ -78,23 +83,65 @@ function KycPage() {
   let countryRef = useRef(null);
   let zipCodeRef = useRef(null);
 
-  const handleOnClickButton = () => {
+  const handleOnClickButton = async () => {
     let streetAddress = streetAddressRef.value;
     let city = cityRef.value;
     let country = countryRef.value;
     let zipCode = zipCodeRef.value;
 
-    const addressData = {
-      streetAddress: streetAddress,
-      city: city,
-      country: country,
-      zipCode: zipCode,
-      frontImage: frontImage,
-      backImage: backImage,
-      idType: selectedOption.value,
-    };
+    if (streetAddress === "" || city === "" || country === "" || zipCode === "") {
+      alert("Please fill all the fields")
+      setError("Please fill all the fields")
+      return
+    } else if (!checkedTerms) {
+      console.log(checkedTerms)
+      alert("Please agree to the terms and conditions")
+      setError("Please agree to the terms and conditions")
+      return
+    } else {
+      const addressData = {
+        "street_address": streetAddress,
+        "city": city,
+        "country": country,
+        "zip_code": zipCode,
+        // id_front: frontImage,
+        // id_back: backImage,
+        "id_type": selectedOption.value
+      };
+      const data = JSON.stringify()
+      const response = await axios.post("http://localhost:1337/api/kycs", {
+        "data": addressData
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+        }
+      });
+      if (response.data.error) {
+        alert('Something went wrong, please try again')
+        setError('Something went wrong, please try again')
+        return
+      }
+      const kycID = response?.data?.data?.id
+      // relate kyc to user
+      const userResponse = await axios.put(`http://localhost:1337/api/users/${localStorage.getItem("user_id")}`, {
+        "kyc": kycID,
+        "kyc_complete": true
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+        }
+      });
+      if (userResponse.data.error) {
+        alert('Something went wrong, please try again')
+        setError('Something went wrong, please try again')
+        return
+      }
+      alert('KYC submitted successfully')
+      navigate("/securityCode")
+    }
 
-    console.log(addressData);
   };
 
   return (
@@ -219,7 +266,11 @@ function KycPage() {
 
           <div className="mt-5">
             <div className="flex items-center mb-5 gap-2">
-              <input type="checkbox" className="registerPageCheckBox" />
+              <input type="checkbox" className="registerPageCheckBox" checked={checkedTerms}
+                onChange={() => {
+                  setCheckedTerms(!checkedTerms);
+                  console.log(checkedTerms);
+                }} />
               <label className="registerPageCheckBoxLabel">
                 I agree to the Terms and Conditions
               </label>
