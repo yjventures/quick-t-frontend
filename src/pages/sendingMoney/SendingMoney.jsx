@@ -115,7 +115,7 @@ function SendingMoney() {
     const city = cityRef.value;
     const note = noteRef.value;
     const purpose = purposeRef.value;
-    if (!contactSelectedValue || !receiverAreaSelectedValue || receiverAreaSelectedValue == 'Select Reciever’s Area' || !firstName || !lastName || !country || !zipCode || !streetAddress || !city) { //!note || !purpose
+    if (!contactSelectedValue || !receiverAreaSelectedValue || receiverAreaSelectedValue == 'Select Reciever’s Area' || !firstName || !lastName || !country || !zipCode || !streetAddress || !city || !purpose) {
       alert('Please fill all the fields correctly')
       return;
     }

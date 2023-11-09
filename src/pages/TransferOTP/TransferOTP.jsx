@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Rectangle from "../../assets/images/Rectangle.png";
 import paymentcheck from "../../assets/images/payment-check.png";
 import Headers from "../../components/Headers";
@@ -6,7 +6,29 @@ import secondStepper from "../../assets/images/secondStepper.png";
 import ReactCodeInput from "react-code-input";
 
 import securityTick from "../../assets/images/securityTick.png";
+import axios from "axios";
 function TransferOTP() {
+  const [countWrongOtp, setCountWrongOtp] = useState(1);
+  const [inputValue, setInputValue] = useState("");
+  const [timer, setTimer] = useState(false);
+  const [countTime, setCountTime] = useState(300); /// 3000 seconds
+  // check if timer is true
+  useEffect(() => {
+    if (timer) {
+      const intervalId = setInterval(() => {
+        setCountTime(countTime - 1);
+      }, 1000);
+
+      if (countTime === 0) {
+        setTimer(false);
+        setCountTime(300);
+        setCountWrongOtp(1);
+      }
+      return () => clearInterval(intervalId);
+    }
+  }, [timer, countTime]);
+
+
   const divStyle = {
     backgroundImage: `url(${Rectangle})`,
     backgroundRepeat: "no-repeat",
@@ -31,6 +53,42 @@ function TransferOTP() {
     borderColor: "lightgrey",
     textAlign: "center",
   };
+
+
+  const handleSubmit = async () => {
+    // if not 3 times wrong otp
+    if (countWrongOtp < 3) {
+      const data = {
+        "code": inputValue,
+        "jwt": localStorage.getItem("jwt"),
+      };
+      JSON.stringify(data);
+      const res = await axios.post("http://localhost:5000/checkSecurity", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res?.data?.statusCode)
+      // 200 = success | 404 = wrong otp | 403 = System error or wrong jwt
+
+      const statusCode = res?.data?.statusCode;
+      if (statusCode === 200) {
+        // window.location.href = "/paymentSuccess";
+        alert("Payment Success")
+      } else if (statusCode === 403) {
+        alert("Something went wrong, please try again later")
+      } else {
+        alert("Wrong OTP")
+        setCountWrongOtp(countWrongOtp + 1)
+      }
+
+    } else {
+      alert("You have entered wrong otp 3 times, Please try after 5 minutes");
+      setTimer(true);
+      return
+    }
+  }
+
 
   return (
     <div>
@@ -104,27 +162,36 @@ function TransferOTP() {
           </ol>
         </div>
         <div className="card">
-          <form className="form pt-10">
+          <div className="form pt-10">
             <div className="mx-auto pb-5">
-              <img src={paymentcheck} alt="" />
+              <img src={paymentcheck} alt="icon" />
             </div>
             <p className="text-center">Enter the OTP to complete transfer</p>
             <div className="flex gap-10 justify-center mt-5">
               <ReactCodeInput
+                onChange={(e) => {
+                  setInputValue(e);
+                }}
+                value={inputValue}
                 type="number"
                 inputStyle={defaultInputStyle}
                 fields={4}
               />
 
-              <img src={securityTick} alt="" />
+              {/* <img src={securityTick} alt="icon" /> */}
             </div>
             <button
+              disabled={countTime < 300}
+              onClick={handleSubmit}
               className="flex justify-center items-center w-2/3 pt-2 pb-2 ps-5 pe-5 rounded-xl text-white mt-5 mx-auto"
-              style={{ backgroundColor: "#043BA0" }}
+              // change background color to #ccc when disabled
+              style={{ backgroundColor: countTime < 300 ? "#999" : "#043BA0" }}
             >
-              Send
+              {
+                countTime < 300 ? `Try again in ${countTime} seconds` : "Send"
+              }
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
