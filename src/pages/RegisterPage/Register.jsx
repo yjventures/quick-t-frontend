@@ -6,7 +6,7 @@ import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
 import googleLogo from "../../assets/images/googleLogo.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { showFailedAlert } from "../../utils/Tooast.Utils";
+import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
 function Register() {
   const [error, setError] = useState(null);
   const [warning, setWarning] = useState(null);
@@ -41,6 +41,7 @@ function Register() {
           })
           .then((response) => {
             console.log("File uploaded successfully: ", response.data);
+            showSuccessAlert("Image uploaded successfully")
             console.log(response.data[0].url);
             setStrapiImage(response.data[0].url);
           })
