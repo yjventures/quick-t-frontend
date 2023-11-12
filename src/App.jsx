@@ -16,6 +16,7 @@ import PersonalInformationPage from "./pages/PersonalInformationPage/PersonalInf
 
 import Settings from "./components/settings/Settings";
 import TransactionHistoryPage from "./pages/TransactionHistory/TransactionHistoryPage";
+import PaymentCancel from "./pages/paymentCancel/PaymentCancel";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ function App() {
           <Route path="/confirmSecurityCode" element={<ConfirmCode />} />
           <Route path="/paymentProcessing" element={<PaymentProcessing />} />
           <Route path="/paymentSuccess" element={<PaymentSuccess />} />
+          <Route path="/cancel" element={<PaymentCancel />} />
           <Route path="/hello" element={<HowWorks />} />
           <Route path="/pricing" element={<HowWorks />} />
           <Route path="/setting" element={<Settings />} />

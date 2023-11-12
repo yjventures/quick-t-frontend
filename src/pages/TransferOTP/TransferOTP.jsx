@@ -58,11 +58,11 @@ function TransferOTP() {
 
   const handleSubmit = async () => {
     // if not 3 times wrong otp
-    if(inputValue.length < 4){
+    if (inputValue.length < 4) {
       showFailedAlert("Please enter 4 digit otp")
       return
     }
-    
+
     if (countWrongOtp < 3) {
       const data = {
         "code": inputValue,
@@ -76,11 +76,28 @@ function TransferOTP() {
       });
       console.log(res?.data?.statusCode)
       // 200 = success | 404 = wrong otp | 403 = System error or wrong jwt
-
+      const amountData = localStorage.getItem("amountData")
+      console.log(amountData)
       const statusCode = res?.data?.statusCode;
       if (statusCode === 200) {
         // window.location.href = "/paymentSuccess";
-        showSuccessAlert("Payment Success")
+        // showSuccessAlert("Payment Successfull")
+
+        const response = await axios.post("http://localhost:5000/checkout-session", {
+          data: amountData,
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const sessionUrl = response?.data;
+        if (sessionUrl) {
+          // Redirect the user to the Stripe checkout session URL
+          window.open(sessionUrl, "_self");
+        } else {
+          // Handle the case where sessionUrl is not available
+          showFailedAlert("Something went wrong, please try again later")
+        }
       } else if (statusCode === 403) {
         showFailedAlert("Something went wrong, please try again later")
       } else {

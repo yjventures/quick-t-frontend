@@ -7,6 +7,7 @@ import googleLogo from "../../assets/images/googleLogo.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
+import PhoneInput from "react-phone-input-2";
 function Register() {
   const [error, setError] = useState(null);
   const [warning, setWarning] = useState(null);
@@ -15,7 +16,7 @@ function Register() {
   /////////////////////////////////////
   //photo upload handling
   /////////////////////////////////////
-
+  const [phone, setPhone] = useState(null);
   const [image, setImage] = useState(imagePlaceholder);
   const [strapiImage, setStrapiImage] = useState(null);
   console.log(image);
@@ -61,7 +62,7 @@ function Register() {
   let firstNameRef = useRef(null);
   let lastNameRef = useRef(null);
   let emailRef = useRef(null);
-  let phoneNumberRef = useRef(null);
+  // let phoneNumberRef = useRef(null);
   let passwordRef = useRef(null);
   let confirmPasswordRef = useRef(null);
   let dobRef = useRef(null);
@@ -70,7 +71,6 @@ function Register() {
     let firstName = firstNameRef.value;
     let lastName = lastNameRef.value;
     let email = emailRef.value;
-    let phoneNumber = phoneNumberRef.value;
     let password = passwordRef.value;
     let confirmPassword = confirmPasswordRef.value;
     let dob = dobRef.value;
@@ -79,11 +79,12 @@ function Register() {
       !email ||
       !firstName ||
       !lastName ||
-      // !phoneNumber ||
+      !phone ||
       !password ||
       !confirmPassword ||
       !dob
     ) {
+      console.log(email, firstName, lastName, phone, password, confirmPassword, dob)
       showFailedAlert("Please fill all the fields");
       return;
     } else if (!checkedTerms) {
@@ -108,7 +109,7 @@ function Register() {
         last_name: lastName,
         email: email,
         password: password,
-        // phone: phoneNumber,
+        phone: phone,
         dob: dob,
         image: strapiImage,
       };
@@ -132,7 +133,7 @@ function Register() {
             localStorage.setItem("dob", result.user?.dob);
             localStorage.setItem("first_name", result.user?.first_name);
             localStorage.setItem("last_name", result.user?.last_name);
-            // localStorage.setItem("phone", result.user?.phone);
+            localStorage.setItem("phone", result.user?.phone);
             // window.location.href = "/dashboard";
             navigate("/kyc");
           } else {
@@ -282,16 +283,7 @@ function Register() {
               </div>
 
               <div className="flex flex-col lg:flex-row gap-x-10">
-                {/* <div className="mb-4">
-                  <label className="registerPagelabel">Phone Number</label>
-                  <br />
-                  <input
-                    type="text"
-                    placeholder="Phone Number"
-                    className="registerPageInput"
-                    ref={(input) => (phoneNumberRef = input)}
-                  />
-                </div> */}
+
                 <div className="mb-4">
                   <label className="registerPagelabel">Email</label>
                   <br />
@@ -315,6 +307,19 @@ function Register() {
                 </div>
               </div>
 
+              <div className="mb-4">
+                <label className="registerPagelabel">Phone Number</label>
+                <br />
+                <PhoneInput
+                  country={"au"}
+                  // remove israel and north korea from the list
+                  excludeCountries={["il", "kp"]}
+                  searchPlaceholder="Search country"
+                  enableSearch={true}
+                  value={phone}
+                  onChange={(phone) => setPhone(phone)}
+                />
+              </div>
               <div className="flex flex-col lg:flex-row gap-x-10">
                 <div className="registerPagelabel">
                   <label htmlFor="phone1">Password</label>

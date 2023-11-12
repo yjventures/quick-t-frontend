@@ -292,7 +292,7 @@ function SendingMoney() {
             <div className="relative w-full mb-6 group">
               <label className="transectionLabel">Phone Number</label> <br />
               <PhoneInput
-                country={"eg"}
+                country={"au"}
                 enableSearch={true}
                 value={phone}
                 onChange={(phone) => setPhone(phone)}

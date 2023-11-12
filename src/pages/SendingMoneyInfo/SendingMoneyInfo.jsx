@@ -40,6 +40,8 @@ function SendingMoneyInfo() {
   console.log(userData)
   const userFullName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
   const userPhone = localStorage.getItem("phone");
+  // const userAddress = 
+  console.log(userData)
   // const userAddress = ;
   const fullName = receiverDataInfo.first_name + " " + receiverDataInfo.last_name;
   const phone = receiverDataInfo.phone;
@@ -168,7 +170,7 @@ function SendingMoneyInfo() {
                 <div style={{textAlign: 'right'}}>
                   <p className="font-normal text-sm pb-1">{userFullName}</p>
                   <p className="font-normal text-sm pb-1">{userPhone}</p>
-                  <p className="font-normal text-sm pb-1">{userData && userData[0].attributes.street_address + ", " + userData[0].attributes.city + ", " + userData[0].attributes.country}</p>
+                  <p className="font-normal text-sm pb-1">{userData && userData[0]?.attributes?.street_address + ", " + userData[0]?.attributes?.city + ", " + userData[0]?.attributes?.country}</p>
                 </div>
               </div>
             </div>

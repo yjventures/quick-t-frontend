@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import "./PaymentSuccess.css";
 import Copy from "../../assets/images/Copy.png";
 import html2pdf from "html2pdf.js";
+import { showSuccessAlert } from "../../utils/Tooast.Utils";
+import { useNavigate } from "react-router-dom";
 function PaymentSuccess() {
   const cardRef = useRef();
   const imgRef = useRef();
@@ -40,18 +42,15 @@ function PaymentSuccess() {
       });
   };
 
-  ////////////////////////////////////////////////////////////////
-  //copy transfer number
-  ////////////////////////////////////////////////////////////////
-  const handleCopyText = () => {
-    const textToCopy = document
-      .querySelector(".transfernumber")
-      .textContent.trim();
-    navigator.clipboard.writeText(textToCopy);
-  };
-
+  const navigate = useNavigate();
+  // const transaction_id = 
+  const receiverDataInfo = JSON.parse(localStorage.getItem("receiverData"));
+  const amountDataInfo = JSON.parse(localStorage.getItem("amountData"));
+  const userName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
+  const time = new Date().toLocaleString();
+  // console.log(time)
   return (
-    <div>
+    <div className="mb-10">
       <div
         className="card pl-7 pr-10"
         ref={cardRef}
@@ -78,10 +77,10 @@ function PaymentSuccess() {
             />
           </svg>
 
-          <p className="paymentSuccessHeaderSectionFrontText">
+          <p className="paymentSuccessHeaderSectionFrontText text-center">
             Payment Success!
           </p>
-          <p className="paymentSuccessHeaderSectionSecondText">US$ 4000</p>
+          <p className="paymentSuccessHeaderSectionSecondText">US ${amountDataInfo.transfer_amount}</p>
         </div>
 
         <p className="paymentSuccessLine mx-auto"></p>
@@ -105,9 +104,13 @@ function PaymentSuccess() {
             </p>
           </div>
           <div className="text-end">
-            <div style={{ position: "relative" }}>
+            <div style={{ position: "relative" }}
+              onClick={() => {
+                navigator.clipboard.writeText(`QT-${localStorage.getItem("transaction_id")}`)
+                showSuccessAlert("Copied to clipboard")
+              }}>
               <p className="paymentSuccessEnding transfernumber text-base lg:text-xl">
-                QT-102
+                QT-{localStorage.getItem("transaction_id")}
               </p>
               <div
                 style={{
@@ -118,20 +121,20 @@ function PaymentSuccess() {
                   width: "24px",
                   cursor: "pointer",
                 }}
-                onClick={handleCopyText}
+              // onClick={handleCopyText}
               >
-                <img ref={imgRef} src={Copy} alt="" />
+                <img ref={imgRef} src={Copy} alt="icon" />
               </div>
             </div>
             <p className="paymentSuccessEnding text-base lg:text-xl">
-              25-02-2023, 13:22:16
+              {time}
             </p>
             <p className="paymentSuccessEnding text-base lg:text-xl">Card</p>
             <p className="paymentSuccessEnding text-base lg:text-xl">
-              Antonio Roberto
+              {userName}
             </p>
             <p className="paymentSuccessEnding text-base lg:text-xl">
-              John Roberto
+              {receiverDataInfo.first_name} {receiverDataInfo.last_name}
             </p>
           </div>
         </div>
@@ -146,12 +149,12 @@ function PaymentSuccess() {
             </p>
           </div>
           <div className="text-end">
-            <p className="paymentSuccessEnding text-base lg:text-xl">$ 4000</p>
-            <p className="paymentSuccessEnding text-base lg:text-xl">$ 700</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ {amountDataInfo.transfer_amount}</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ {amountDataInfo.transfer_fees}</p>
           </div>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex justify-center" >
           <button
             onClick={downloadAsPdf}
             className="mt-10 flex items-center gap-4 paymentSuccessButton"
@@ -193,7 +196,26 @@ function PaymentSuccess() {
             </svg>
             Get PDF Receipt
           </button>
+
         </div>
+        <button
+          style={{
+            backgroundColor: "#23A26D",
+            color: "#fff",
+            width: "100%",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+          onClick={() => {
+            localStorage.removeItem("receiverData");
+            localStorage.removeItem("transaction_id");
+            navigate('/')
+          }}
+          className="py-2 rounded-md text-white"
+        >
+          Go Home
+        </button>
+
       </div>
     </div>
   );
