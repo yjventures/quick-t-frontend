@@ -10,6 +10,7 @@ import SendFrom from "../sendFrom/SendFrom";
 import ReceiveFrom from "../receiveFrom/ReceiveFrom";
 import Footer from "../Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
+import { showFailedAlert } from "../../utils/Tooast.Utils";
 
 function MainPage() {
 
@@ -22,7 +23,7 @@ function MainPage() {
         .then(res => res.json())
         .then(data => data?.data?.[0]?.attributes),
   })
-
+  if(generalSettingsError) return showFailedAlert("Something went wrong")
   // console.log(pendingGeneralSettings)
   // console.log(generalSettingsError)
   // console.log(generalSettings) 

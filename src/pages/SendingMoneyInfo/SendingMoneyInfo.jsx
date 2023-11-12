@@ -5,6 +5,7 @@ import Headers from "../../components/Headers";
 import secondStepper from "../../assets/images/secondStepper.png";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { showFailedAlert } from "../../utils/Tooast.Utils";
 function SendingMoneyInfo() {
   const divStyle = {
     backgroundImage: `url(${Rectangle})`,
@@ -35,6 +36,7 @@ function SendingMoneyInfo() {
     queryKey: 'userData',
     queryFn: fetchIUserData,
   })
+  if(error) showFailedAlert('Something went wrong, please try again later');
   console.log(userData)
   const userFullName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
   const userPhone = localStorage.getItem("phone");

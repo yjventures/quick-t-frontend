@@ -5,7 +5,11 @@ import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
 import googleLogo from "../../assets/images/googleLogo.png";
 import { NavLink, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { showFailedAlert } from "../../utils/Tooast.Utils";
 function LoginPage() {
+  // do not user let refresh page 
+
+
   let emailRef = useRef(null);
   let passwordRef = useRef(null);
   const navigate = useNavigate();
@@ -32,47 +36,19 @@ function LoginPage() {
           localStorage.setItem("jwt", response.data.jwt);
           if (response.data.user?.kyc_complete == false) {
             navigate("/kyc");
-          }else if (localStorage.getItem("amountData")) {
+          } else if (localStorage.getItem("amountData")) {
             navigate("/sendingMoney");
           } else {
             navigate("/");
           }
         } else {
-          alert("Invalid Credentials");
+          showFailedAlert("Invalid Credentials");
         }
       })
-      .catch(error => console.log('Error:', error));
-    // const res = fetch("http://localhost:1337/auth/local", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     identifier: email,
-    //     password: password,
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     if (data.user) {
-    //       localStorage.setItem("user_id", data.user.id);
-    //       localStorage.setItem("first_name", data.user?.first_name);
-    //       localStorage.setItem("last_name", data.user?.last_name);
-    //       localStorage.setItem("phone", data.user?.phone);
-    //       localStorage.setItem("jwt", data.jwt);
-    //       if (localStorage.getItem("amountData")) {
-    //         redirect("/sendingMoney");
-    //       } else {
-    //         redirect("/");
-    //       }
-    //     } else {
-    //       alert("Invalid Credentials");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+      .catch(error => {
+        console.log('Error:', error)
+        showFailedAlert("Invalid Credentials");
+      });
   };
   return (
     <div className="flex flex-col md:flex-row">

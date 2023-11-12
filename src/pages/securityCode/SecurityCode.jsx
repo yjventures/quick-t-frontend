@@ -58,22 +58,6 @@ function SecurityCode() {
   //handle on click
   ////////////////////////////
   const handleOnClick = () => {
-    // if (/^(\d)\1{3}$/.test(inputValue)) {
-    //   console.log("All four digits cannot be the same");
-    //   alert("All four digits cannot be the same");
-    //   return;
-    // }
-    // // security code cannot be the same as the user's birthday in different formats
-    // if (birthDate) {
-    //   // const ddmm = birthDate.slice(0, 4);
-    //   // const mmdd = birthDate.slice(2) + birthDate.slice(0, 2);
-    //   console.log(birthDay + birthMonth)
-    //   if (inputValue === birthDay + birthMonth || inputValue === birthMonth + birthDay || inputValue === birthYear) {
-    //     console.log("Security code cannot be the same as user's birthday");
-    //     alert("Security code cannot be the same as user's birthday, please try a different code");
-    //     return;
-    //   }
-    // }
     localStorage.setItem("security_code", inputValue);
     navigate("/confirmSecurityCode");
 

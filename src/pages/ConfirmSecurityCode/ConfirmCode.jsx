@@ -6,6 +6,7 @@ import ReactCodeInput from "react-code-input";
 import securityTick from "../../assets/images/securityTick.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
 function ConfirmCode() {
   let defaultInputStyle = {
     fontFamily: "monospace",
@@ -55,13 +56,6 @@ function ConfirmCode() {
   const handleContinueButton = () => {
     const mySecurityCode = securityCodeRef.value;
     console.log(securityCode, mySecurityCode);
-    // if (securityCode == mySecurityCode) {
-    //   // localStorage.removeItem("security_code");
-    //   navigate('/')
-    // } else {
-    //   alert("Wrong Security Code")
-    //   // navigate('/securityCode')
-    // }
     confirmSecurityCode();
   };
   // if matches both code then do this
@@ -78,7 +72,7 @@ function ConfirmCode() {
     });
 
     if (res.data.error) {
-      alert('Something went wrong, please try again')
+      showFailedAlert('Something went wrong, please try again')
       return
     } else {
       const securityCodeID = res?.data?.data?.id;
@@ -93,11 +87,11 @@ function ConfirmCode() {
         }
       });
       if (userResponse.data.error) {
-        alert('Something went wrong, please try again')
+        showFailedAlert('Something went wrong, please try again')
         return
       }
       localStorage.removeItem("security_code");
-      alert('Security Code added successfully')
+      showSuccessAlert('Security Code added successfully')
       // check amount data is available in local storage or not
       if(localStorage.getItem('amountData')){
         navigate('/sendingMoney');

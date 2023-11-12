@@ -6,6 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 import { useQuery } from "@tanstack/react-query";
+import { showFailedAlert } from "../../utils/Tooast.Utils";
 
 function SendingMoney() {
   const navigate = useNavigate();
@@ -116,7 +117,7 @@ function SendingMoney() {
     const note = noteRef.value;
     const purpose = purposeRef.value;
     if (!contactSelectedValue || !receiverAreaSelectedValue || receiverAreaSelectedValue == 'Select Reciever’s Area' || !firstName || !lastName || !country || !zipCode || !streetAddress || !city || !purpose) {
-      alert('Please fill all the fields correctly')
+      showFailedAlert('Please fill all the fields correctly')
       return;
     }
     const receiverData = {
@@ -164,7 +165,7 @@ function SendingMoney() {
       if(res.data){
         navigate('/sendingMoneyInfo')
       }else{
-        alert('Something went wrong')
+        showFailedAlert('Something went wrong')
       }
     }else{
       navigate('/sendingMoneyInfo')

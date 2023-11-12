@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./Headers.css";
 import logo from "../assets/images/logo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false); // State to handle the dropdown visibility
   const [showMobileMenu, setShowMobileMenu] = useState(false); // State to handle the mobile menu visibility
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 768); // Adjust the value based on your breakpoint
@@ -89,9 +89,14 @@ const Navbar = () => {
         {/* Dropdown */}
         {showDropdown && (
           <div className="dropdown mobile-dropdown">
-            <ul>
+            <ul style={{
+              cursor: "pointer"
+            }}>
               <li>Settings</li>
-              <li>Logout</li>
+              <li onClick={()=> {
+                localStorage.clear();
+                navigate('/login');
+              }}>Logout</li>
             </ul>
           </div>
         )}

@@ -6,6 +6,7 @@ import stopCircle from "../../assets/images/stop-circle.png";
 import tickCircle from "../../assets/images/tick-circle.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { showFailedAlert } from "../../utils/Tooast.Utils";
 
 function HeroSection({ transfer_percentage }) {
   const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
@@ -67,7 +68,7 @@ function HeroSection({ transfer_percentage }) {
   const handleCardButton = () => {
     let customAmount = customAmmountRef.value;
     if (clickedCustomAmount == true && customAmount == "") {
-      alert("Please enter amount");
+      showFailedAlert("Please enter amount");
       return;
     }
     const data = {
@@ -92,7 +93,7 @@ function HeroSection({ transfer_percentage }) {
         navigate('/register')
       }
     }else{
-      alert("Please select send from country")
+      showFailedAlert("Please select country to proceed")
     }
 
   };

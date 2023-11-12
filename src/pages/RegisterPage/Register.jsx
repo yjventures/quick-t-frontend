@@ -76,9 +76,10 @@ function Register() {
     let dob = dobRef.value;
 
     if (
+      !email ||
       !firstName ||
       !lastName ||
-      !phoneNumber ||
+      // !phoneNumber ||
       !password ||
       !confirmPassword ||
       !dob
@@ -105,8 +106,9 @@ function Register() {
         username: firstName + " " + lastName,
         first_name: firstName,
         last_name: lastName,
+        email: email,
         password: password,
-        phone: phoneNumber,
+        // phone: phoneNumber,
         dob: dob,
         image: strapiImage,
       };
@@ -130,11 +132,11 @@ function Register() {
             localStorage.setItem("dob", result.user?.dob);
             localStorage.setItem("first_name", result.user?.first_name);
             localStorage.setItem("last_name", result.user?.last_name);
-            localStorage.setItem("phone", result.user?.phone);
+            // localStorage.setItem("phone", result.user?.phone);
             // window.location.href = "/dashboard";
             navigate("/kyc");
           } else {
-            alert(result.error.message);
+            showFailedAlert(result.error.message);
             setError(result.error.message);
           }
         })
@@ -280,7 +282,7 @@ function Register() {
               </div>
 
               <div className="flex flex-col lg:flex-row gap-x-10">
-                <div className="mb-4">
+                {/* <div className="mb-4">
                   <label className="registerPagelabel">Phone Number</label>
                   <br />
                   <input
@@ -288,6 +290,16 @@ function Register() {
                     placeholder="Phone Number"
                     className="registerPageInput"
                     ref={(input) => (phoneNumberRef = input)}
+                  />
+                </div> */}
+                <div className="mb-4">
+                  <label className="registerPagelabel">Email</label>
+                  <br />
+                  <input
+                    type="email"
+                    placeholder="Enter email"
+                    className="registerPageInput"
+                    ref={(input) => (emailRef = input)}
                   />
                 </div>
                 <div className="mb-4">

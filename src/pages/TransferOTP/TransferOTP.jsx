@@ -7,6 +7,7 @@ import ReactCodeInput from "react-code-input";
 
 import securityTick from "../../assets/images/securityTick.png";
 import axios from "axios";
+import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
 function TransferOTP() {
   const [countWrongOtp, setCountWrongOtp] = useState(1);
   const [inputValue, setInputValue] = useState("");
@@ -57,6 +58,11 @@ function TransferOTP() {
 
   const handleSubmit = async () => {
     // if not 3 times wrong otp
+    if(inputValue.length < 4){
+      showFailedAlert("Please enter 4 digit otp")
+      return
+    }
+    
     if (countWrongOtp < 3) {
       const data = {
         "code": inputValue,
@@ -74,16 +80,16 @@ function TransferOTP() {
       const statusCode = res?.data?.statusCode;
       if (statusCode === 200) {
         // window.location.href = "/paymentSuccess";
-        alert("Payment Success")
+        showSuccessAlert("Payment Success")
       } else if (statusCode === 403) {
-        alert("Something went wrong, please try again later")
+        showFailedAlert("Something went wrong, please try again later")
       } else {
-        alert("Wrong OTP")
+        showFailedAlert("Your entered otp is wrong")
         setCountWrongOtp(countWrongOtp + 1)
       }
 
     } else {
-      alert("You have entered wrong otp 3 times, Please try after 5 minutes");
+      showFailedAlert("You have entered wrong otp 3 times, Please try after 5 minutes");
       setTimer(true);
       return
     }

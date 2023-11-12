@@ -7,6 +7,7 @@ import frontPlaceholder from "../../assets/images/frontPlaceholder.png";
 import backPlaceholder from "../../assets/images/backPlaceHolder.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
 function KycPage() {
   const style = {
     control: (base, state) => ({
@@ -90,12 +91,12 @@ function KycPage() {
     let zipCode = zipCodeRef.value;
 
     if (streetAddress === "" || city === "" || country === "" || zipCode === "") {
-      alert("Please fill all the fields")
+      showFailedAlert("Please fill all the fields")
       setError("Please fill all the fields")
       return
     } else if (!checkedTerms) {
       console.log(checkedTerms)
-      alert("Please agree to the terms and conditions")
+      showFailedAlert("Please agree to the terms and conditions")
       setError("Please agree to the terms and conditions")
       return
     } else {
@@ -118,7 +119,7 @@ function KycPage() {
         }
       });
       if (response.data.error) {
-        alert('Something went wrong, please try again')
+        showFailedAlert('Something went wrong, please try again')
         setError('Something went wrong, please try again')
         return
       }
@@ -134,11 +135,11 @@ function KycPage() {
         }
       });
       if (userResponse.data.error) {
-        alert('Something went wrong, please try again')
+        showFailedAlert('Something went wrong, please try again')
         setError('Something went wrong, please try again')
         return
       }
-      alert('KYC submitted successfully')
+      showSuccessAlert('KYC submitted successfully')
       navigate("/securityCode")
     }
 
