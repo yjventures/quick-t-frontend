@@ -107,8 +107,8 @@ function TransferOTP() {
       } else if (statusCode === 403) {
         showFailedAlert("Something went wrong, please try again later");
       } else {
-        showFailedAlert("Your entered otp is wrong");
-        setCountWrongOtp(countWrongOtp + 1);
+        showFailedAlert("Wrong otp")
+        setCountWrongOtp(countWrongOtp + 1)
       }
     } else {
       showFailedAlert(

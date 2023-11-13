@@ -129,7 +129,7 @@ function SendingMoneyInfo() {
                 <div>
                   <p className="font-normal text-sm pb-1">Transfer amount</p>
                   <p className="font-normal text-sm pb-1">Transfer fee</p>
-                  <p className="font-normal text-sm pb-1">Toal Receiver gets</p>
+                  <p className="font-normal text-sm pb-1">Total payable</p>
                 </div>
                 <div style={{textAlign: 'right'}}>
                   <p className="font-bold font-bold pb-1">
@@ -138,7 +138,7 @@ function SendingMoneyInfo() {
                   <p className="font-normal text-sm pb-1">
                     {amountDataInfo.transfer_fees} USD
                   </p>
-                  <p className="font-bold font-bold pb-1">{amountDataInfo.transfer_total} AUD</p>
+                  <p className="font-bold font-bold pb-1">{amountDataInfo.transfer_total} USD</p>
                 </div>
               </div>
             </div>
@@ -153,7 +153,7 @@ function SendingMoneyInfo() {
                 </div>
                 <div style={{textAlign: 'right'}}>
                   <p className="font-normal text-sm pb-1">{fullName}</p>
-                  <p className="font-normal text-sm pb-1">{phone}</p>
+                  <p className="font-normal text-sm pb-1">+{phone}</p>
                   <p className="font-normal text-sm pb-1">{address}</p>
                 </div>
               </div>
@@ -169,7 +169,7 @@ function SendingMoneyInfo() {
                 </div>
                 <div style={{textAlign: 'right'}}>
                   <p className="font-normal text-sm pb-1">{userFullName}</p>
-                  <p className="font-normal text-sm pb-1">{userPhone}</p>
+                  <p className="font-normal text-sm pb-1">+{userPhone}</p>
                   <p className="font-normal text-sm pb-1">{userData && userData[0]?.attributes?.street_address + ", " + userData[0]?.attributes?.city + ", " + userData[0]?.attributes?.country}</p>
                 </div>
               </div>

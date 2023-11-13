@@ -12,18 +12,19 @@ function PaymentSuccess() {
     const element = cardRef.current;
     const button = element.querySelector(".paymentSuccessButton");
     const img = imgRef.current;
-
+    const homeButton = element.querySelector(".homeButton");
     if (button) {
       button.style.display = "none"; // Hide the button before generating the PDF
+      homeButton.style.display = "none";
     }
 
     if (img) {
       img.style.display = "none"; // Hide the image before generating the PDF
     }
-
+    const transaction_id = localStorage.getItem("transaction_id");
     const opt = {
       margin: 1,
-      filename: "payment_success.pdf",
+      filename: `QT-${transaction_id} payment_success.pdf`,
       image: { type: "jpeg", quality: 0.98 }, // Adjust quality here
       html2canvas: { scale: 2 }, // Adjust scale here
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
@@ -35,9 +36,8 @@ function PaymentSuccess() {
       .save()
       .then(() => {
         button.style.display = "block"; // Show the button again after generating the PDF
-
+        homeButton.style.display = "block";
         img.style.display = "block"; // Show the image again after generating the PDF
-
         window.location.reload();
       });
   };
@@ -48,7 +48,11 @@ function PaymentSuccess() {
   const amountDataInfo = JSON.parse(localStorage.getItem("amountData"));
   const userName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
   const time = new Date().toLocaleString();
-  // console.log(time)
+  
+  const unixTimestamp = localStorage.getItem("transaction_time");
+  const date = new Date(unixTimestamp * 1000);
+  const localTime = date.toLocaleString();
+  // console.log(localTime);
   return (
     <div className="mb-10">
       <div
@@ -127,7 +131,7 @@ function PaymentSuccess() {
               </div>
             </div>
             <p className="paymentSuccessEnding text-base lg:text-xl">
-              {time}
+              {localTime}
             </p>
             <p className="paymentSuccessEnding text-base lg:text-xl">Card</p>
             <p className="paymentSuccessEnding text-base lg:text-xl">
@@ -207,11 +211,11 @@ function PaymentSuccess() {
             marginBottom: "20px",
           }}
           onClick={() => {
-            localStorage.removeItem("receiverData");
-            localStorage.removeItem("transaction_id");
+            // localStorage.removeItem("receiverData");
+            // localStorage.removeItem("transaction_id");
             navigate('/')
           }}
-          className="py-2 rounded-md text-white"
+          className="py-2 rounded-md text-white homeButton"
         >
           Go Home
         </button>

@@ -23,7 +23,7 @@ function HeroSection({ transfer_percentage }) {
   })
   // console.log(pendingGeneralSettings)
   // console.log(generalSettingsError)
-  console.log(countries)
+  // console.log(countries)
   // get quick transfer api using react query
   const { isPending: pendingQuickTransfers, error: transfersError, data: quickTransfers } = useQuery({
     queryKey: ['quick-transfers'],
@@ -34,7 +34,7 @@ function HeroSection({ transfer_percentage }) {
   })
   // console.log(pendingQuickTransfers)
   // console.log(transfersError)
-  console.log(quickTransfers)
+  // console.log(quickTransfers)
 
   const options = [
     {
