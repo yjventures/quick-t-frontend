@@ -21,35 +21,46 @@ function SendingMoney() {
   const [phone, setPhone] = useState("");
 
   const fetchReceivers = async () => {
-    const user_id = localStorage.getItem('user_id');
-    const res = await fetch(`http://localhost:1337/api/saved-receivers?filters[users_permissions_user][id][$eq]=${user_id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-      },
-    })
-    const data = await res.json()
+    const user_id = localStorage.getItem("user_id");
+    const res = await fetch(
+      `http://localhost:1337/api/saved-receivers?filters[users_permissions_user][id][$eq]=${user_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      }
+    );
+    const data = await res.json();
     return data?.data;
-  }
+  };
 
-  const { isPending: pendingReceiver, error: receiverstError, data: receivers } = useQuery({
-    queryKey: ['receivers'],
+  const {
+    isPending: pendingReceiver,
+    error: receiverstError,
+    data: receivers,
+  } = useQuery({
+    queryKey: ["receivers"],
     queryFn: fetchReceivers,
-  })
+  });
 
   const fetchAreas = async () => {
     const res = await fetch(`http://localhost:1337/api/areas`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
-    })
-    const data = await res.json()
+    });
+    const data = await res.json();
     return data?.data;
-  }
+  };
 
-  const { isPending: pendingAreas, error: areasError, data: areas } = useQuery({
-    queryKey: ['areas'],
+  const {
+    isPending: pendingAreas,
+    error: areasError,
+    data: areas,
+  } = useQuery({
+    queryKey: ["areas"],
     queryFn: fetchAreas,
-  })
+  });
 
   // console.log(areas)
   // console.log(pendingReceiver)
@@ -72,27 +83,37 @@ function SendingMoney() {
   let purposeRef = useRef(null);
   const [selectedContact, setSelectedContact] = useState(false);
 
-  console.log()
+  console.log();
   const showData = () => {
     const contactCelectedId = contactSelectRef.current.value;
-    if (contactCelectedId == 'Select saved contact') {
+    if (contactCelectedId == "Select saved contact") {
       setSelectedContact(false);
       // make all fields empty
-      firstNameRef.value = '';
-      lastNameRef.value = '';
-      countryRef.value = '';
-      zipCodeRef.value = '';
-      streetAddressRef.value = '';
-      cityRef.value = '';
-      setPhone('');
+      firstNameRef.value = "";
+      lastNameRef.value = "";
+      countryRef.value = "";
+      zipCodeRef.value = "";
+      streetAddressRef.value = "";
+      cityRef.value = "";
+      setPhone("");
       return;
     } else {
       setSelectedContact(true);
     }
-    const selectedReceiver = receivers.find((receiver) => Number(receiver.id) === Number(contactCelectedId));
+    const selectedReceiver = receivers.find(
+      (receiver) => Number(receiver.id) === Number(contactCelectedId)
+    );
     // console.log(selectedReceiver)
     if (selectedReceiver) {
-      const { first_name, last_name, phone, country, zip_code, street_address, city } = selectedReceiver.attributes;
+      const {
+        first_name,
+        last_name,
+        phone,
+        country,
+        zip_code,
+        street_address,
+        city,
+      } = selectedReceiver.attributes;
       // console.log(selectedReceiver.attributes)
       firstNameRef.value = first_name;
       lastNameRef.value = last_name;
@@ -102,12 +123,12 @@ function SendingMoney() {
       cityRef.value = city;
       setPhone(phone);
     }
-  }
+  };
   const handleSelectChange = async () => {
     const contactSelectedValue = contactSelectRef.current.value;
     const receiverAreaSelectedValue = receiverAreaSelectRef.current.value;
     // const purposeCelectedValue = purposeSelectRef.current.value;
-    console.log(contactSelectedValue, receiverAreaSelectedValue)
+    console.log(contactSelectedValue, receiverAreaSelectedValue);
     const firstName = firstNameRef.value;
     const lastName = lastNameRef.value;
     const country = countryRef.value;
@@ -116,8 +137,19 @@ function SendingMoney() {
     const city = cityRef.value;
     const note = noteRef.value;
     const purpose = purposeRef.value;
-    if (!contactSelectedValue || !receiverAreaSelectedValue || receiverAreaSelectedValue == 'Select Reciever’s Area' || !firstName || !lastName || !country || !zipCode || !streetAddress || !city || !purpose) {
-      showFailedAlert('Please fill all the fields correctly')
+    if (
+      !contactSelectedValue ||
+      !receiverAreaSelectedValue ||
+      receiverAreaSelectedValue == "Select Reciever’s Area" ||
+      !firstName ||
+      !lastName ||
+      !country ||
+      !zipCode ||
+      !streetAddress ||
+      !city ||
+      !purpose
+    ) {
+      showFailedAlert("Please fill all the fields correctly");
       return;
     }
     const receiverData = {
@@ -135,17 +167,17 @@ function SendingMoney() {
     // console.log(receiverData);
     localStorage.setItem("receiverData", JSON.stringify(receiverData));
     if (!selectedContact) {
-      console.log('save this receiver')
+      console.log("save this receiver");
       const saveReceiver = async () => {
-        const user_id = localStorage.getItem('user_id');
+        const user_id = localStorage.getItem("user_id");
         const res = await fetch(`http://localhost:1337/api/saved-receivers`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           },
           body: JSON.stringify({
-            "data": {
+            data: {
               first_name: firstName,
               last_name: lastName,
               phone: phone,
@@ -155,20 +187,20 @@ function SendingMoney() {
               city: city,
               area: receiverAreaSelectedValue,
               users_permissions_user: user_id,
-            }
+            },
           }),
-        })
-        const data = await res.json()
+        });
+        const data = await res.json();
         return data;
-      }
+      };
       const res = await saveReceiver();
-      if(res.data){
-        navigate('/sendingMoneyInfo')
-      }else{
-        showFailedAlert('Something went wrong')
+      if (res.data) {
+        navigate("/sendingMoneyInfo");
+      } else {
+        showFailedAlert("Something went wrong");
       }
-    }else{
-      navigate('/sendingMoneyInfo')
+    } else {
+      navigate("/sendingMoneyInfo");
     }
   };
   return (
@@ -178,7 +210,7 @@ function SendingMoney() {
         style={divStyle}
         className="flex flex-col justify-cneter items-center"
       >
-        <div className="w-5/6 flex flex-col mt-5 mb-5">
+        <div className="w-5/6 flex flex-col mt-32 mb-5">
           <ol className="progressBar flex items-center w-full justify-center text-center xl:ps-40 md:ps-40 ps-10">
             <li className="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-orange-200">
               <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-orange-500 shrink-0">
@@ -257,16 +289,19 @@ function SendingMoney() {
                 >
                   <option>Select saved contact</option>
                   {/* show saved receivers */}
-                  {
-                    pendingReceiver ? <option>Loading...</option> : receivers?.map(receiver => {
+                  {pendingReceiver ? (
+                    <option>Loading...</option>
+                  ) : (
+                    receivers?.map((receiver) => {
                       // console.log(receiver)
                       const { id, attributes } = receiver;
                       return (
-                        <option key={id} value={id}>{attributes.first_name} {attributes.last_name}</option>
-                      )
+                        <option key={id} value={id}>
+                          {attributes.first_name} {attributes.last_name}
+                        </option>
+                      );
                     })
-                  }
-
+                  )}
                 </select>
               </div>
             </div>
@@ -343,15 +378,18 @@ function SendingMoney() {
                 ref={receiverAreaSelectRef}
               >
                 <option>Select Reciever’s Area</option>
-                {
-                  pendingAreas ? <option>Loading...</option> : areas?.map(area => {
+                {pendingAreas ? (
+                  <option>Loading...</option>
+                ) : (
+                  areas?.map((area) => {
                     const { id, attributes } = area;
                     return (
-                      <option key={id} value={id}>{attributes.name}</option>
-                    )
+                      <option key={id} value={id}>
+                        {attributes.name}
+                      </option>
+                    );
                   })
-
-                }
+                )}
               </select>
             </div>
             <div className="relative z-0 w-full mb-6 group">
@@ -378,19 +416,22 @@ function SendingMoney() {
               ></textarea>
             </div>
             {/* save this receiver */}
-            {
-              selectedContact === false &&
+            {selectedContact === false && (
               <div className="relative z-0 w-full mb-6 group">
                 <div className="flex items-center">
-                  <input type="checkbox" onCanPlay={() => {
-                    console.log('checked')
-                  }} className="w-4" />
+                  <input
+                    type="checkbox"
+                    onCanPlay={() => {
+                      console.log("checked");
+                    }}
+                    className="w-4"
+                  />
                   <label className="transectionLabel ms-1">
                     Save this receiver
                   </label>
                 </div>
               </div>
-            }
+            )}
             {/* continue button */}
             <button
               type="submit"

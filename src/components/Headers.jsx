@@ -89,14 +89,20 @@ const Navbar = () => {
         {/* Dropdown */}
         {showDropdown && (
           <div className="dropdown mobile-dropdown">
-            <ul style={{
-              cursor: "pointer"
-            }}>
+            <ul
+              style={{
+                cursor: "pointer",
+              }}
+            >
               <li>Settings</li>
-              <li onClick={()=> {
-                localStorage.clear();
-                navigate('/login');
-              }}>Logout</li>
+              <li
+                onClick={() => {
+                  localStorage.clear();
+                  navigate("/login");
+                }}
+              >
+                Logout
+              </li>
             </ul>
           </div>
         )}

@@ -29,7 +29,6 @@ function TransferOTP() {
     }
   }, [timer, countTime]);
 
-
   const divStyle = {
     backgroundImage: `url(${Rectangle})`,
     backgroundRepeat: "no-repeat",
@@ -55,63 +54,70 @@ function TransferOTP() {
     textAlign: "center",
   };
 
-
   const handleSubmit = async () => {
     // if not 3 times wrong otp
     if (inputValue.length < 4) {
-      showFailedAlert("Please enter 4 digit otp")
-      return
+      showFailedAlert("Please enter 4 digit otp");
+      return;
     }
 
     if (countWrongOtp < 3) {
       const data = {
-        "code": inputValue,
-        "jwt": localStorage.getItem("jwt"),
+        code: inputValue,
+        jwt: localStorage.getItem("jwt"),
       };
       JSON.stringify(data);
-      const res = await axios.post("http://localhost:5000/checkSecurity", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(res?.data?.statusCode)
+      const res = await axios.post(
+        "http://localhost:5000/checkSecurity",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(res?.data?.statusCode);
       // 200 = success | 404 = wrong otp | 403 = System error or wrong jwt
-      const amountData = localStorage.getItem("amountData")
-      console.log(amountData)
+      const amountData = localStorage.getItem("amountData");
+      console.log(amountData);
       const statusCode = res?.data?.statusCode;
       if (statusCode === 200) {
         // window.location.href = "/paymentSuccess";
         // showSuccessAlert("Payment Successfull")
 
-        const response = await axios.post("http://localhost:5000/checkout-session", {
-          data: amountData,
-        }, {
-          headers: {
-            "Content-Type": "application/json",
+        const response = await axios.post(
+          "http://localhost:5000/checkout-session",
+          {
+            data: amountData,
           },
-        });
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         const sessionUrl = response?.data;
         if (sessionUrl) {
           // Redirect the user to the Stripe checkout session URL
           window.open(sessionUrl, "_self");
         } else {
           // Handle the case where sessionUrl is not available
-          showFailedAlert("Something went wrong, please try again later")
+          showFailedAlert("Something went wrong, please try again later");
         }
       } else if (statusCode === 403) {
-        showFailedAlert("Something went wrong, please try again later")
+        showFailedAlert("Something went wrong, please try again later");
       } else {
-        showFailedAlert("Your entered otp is wrong")
-        setCountWrongOtp(countWrongOtp + 1)
+        showFailedAlert("Your entered otp is wrong");
+        setCountWrongOtp(countWrongOtp + 1);
       }
-
     } else {
-      showFailedAlert("You have entered wrong otp 3 times, Please try after 5 minutes");
+      showFailedAlert(
+        "You have entered wrong otp 3 times, Please try after 5 minutes"
+      );
       setTimer(true);
-      return
+      return;
     }
-  }
-
+  };
 
   return (
     <div>
@@ -196,7 +202,6 @@ function TransferOTP() {
                   setInputValue(e);
                 }}
                 value={inputValue}
-                type="number"
                 inputStyle={defaultInputStyle}
                 fields={4}
               />
@@ -210,9 +215,7 @@ function TransferOTP() {
               // change background color to #ccc when disabled
               style={{ backgroundColor: countTime < 300 ? "#999" : "#043BA0" }}
             >
-              {
-                countTime < 300 ? `Try again in ${countTime} seconds` : "Send"
-              }
+              {countTime < 300 ? `Try again in ${countTime} seconds` : "Send"}
             </button>
           </div>
         </div>

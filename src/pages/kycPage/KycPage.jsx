@@ -9,6 +9,76 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
 function KycPage() {
+  //for the front image
+  const [frontImage, setFrontImage] = useState(frontPlaceholder);
+  const [strapiFrontImage, setStrapiFrontImage] = useState(null);
+  console.log(frontImage);
+
+  const handleFrontImageClick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFrontImage(event.target.result);
+
+        const formData = new FormData();
+        formData.append("files", file);
+
+        axios
+          .post("http://localhost:1337/api/upload", formData)
+          .then((response) => {
+            console.log("File uploaded successfully: ", response.data);
+            showSuccessAlert("Image uploaded successfully");
+            console.log(response.data[0].url);
+            setStrapiFrontImage(response.data[0].url);
+          })
+          .catch((error) => {
+            console.error("Error uploading file: ", error.message);
+          });
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  };
+
+  //back image
+  const [backImage, setBackImage] = useState(backPlaceholder);
+
+  const [strapiBackImage, setStrapiBackImage] = useState(null);
+  const handleBackImageClick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        // Update the state for the back image, not the front image
+        setBackImage(event.target.result);
+
+        const formData = new FormData();
+        formData.append("files", file);
+
+        axios
+          .post("http://localhost:1337/api/upload", formData)
+          .then((response) => {
+            console.log("File uploaded successfully: ", response.data);
+            showSuccessAlert("Image uploaded successfully");
+            console.log(response.data[0].url);
+            setStrapiBackImage(response.data[0].url);
+          })
+          .catch((error) => {
+            console.error("Error uploading file: ", error.message);
+          });
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  };
+
   const style = {
     control: (base, state) => ({
       ...base,
@@ -38,8 +108,7 @@ function KycPage() {
   //////////////////////////
   //image upload
   //////////////////////////
-  const [frontImage, setFrontImage] = useState(frontPlaceholder);
-  const [backImage, setBackImage] = useState(backPlaceholder);
+
   const [checkedTerms, setCheckedTerms] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -90,59 +159,71 @@ function KycPage() {
     let country = countryRef.value;
     let zipCode = zipCodeRef.value;
 
-    if (streetAddress === "" || city === "" || country === "" || zipCode === "") {
-      showFailedAlert("Please fill all the fields")
-      setError("Please fill all the fields")
-      return
+    if (
+      streetAddress === "" ||
+      city === "" ||
+      country === "" ||
+      zipCode === ""
+    ) {
+      showFailedAlert("Please fill all the fields");
+      setError("Please fill all the fields");
+      return;
     } else if (!checkedTerms) {
-      console.log(checkedTerms)
-      showFailedAlert("Please agree to the terms and conditions")
-      setError("Please agree to the terms and conditions")
-      return
+      console.log(checkedTerms);
+      showFailedAlert("Please agree to the terms and conditions");
+      setError("Please agree to the terms and conditions");
+      return;
     } else {
       const addressData = {
-        "street_address": streetAddress,
-        "city": city,
-        "country": country,
-        "zip_code": zipCode,
-        // id_front: frontImage,
-        // id_back: backImage,
-        "id_type": selectedOption.value
+        street_address: streetAddress,
+        city: city,
+        country: country,
+        zip_code: zipCode,
+        id_front: strapiFrontImage,
+        id_back: strapiBackImage,
+        id_type: selectedOption.value,
       };
-      const data = JSON.stringify()
-      const response = await axios.post("http://localhost:1337/api/kycs", {
-        "data": addressData
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+      const data = JSON.stringify();
+      const response = await axios.post(
+        "http://localhost:1337/api/kycs",
+        {
+          data: addressData,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
         }
-      });
+      );
       if (response.data.error) {
-        showFailedAlert('Something went wrong, please try again')
-        setError('Something went wrong, please try again')
-        return
+        showFailedAlert("Something went wrong, please try again");
+        setError("Something went wrong, please try again");
+        return;
       }
-      const kycID = response?.data?.data?.id
+      const kycID = response?.data?.data?.id;
       // relate kyc to user
-      const userResponse = await axios.put(`http://localhost:1337/api/users/${localStorage.getItem("user_id")}`, {
-        "kyc": kycID,
-        "kyc_complete": true
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+      const userResponse = await axios.put(
+        `http://localhost:1337/api/users/${localStorage.getItem("user_id")}`,
+        {
+          kyc: kycID,
+          kyc_complete: true,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
         }
-      });
+      );
       if (userResponse.data.error) {
-        showFailedAlert('Something went wrong, please try again')
-        setError('Something went wrong, please try again')
-        return
+        showFailedAlert("Something went wrong, please try again");
+        setError("Something went wrong, please try again");
+        return;
       }
-      showSuccessAlert('KYC submitted successfully')
-      navigate("/securityCode")
+      showSuccessAlert("KYC submitted successfully");
+      navigate("/securityCode");
     }
-
   };
 
   return (
@@ -234,7 +315,7 @@ function KycPage() {
               <div
                 className="mb-4 mt-10"
                 style={{ width: "252px", height: "135px" }}
-                onClick={frontImageUploader}
+                onClick={handleFrontImageClick}
               >
                 <img
                   src={frontImage}
@@ -254,7 +335,7 @@ function KycPage() {
                   height: "135px",
                   borderRadius: "12px",
                 }}
-                onClick={backImageUploader}
+                onClick={handleBackImageClick}
               >
                 <img
                   src={backImage}
@@ -267,11 +348,15 @@ function KycPage() {
 
           <div className="mt-5">
             <div className="flex items-center mb-5 gap-2">
-              <input type="checkbox" className="registerPageCheckBox" checked={checkedTerms}
+              <input
+                type="checkbox"
+                className="registerPageCheckBox"
+                checked={checkedTerms}
                 onChange={() => {
                   setCheckedTerms(!checkedTerms);
                   console.log(checkedTerms);
-                }} />
+                }}
+              />
               <label className="registerPageCheckBoxLabel">
                 I agree to the Terms and Conditions
               </label>

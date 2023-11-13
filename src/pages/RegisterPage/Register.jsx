@@ -35,14 +35,10 @@ function Register() {
         formData.append("files", file);
 
         axios
-          .post("http://localhost:1337/api/upload", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
+          .post("http://localhost:1337/api/upload", formData)
           .then((response) => {
             console.log("File uploaded successfully: ", response.data);
-            showSuccessAlert("Image uploaded successfully")
+            showSuccessAlert("Image uploaded successfully");
             console.log(response.data[0].url);
             setStrapiImage(response.data[0].url);
           })
@@ -84,7 +80,15 @@ function Register() {
       !confirmPassword ||
       !dob
     ) {
-      console.log(email, firstName, lastName, phone, password, confirmPassword, dob)
+      console.log(
+        email,
+        firstName,
+        lastName,
+        phone,
+        password,
+        confirmPassword,
+        dob
+      );
       showFailedAlert("Please fill all the fields");
       return;
     } else if (!checkedTerms) {
@@ -283,7 +287,6 @@ function Register() {
               </div>
 
               <div className="flex flex-col lg:flex-row gap-x-10">
-
                 <div className="mb-4">
                   <label className="registerPagelabel">Email</label>
                   <br />

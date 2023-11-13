@@ -99,7 +99,7 @@ function HeroSection({ transfer_percentage }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row" style={{ paddingTop: "80px" }}>
       {/* Left Part */}
       <div
         className="w-full md:w-1/2 flex items-center justify-center pl-5"

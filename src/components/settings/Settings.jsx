@@ -7,6 +7,10 @@ const Settings = (props) => {
     sideNavRef = useRef();
   const [activeSection, setActiveSection] = useState("");
 
+  const handleActiveSection = (section) => {
+    setActiveSection(section);
+  };
+
   const dropdownRef = useRef(null);
 
   const [username, setUserName] = useState(null);
@@ -193,7 +197,7 @@ const Settings = (props) => {
                   {isActive ? (
                     <div
                       className=""
-                      onClick={() => setActiveSection("transactionHistory")}
+                      onClick={handleActiveSection("transactionHistory")}
                     >
                       <button className={`flex justify-between`}>
                         <div className="flex gap-2 mt-2">
@@ -228,7 +232,7 @@ const Settings = (props) => {
                   {isActive ? (
                     <div
                       className="mt-2"
-                      onClick={() => setActiveSection("personalInfo")}
+                      onClick={handleActiveSection("personalInfo")}
                     >
                       <button className={`flex justify-between `}>
                         <div className="flex gap-2 ">
