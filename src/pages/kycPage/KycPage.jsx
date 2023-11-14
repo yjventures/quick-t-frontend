@@ -113,38 +113,7 @@ function KycPage() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const frontImageUploader = () => {
-    // Code to handle image click and trigger file upload
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = (e) => {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setFrontImage(event.target.result);
-      };
-      reader.readAsDataURL(file);
-    };
-    input.click();
-  };
-
-  const backImageUploader = () => {
-    // Code to handle image click and trigger file upload
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = (e) => {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setBackImage(event.target.result);
-      };
-      reader.readAsDataURL(file);
-    };
-    input.click();
-  };
-
+ 
   //////////////////////////
   //onClick handler
   //////////////////////////

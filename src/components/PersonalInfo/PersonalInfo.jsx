@@ -4,9 +4,9 @@ import "./PersonalInfo.css";
 function PersonalInfo() {
   return (
     <div
-      className="card"
+      className="cardPersonalInfo"
       style={{
-        maxWidth: "2400px",
+        maxWidth: "1400px",
         backgroundColor: "#fff",
       }}
     >
