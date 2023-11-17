@@ -68,7 +68,7 @@ function TransferOTP() {
       };
       JSON.stringify(data);
       const res = await axios.post(
-        "http://localhost:5000/checkSecurity",
+        "https://microservice.quickt.com.au/checkSecurity",
         data,
         {
           headers: {
@@ -86,7 +86,7 @@ function TransferOTP() {
         // showSuccessAlert("Payment Successfull")
 
         const response = await axios.post(
-          "http://localhost:5000/checkout-session",
+          "https://microservice.quickt.com.au/checkout-session",
           {
             data: amountData,
           },

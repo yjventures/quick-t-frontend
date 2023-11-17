@@ -23,7 +23,7 @@ function LoginPage() {
     };
 
     // Make the axios request
-    const res = axios.post("http://localhost:1337/api/auth/local", userData)
+    const res = axios.post("https://api.quickt.com.au/api/auth/local", userData)
       .then(response => {
         console.log(response.data)
         if (response.data) {

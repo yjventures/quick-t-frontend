@@ -17,7 +17,7 @@ function HeroSection({ transfer_percentage }) {
   const { isPending: pendingCountries, error: countriesError, data: countries } = useQuery({
     queryKey: ['countries'],
     queryFn: () =>
-      fetch('http://localhost:1337/api/countries')
+      fetch('https://api.quickt.com.au/api/countries')
         .then(res => res.json())
         .then(data => data?.data),
   })
@@ -28,7 +28,7 @@ function HeroSection({ transfer_percentage }) {
   const { isPending: pendingQuickTransfers, error: transfersError, data: quickTransfers } = useQuery({
     queryKey: ['quick-transfers'],
     queryFn: () =>
-      fetch('http://localhost:1337/api/quick-transfers')
+      fetch('https://api.quickt.com.au/api/quick-transfers')
         .then(res => res.json())
         .then(data => data?.data),
   })

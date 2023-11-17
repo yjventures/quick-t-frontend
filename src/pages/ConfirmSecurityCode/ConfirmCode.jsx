@@ -60,7 +60,7 @@ function ConfirmCode() {
   };
   // if matches both code then do this
   const confirmSecurityCode = async () => {
-    const res = await axios.post('http://localhost:1337/api/security-codes', {
+    const res = await axios.post('https://api.quickt.com.au/api/security-codes', {
       "data": {
         "code": securityCode
       }
@@ -77,7 +77,7 @@ function ConfirmCode() {
     } else {
       const securityCodeID = res?.data?.data?.id;
       // relate security code to user
-      const userResponse = await axios.put(`http://localhost:1337/api/users/${localStorage.getItem("user_id")}`, {
+      const userResponse = await axios.put(`https://api.quickt.com.au/api/users/${localStorage.getItem("user_id")}`, {
         "security_code": securityCodeID,
         "security_complete": true
       }, {
