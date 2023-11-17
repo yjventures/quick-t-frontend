@@ -10,7 +10,7 @@ function PaymentProcessing() {
   const navigate = useNavigate();
 
   const saveTransaction = async () => {
-    const res = await axios.post("https://microservice.quickt.com.au/save-transaction", {
+    const res = await axios.post("https://microservice.quickt.com.au/save-transaction/", {
       data: {
         session_id: session_id,
         user_id: localStorage.getItem("user_id"),
