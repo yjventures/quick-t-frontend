@@ -121,7 +121,7 @@ function HeroSection({ transfer_percentage, title, description }) {
           <p className="font-bold text-5xl sm:md:text-6xl lg:text-6xl xl:text-6xl herosectionLeftSideHeadingText">
             {title ? (
               <React.Fragment>
-                {title.split(" ").map((word, index, array) => (
+                {title?.split(" ").map((word, index, array) => (
                   <React.Fragment key={index}>
                     {index % 3 === 0 && index !== 0 ? <br /> : null}
                     {word}{" "}
