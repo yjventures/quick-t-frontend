@@ -36,7 +36,7 @@ function ChooseUs({
                     borderRadius: "12px",
                   }}
                 >
-                  <img src={`http://localhost:1337${service_box_one_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
+                  <img src={`https://api.quickt.com.au${service_box_one_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
                 </div>
                 <div className="card_content">
                   <div className="card_content_title">
@@ -68,7 +68,7 @@ function ChooseUs({
                     borderRadius: "12px",
                   }}
                 >
-                  <img src={`http://localhost:1337${service_box_two_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
+                  <img src={`https://api.quickt.com.au${service_box_two_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
                 </div>
                 <div className="card_content">
                   <div className="card_content_title">
@@ -100,7 +100,7 @@ function ChooseUs({
                     borderRadius: "12px",
                   }}
                 >
-                  <img src={`http://localhost:1337${service_box_three_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
+                  <img src={`https://api.quickt.com.au${service_box_three_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
                 </div>
                 <div className="card_content">
                   <div className="card_content_title">
