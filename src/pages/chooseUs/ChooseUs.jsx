@@ -18,11 +18,8 @@ function ChooseUs({
         <p className="chooseUsTextIntro ">WE HELP FOR YOU</p>
         <p className="chooseUsTextIntroHeading text-4xl md:text-5xl lg:text-5xl xl:text-5xl pt-5">
           {/* look here image is showing,  */}
-          Why Chooes Us{" "}
-          <img
-            src={`http://localhost:1337${service_box_one_icon}`}
-            alt="icon"
-          />
+          Why Chooes Us
+          
         </p>
       </div>
       <div className="container mx-auto">
@@ -35,14 +32,14 @@ function ChooseUs({
                 <div className="card_content">
                   <div className="card_content_title">
                     <p>
-                      {service_box_three_title
-                        ? service_box_three_title
-                        : "24/7 Support"}
+                      {service_box_one_title
+                        ? service_box_one_title
+                        : "Trust Partner"}
                     </p>
                   </div>
                   <div className="card_content_desc">
-                    {service_box_three_desc
-                      ? service_box_three_desc
+                    {service_box_one_desc
+                      ? service_box_one_desc
                       : "Cloudless and of a deep dark blue the spectacle before us was."}
                   </div>
                 </div>
@@ -57,14 +54,14 @@ function ChooseUs({
                 <div className="card_content">
                   <div className="card_content_title">
                     <p>
-                      {service_box_three_title
-                        ? service_box_three_title
-                        : "24/7 Support"}
+                      {service_box_two_title
+                        ? service_box_two_title
+                        : "Secure Processing"}
                     </p>
                   </div>
                   <div className="card_content_desc">
-                    {service_box_three_desc
-                      ? service_box_three_desc
+                    {service_box_two_desc
+                      ? service_box_two_desc
                       : "Cloudless and of a deep dark blue the spectacle before us was."}
                   </div>
                 </div>
