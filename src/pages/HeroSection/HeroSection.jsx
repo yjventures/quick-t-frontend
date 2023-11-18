@@ -14,24 +14,32 @@ function HeroSection({ transfer_percentage, title, description }) {
   const jwt = localStorage.getItem("jwt");
 
   // get countries api using react query
-  const { isPending: pendingCountries, error: countriesError, data: countries } = useQuery({
-    queryKey: ['countries'],
+  const {
+    isPending: pendingCountries,
+    error: countriesError,
+    data: countries,
+  } = useQuery({
+    queryKey: ["countries"],
     queryFn: () =>
-      fetch('https://api.quickt.com.au/api/countries')
-        .then(res => res.json())
-        .then(data => data?.data),
-  })
+      fetch("https://api.quickt.com.au/api/countries")
+        .then((res) => res.json())
+        .then((data) => data?.data),
+  });
   // console.log(pendingGeneralSettings)
   // console.log(generalSettingsError)
   // console.log(countries)
   // get quick transfer api using react query
-  const { isPending: pendingQuickTransfers, error: transfersError, data: quickTransfers } = useQuery({
-    queryKey: ['quick-transfers'],
+  const {
+    isPending: pendingQuickTransfers,
+    error: transfersError,
+    data: quickTransfers,
+  } = useQuery({
+    queryKey: ["quick-transfers"],
     queryFn: () =>
-      fetch('https://api.quickt.com.au/api/quick-transfers')
-        .then(res => res.json())
-        .then(data => data?.data),
-  })
+      fetch("https://api.quickt.com.au/api/quick-transfers")
+        .then((res) => res.json())
+        .then((data) => data?.data),
+  });
   // console.log(pendingQuickTransfers)
   // console.log(transfersError)
   // console.log(quickTransfers)
@@ -40,13 +48,17 @@ function HeroSection({ transfer_percentage, title, description }) {
     {
       value: "lebanon",
       label: "Lebanon",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_Lebanon.svg/1200px-Flag_of_Lebanon.svg.png?20190109154742"
-
-    }
-  ]
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_Lebanon.svg/1200px-Flag_of_Lebanon.svg.png?20190109154742",
+    },
+  ];
   const [selectedCard, setSelectedCard] = useState(1);
-  const [defaultAmount, setDefaultAmount] = useState(quickTransfers ? quickTransfers[0]?.attributes?.amount : 100);
-  const [transferFee, setTransferFee] = useState(quickTransfers ? quickTransfers[0]?.attributes?.fee : 4);
+  const [defaultAmount, setDefaultAmount] = useState(
+    quickTransfers ? quickTransfers[0]?.attributes?.amount : 100
+  );
+  const [transferFee, setTransferFee] = useState(
+    quickTransfers ? quickTransfers[0]?.attributes?.fee : 4
+  );
 
   const handleCardClick = (index, amount, transferfee) => {
     setSelectedCard(index);
@@ -64,7 +76,7 @@ function HeroSection({ transfer_percentage, title, description }) {
 
   const sentTo = "lebanon";
   const sendFrom = selectedOption?.attributes?.name;
-  console.log(sendFrom)
+  console.log(sendFrom);
   const handleCardButton = () => {
     let customAmount = customAmmountRef.value;
     if (clickedCustomAmount == true && customAmount == "") {
@@ -78,7 +90,8 @@ function HeroSection({ transfer_percentage, title, description }) {
     // if custom amount is clicked then take custom amount else take default amount
     if (clickedCustomAmount) {
       data.transfer_amount = Number(customAmount);
-      data.transfer_fees = Number(customAmount) * Number(transfer_percentage) / 100;
+      data.transfer_fees =
+        (Number(customAmount) * Number(transfer_percentage)) / 100;
       data.transfer_total = Number(customAmount) + Number(data.transfer_fees);
     } else {
       data.transfer_amount = Number(defaultAmount);
@@ -88,14 +101,13 @@ function HeroSection({ transfer_percentage, title, description }) {
     localStorage.setItem("amountData", JSON.stringify(data));
     if (data.sendFrom) {
       if (jwt) {
-        navigate('/sendingMoney')
+        navigate("/sendingMoney");
       } else {
-        navigate('/register')
+        navigate("/register");
       }
     } else {
-      showFailedAlert("Please select country to proceed")
+      showFailedAlert("Please select country to proceed");
     }
-
   };
 
   return (
@@ -105,12 +117,25 @@ function HeroSection({ transfer_percentage, title, description }) {
         className="w-full md:w-1/2 flex items-center justify-center pl-5"
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
-        <div className="container-fluid">
+        <div className="container lg:ms-40">
           <p className="font-bold text-5xl sm:md:text-6xl lg:text-6xl xl:text-6xl herosectionLeftSideHeadingText">
-            {title ? title : "Fastest way to send money to Lebanon, instantly."}
+            {title ? (
+              <React.Fragment>
+                {title.split(" ").map((word, index, array) => (
+                  <React.Fragment key={index}>
+                    {index % 3 === 0 && index !== 0 ? <br /> : null}
+                    {word}{" "}
+                  </React.Fragment>
+                ))}
+              </React.Fragment>
+            ) : (
+              "Fastest way to send money to Lebanon, instantly."
+            )}
           </p>
           <p className="herosectionLeftSideNormalText">
-            {description ? description : "From security and privacy to care and accountability - what matters to you matters to us."}
+            {description
+              ? description
+              : "From security and privacy to care and accountability - what matters to you matters to us."}
           </p>
           <div className="herosectionLeftSideButtonSection">
             <button className="herosectionLeftSideButton">Get Started</button>
@@ -194,32 +219,50 @@ function HeroSection({ transfer_percentage, title, description }) {
           {/* quick transfer */}
           <p className="heroSectionQuickTransfer">Quick Transfer</p>
           <div className="flex gap-2 mt-5 justify-evenly">
-            {
-              pendingQuickTransfers ? <p>Loading...</p> : quickTransfers?.map((transfer, index) => (
-                transfer?.attributes?.enabled == true &&
-                <div
-                  key={index}
-                  className={`flex items-center w-1/3 gap-4 p-3 cursor-pointer ${clickedCustomAmount == false && selectedCard === index + 1 ? "bg-gray-200 rounded-xl" : ""}`}
-                  onClick={() => {
-                    customAmmountRef.value = "";
-                    handleCardClick(index + 1, transfer?.attributes?.amount, transfer?.attributes?.fee);
-                    setClickedCustomAmount(false);
-                  }}
-                >
-                  <div>
-                    <p className="heroSectionRightSideUSD">{transfer?.attributes?.amount}</p>
-                    <p className="heroSectionRightSideFee">fees: {transfer?.attributes?.fee}</p>
-                  </div>
-                  <div>
-                    {clickedCustomAmount == false && selectedCard === index + 1 ? (
-                      <img src={tickCircle} alt="" />
-                    ) : (
-                      <img src={stopCircle} alt="" />
-                    )}
-                  </div>
-                </div>
-              ))
-            }
+            {pendingQuickTransfers ? (
+              <p>Loading...</p>
+            ) : (
+              quickTransfers?.map(
+                (transfer, index) =>
+                  transfer?.attributes?.enabled == true && (
+                    <div
+                      key={index}
+                      className={`flex items-center w-1/3 gap-4 lg:gap-10 p-3 cursor-pointer ${
+                        clickedCustomAmount == false &&
+                        selectedCard === index + 1
+                          ? "bg-gray-200 rounded-xl"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        customAmmountRef.value = "";
+                        handleCardClick(
+                          index + 1,
+                          transfer?.attributes?.amount,
+                          transfer?.attributes?.fee
+                        );
+                        setClickedCustomAmount(false);
+                      }}
+                    >
+                      <div>
+                        <p className="heroSectionRightSideUSD">
+                          {transfer?.attributes?.amount}
+                        </p>
+                        <p className="heroSectionRightSideFee">
+                          fees: {transfer?.attributes?.fee}
+                        </p>
+                      </div>
+                      <div>
+                        {clickedCustomAmount == false &&
+                        selectedCard === index + 1 ? (
+                          <img src={tickCircle} alt="" />
+                        ) : (
+                          <img src={stopCircle} alt="" />
+                        )}
+                      </div>
+                    </div>
+                  )
+              )
+            )}
           </div>
           {/* custom amount */}
           <input
@@ -232,10 +275,8 @@ function HeroSection({ transfer_percentage, title, description }) {
             <button
               className="heroSectionRightSideButton"
               onClick={handleCardButton}
-            >{
-                jwt ? "Send Money" : "Sign Up/Login to transfer"
-              }
-
+            >
+              {jwt ? "Send Money" : "Sign Up/Login to transfer"}
             </button>
           }
         </div>
