@@ -55,3 +55,69 @@
   font-size: 17.844px;
   font-weight: 400;
 }
+
+.services_bgCard {
+  height: 267px;
+  width: 400px;
+  background-color: #edf0f6;
+  transform: rotate(-3deg);
+}
+
+.services_card {
+  width: 375px;
+  height: 247px;
+  position: absolute;
+  top: 0;
+  background: #fff;
+  left: -10px;
+}
+
+.card_topImage {
+  position: absolute;
+  top: -40px;
+  left: 40px;
+}
+.card_content {
+  position: absolute;
+  top: 80px;
+  left: 40px;
+}
+
+.card_content_desc {
+  color: #07225a;
+  font-size: 17.844px;
+  font-weight: 400;
+  line-height: 35.689px;
+  letter-spacing: -0.558px;
+  margin-top: 20px;
+}
+
+.card_content_title {
+  color: #333;
+  font-size: 26.767px;
+  font-weight: 700;
+}
+@media (min-width: 768px) {
+  .services_bgCard {
+    height: 267px;
+    width: 400px;
+  }
+
+  .services_card {
+    width: 375px;
+    height: 247px;
+  }
+}
+
+@media (max-width: 767px) {
+  .services_bgCard {
+    height: 247px;
+    width: 350px;
+  }
+
+  .services_card {
+    width: 335px;
+    height: 247px;
+    left: "-25px";
+  }
+}
