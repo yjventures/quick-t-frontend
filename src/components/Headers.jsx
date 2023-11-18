@@ -120,7 +120,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Dropdown */}
         {showMobileMenu && isSmallScreen && (
-          <div className="mobile-menu" onClick={handleDropdownToggle}>
+          <div className="mobile-menu">
             <ul className="nav-links">
               <li>
                 <a href="/how-it-works">How It Works</a>
