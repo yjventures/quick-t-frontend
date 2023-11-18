@@ -227,7 +227,7 @@ function HeroSection({ transfer_percentage, title, description }) {
                   transfer?.attributes?.enabled == true && (
                     <div
                       key={index}
-                      className={`flex items-center w-1/3 gap-4 lg:gap-10 p-3 cursor-pointer ${
+                      className={`flex items-center w-1/3 justify-between p-3 cursor-pointer ${
                         clickedCustomAmount == false &&
                         selectedCard === index + 1
                           ? "bg-gray-200 rounded-xl"
