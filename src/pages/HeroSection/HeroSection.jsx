@@ -8,7 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
 
-function HeroSection({ transfer_percentage }) {
+function HeroSection({ transfer_percentage, title, description }) {
   const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
@@ -92,7 +92,7 @@ function HeroSection({ transfer_percentage }) {
       } else {
         navigate('/register')
       }
-    }else{
+    } else {
       showFailedAlert("Please select country to proceed")
     }
 
@@ -107,12 +107,10 @@ function HeroSection({ transfer_percentage }) {
       >
         <div className="container-fluid">
           <p className="font-bold text-5xl sm:md:text-6xl lg:text-6xl xl:text-6xl herosectionLeftSideHeadingText">
-            Fastest way to send <br /> money to Lebanon,
-            <br /> instantly.
+            {title ? title : "Fastest way to send money to Lebanon, instantly."}
           </p>
           <p className="herosectionLeftSideNormalText">
-            From security and privacy to care and accountability - <br /> what
-            matters to you matters to us.
+            {description ? description : "From security and privacy to care and accountability - what matters to you matters to us."}
           </p>
           <div className="herosectionLeftSideButtonSection">
             <button className="herosectionLeftSideButton">Get Started</button>
