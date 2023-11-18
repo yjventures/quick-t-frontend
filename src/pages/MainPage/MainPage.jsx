@@ -19,7 +19,7 @@ function MainPage() {
   const { isPending: pendingGeneralSettings, error: generalSettingsError, data: generalSettings } = useQuery({
     queryKey: ['general-settings'],
     queryFn: () =>
-      fetch('http://localhost:1337/api/general-settings?populate=*')
+      fetch('https://api.quickt.com.au/api/general-settings?populate=*')
         .then(res => res.json())
         .then(data => data?.data?.[0]?.attributes),
   })
@@ -36,10 +36,10 @@ function MainPage() {
         service_box_one_icon={generalSettings?.service_box_one_icon?.data?.attributes?.url}
         service_box_one_title={generalSettings?.service_box_one_title}
         service_box_one_desc={generalSettings?.service_box_one_desc}
-        service_box_two_icon={generalSettings?.service_box_two_icon}
+        service_box_two_icon={generalSettings?.service_box_two_icon?.data?.attributes?.url}
         service_box_two_title={generalSettings?.service_box_two_title}
         service_box_two_desc={generalSettings?.service_box_two_desc}
-        service_box_three_icon={generalSettings?.service_box_three_icon}
+        service_box_three_icon={generalSettings?.service_box_three_icon?.data?.attributes?.url}
         service_box_three_title={generalSettings?.service_box_three_title}
         service_box_three_desc={generalSettings?.service_box_three_desc}
       />
