@@ -1,6 +1,5 @@
 .herosectionLeftSideHeadingText {
   color: #06113c;
-  
 }
 
 .herosectionLeftSideNormalText {
@@ -74,6 +73,7 @@
 
 .css-13cymwt-control {
   border: none !important;
+  background-color: hsl(0, 0%, 100%) !important;
 }
 
 .css-art2ul-ValueContainer2 {
