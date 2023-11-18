@@ -36,19 +36,19 @@ function ChooseUs({
                     borderRadius: "12px",
                   }}
                 >
-                  <img src={color} style={{ width: "50px", height: "50px" }} />
+                  <img src={`http://localhost:1337${service_box_one_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
                 </div>
                 <div className="card_content">
                   <div className="card_content_title">
                     <p>
-                      {service_box_three_title
-                        ? service_box_three_title
-                        : "24/7 Support"}
+                      {service_box_one_title
+                        ? service_box_one_title
+                        : "Trust Partner"}
                     </p>
                   </div>
                   <div className="card_content_desc">
-                    {service_box_three_desc
-                      ? service_box_three_desc
+                    {service_box_one_desc
+                      ? service_box_one_desc
                       : "Cloudless and of a deep dark blue the spectacle before us was."}
                   </div>
                 </div>
@@ -68,19 +68,19 @@ function ChooseUs({
                     borderRadius: "12px",
                   }}
                 >
-                  <img src={color} style={{ width: "50px", height: "50px" }} />
+                  <img src={`http://localhost:1337${service_box_two_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
                 </div>
                 <div className="card_content">
                   <div className="card_content_title">
                     <p>
-                      {service_box_three_title
-                        ? service_box_three_title
-                        : "24/7 Support"}
+                      {service_box_two_title
+                        ? service_box_two_title
+                        : "Secure Processing"}
                     </p>
                   </div>
                   <div className="card_content_desc">
-                    {service_box_three_desc
-                      ? service_box_three_desc
+                    {service_box_two_desc
+                      ? service_box_two_desc
                       : "Cloudless and of a deep dark blue the spectacle before us was."}
                   </div>
                 </div>
@@ -100,14 +100,14 @@ function ChooseUs({
                     borderRadius: "12px",
                   }}
                 >
-                  <img src={color} style={{ width: "50px", height: "50px" }} />
+                  <img src={`http://localhost:1337${service_box_three_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
                 </div>
                 <div className="card_content">
                   <div className="card_content_title">
                     <p>
                       {service_box_three_title
                         ? service_box_three_title
-                        : "24/7 Support"}
+                        : "Award-Winning Team"}
                     </p>
                   </div>
                   <div className="card_content_desc">
