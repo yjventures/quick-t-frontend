@@ -95,15 +95,18 @@ function Register() {
       showFailedAlert(
         "Please accept the terms and conditions to proceed further"
       );
-
       return;
-    } else if (password.length < 8) {
+    }
+    // if dob is less than 18 years old
+    else if (new Date(dob) > new Date(new Date().setFullYear(new Date().getFullYear() - 18))) {
+      showFailedAlert("Invalid date of birth. Must be at least 18 years old.");
+      return;
+    }
+    else if (password.length < 8) {
       showFailedAlert("Password must be atleast 8 characters long");
-
       return;
     } else if (password !== confirmPassword) {
       showFailedAlert("Password does not match");
-
       return;
     } else {
       setLoading(true);
@@ -304,8 +307,26 @@ function Register() {
                     type="date"
                     placeholder="Date of Birth"
                     className="registerdateofBirthInput"
-                    style={{ width: "100%" }} // Adding custom width to make it consistent
+                    style={{ width: "100%" }}
                     ref={(input) => (dobRef = input)}
+                    onChange={(e) => {
+                      const selectedDate = new Date(e.target.value);
+                      const currentDate = new Date();
+                      const minAge = 18;
+                      const minAgeDate = new Date(
+                        currentDate.getFullYear() - minAge,
+                        currentDate.getMonth(),
+                        currentDate.getDate()
+                      );
+
+                      if (selectedDate > minAgeDate) {
+                        // Show warning or handle invalid date of birth
+                        showFailedAlert("Invalid date of birth. Must be at least 18 years old.");
+                      } else {
+                        // Valid date of birth
+                        console.log("Valid date of birth.");
+                      }
+                    }}
                   />
                 </div>
               </div>
