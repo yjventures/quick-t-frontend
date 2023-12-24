@@ -2,12 +2,27 @@ import React, { useState, useEffect } from "react";
 import "./Headers.css";
 import logo from "../assets/images/logo.png";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false); // State to handle the dropdown visibility
   const [showMobileMenu, setShowMobileMenu] = useState(false); // State to handle the mobile menu visibility
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const navigate = useNavigate();
+  // get user details
+  const { isPending: pendingUser, error: userError, data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: () =>
+      fetch("https://api.quickt.com.au/api/users/me", {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((res) => res.json())
+  });
+  if (userError) return showFailedAlert("Something went wrong");
+  // console.log(user);
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 768); // Adjust the value based on your breakpoint
@@ -40,7 +55,6 @@ const Navbar = () => {
           style={{ width: "208px", height: "66px" }}
         />
       </div>
-
       {/* Middle section with Nav Links for Large Screens */}
       {!isSmallScreen && (
         <div className="navbar-middle">
@@ -69,11 +83,11 @@ const Navbar = () => {
             onClick={handleDropdownToggle}
           >
             <img
-              src="https://www.w3schools.com/howto/img_avatar.png"
+              src={`https://api.quickt.com.au` + user?.image}
               alt="User"
               className="user-image"
             />
-            <span className="user-name">Username</span>
+            <span className="user-name">{user?.first_name}</span>
             <span className="arrow-icon">
               {showDropdown ? "\u25B2" : "\u25BC"}
             </span>
