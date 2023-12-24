@@ -57,7 +57,7 @@ function TransferOTP() {
   const handleSubmit = async () => {
     // if not 3 times wrong otp
     if (inputValue.length < 4) {
-      showFailedAlert("Please enter 4 digit otp");
+      showFailedAlert("Please enter 4 digit PIN");
       return;
     }
 
@@ -107,12 +107,12 @@ function TransferOTP() {
       } else if (statusCode === 403) {
         showFailedAlert("Something went wrong, please try again later");
       } else {
-        showFailedAlert("Wrong otp")
+        showFailedAlert("Wrong PIN")
         setCountWrongOtp(countWrongOtp + 1)
       }
     } else {
       showFailedAlert(
-        "You have entered wrong otp 3 times, Please try after 5 minutes"
+        "You have entered wrong PIN 3 times, Please try after 5 minutes"
       );
       setTimer(true);
       return;
@@ -195,7 +195,7 @@ function TransferOTP() {
             <div className="mx-auto pb-5">
               <img src={paymentcheck} alt="icon" />
             </div>
-            <p className="text-center">Enter the OTP to complete transfer</p>
+            <p className="text-center">Enter the PIN to complete transfer</p>
             <div className="flex gap-10 justify-center mt-5">
               <ReactCodeInput
                 onChange={(e) => {

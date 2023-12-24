@@ -180,7 +180,7 @@ function HeroSection({ transfer_percentage, title, description }) {
             formatOptionLabel={(country) => (
               <div className="flex">
                 <img
-                  src={country.attributes.icon}
+                  src={`https://api.quickt.com.au` + country.attributes?.icon}
                   alt="country-image"
                   style={{
                     height: "24px",
@@ -222,7 +222,8 @@ function HeroSection({ transfer_percentage, title, description }) {
             {pendingQuickTransfers ? (
               <p>Loading...</p>
             ) : (
-              quickTransfers?.map(
+              // sorting quick transfers by amount
+              quickTransfers?.sort((a,b) => a?.attributes?.amount-b?.attributes?.amount)?.map(
                 (transfer, index) =>
                   transfer?.attributes?.enabled == true && (
                     <div
@@ -245,7 +246,7 @@ function HeroSection({ transfer_percentage, title, description }) {
                     >
                       <div>
                         <p className="heroSectionRightSideUSD">
-                          {transfer?.attributes?.amount}
+                          $ {transfer?.attributes?.amount}
                         </p>
                         <p className="heroSectionRightSideFee">
                           fees: {transfer?.attributes?.fee}
