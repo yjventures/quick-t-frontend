@@ -29,6 +29,7 @@ function PersonalInfoEdit() {
           "https://api.quickt.com.au/api/upload/",
           formData
         );
+        console.log(response.data)
         
         console.log(response.data[0].url);
         setUploadImageURL(response.data[0].url);
