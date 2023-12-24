@@ -29,7 +29,7 @@ function SendingMoneyInfo() {
       },
     });
     const res = await response.json();
-    console.log(res.data);
+    // console.log(res.data);
     return res.data;
   }
   const { isPending, error, data: userData } = useQuery({
@@ -37,16 +37,13 @@ function SendingMoneyInfo() {
     queryFn: fetchIUserData,
   })
   if(error) showFailedAlert('Something went wrong, please try again later');
-  console.log(userData)
+  // console.log(userData)
   const userFullName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
   const userPhone = localStorage.getItem("phone");
-  // const userAddress = 
-  console.log(userData)
-  // const userAddress = ;
   const fullName = receiverDataInfo.first_name + " " + receiverDataInfo.last_name;
   const phone = receiverDataInfo.phone;
   const address = receiverDataInfo.city + ", " + receiverDataInfo.country;
-  console.log(address);
+  // console.log(address);
 
   return (
     <div>

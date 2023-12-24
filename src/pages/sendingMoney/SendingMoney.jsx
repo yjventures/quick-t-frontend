@@ -81,6 +81,8 @@ function SendingMoney() {
   let cityRef = useRef(null);
   let noteRef = useRef(null);
   let purposeRef = useRef(null);
+  let transectionPasswordRef = useRef(null);
+
   const [selectedContact, setSelectedContact] = useState(false);
 
   console.log();
@@ -137,6 +139,7 @@ function SendingMoney() {
     const city = cityRef.value;
     const note = noteRef.value;
     const purpose = purposeRef.value;
+    const transectionPassword = transectionPasswordRef.value;
     if (
       !contactSelectedValue ||
       !receiverAreaSelectedValue ||
@@ -147,7 +150,8 @@ function SendingMoney() {
       !zipCode ||
       !streetAddress ||
       !city ||
-      !purpose
+      !purpose ||
+      !transectionPassword
     ) {
       showFailedAlert("Please fill all the fields correctly");
       return;
@@ -163,11 +167,12 @@ function SendingMoney() {
       receiverAreaSelectedValue: receiverAreaSelectedValue,
       purpose: purpose,
       note: note,
+      transection_password: transectionPassword,
     };
     // console.log(receiverData);
     localStorage.setItem("receiverData", JSON.stringify(receiverData));
+    // save this receiver
     if (!selectedContact) {
-      console.log("save this receiver");
       const saveReceiver = async () => {
         const user_id = localStorage.getItem("user_id");
         const res = await fetch(`https://api.quickt.com.au/api/saved-receivers`, {
@@ -402,6 +407,16 @@ function SendingMoney() {
                 placeholder="Write the purpose for transfer..."
                 ref={(input) => (purposeRef = input)}
               ></textarea>
+            </div>
+
+            <div className="relative z-0 w-full mb-6 group">
+              <label className="transectionLabel">Transaction Password</label>
+              <br />
+              <input
+                type="text"
+                className="block w-full sendingInputField"
+                ref={(input) => (transectionPasswordRef = input)}
+              />
             </div>
 
             <div className="relative z-0 w-full mb-6 group">
