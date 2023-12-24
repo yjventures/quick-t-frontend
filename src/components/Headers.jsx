@@ -94,7 +94,13 @@ const Navbar = () => {
                 cursor: "pointer",
               }}
             >
-              <li>Settings</li>
+              <li
+                onClick={() => {
+                  navigate("/personalInfo");
+                }}
+              >
+                Settings
+              </li>
               <li
                 onClick={() => {
                   localStorage.clear();

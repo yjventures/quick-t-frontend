@@ -151,7 +151,6 @@
   margin-top: 0px;
   transition: 0.3s;
   margin-left: 0px;
-
 }
 
 .nav-logo {
@@ -187,7 +186,6 @@
   font-weight: 500;
 }
 .side-bar-item-caption {
-  
   font-size: 13px;
   margin-left: 5px;
   font-weight: 500;
@@ -293,6 +291,8 @@
     top: 0;
     left: 0;
     overflow-x: hidden;
+    padding-left: 0;
+    padding-right: 0;
   }
   .side-nav-close {
     width: 240px;
@@ -318,6 +318,8 @@
     top: 0;
     left: 0;
     overflow-x: hidden;
+    padding-left: 0;
+    padding-right: 0;
   }
   .side-nav-close {
     width: 240px;

@@ -20,3 +20,47 @@
   padding: 40px 20px;
   z-index: 1;
 }
+
+.editPersonalInfoInput {
+  padding: 10px;
+  width: 90%;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: 1px solid #e4ecf1;
+  background-color: #eee;
+}
+.editPersonalInfoInput:focus {
+  background-color: white;
+}
+
+.editPersonalInfoDoneButton {
+  background-color: #1e90ff;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+  cursor: pointer;
+}
+
+.editPersonalInfoCancelButton {
+  background-color: #574343;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+  cursor: pointer;
+}
