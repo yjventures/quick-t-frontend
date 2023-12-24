@@ -16,11 +16,12 @@ function PersonalInfo() {
     axios
       .get(`https://api.quickt.com.au/api/users/${userId}?populate=*`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setUserData(res.data);
       })
       .catch((err) => {
         console.log(err.message);
+
       });
   }, []);
   return (
