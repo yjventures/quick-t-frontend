@@ -33,13 +33,13 @@ function MainPage() {
       <HeroSection transfer_percentage={generalSettings?.transfer_percentage} title={generalSettings?.main_banner_title} description={generalSettings?.main_banner_desc} />
       <GetStart title={generalSettings?.get_started_title} second_title={generalSettings?.get_started_second_title} description={generalSettings?.get_started_description} />
       <ChooseUs
-        service_box_one_icon={generalSettings?.service_box_one_icon?.data?.attributes?.url}
+        service_box_one_icon={generalSettings?.service_box_one_icon}
         service_box_one_title={generalSettings?.service_box_one_title}
         service_box_one_desc={generalSettings?.service_box_one_desc}
-        service_box_two_icon={generalSettings?.service_box_two_icon?.data?.attributes?.url}
+        service_box_two_icon={generalSettings?.service_box_two_icon}
         service_box_two_title={generalSettings?.service_box_two_title}
         service_box_two_desc={generalSettings?.service_box_two_desc}
-        service_box_three_icon={generalSettings?.service_box_three_icon?.data?.attributes?.url}
+        service_box_three_icon={generalSettings?.service_box_three_icon}
         service_box_three_title={generalSettings?.service_box_three_title}
         service_box_three_desc={generalSettings?.service_box_three_desc}
       />

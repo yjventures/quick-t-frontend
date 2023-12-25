@@ -12,7 +12,7 @@ function HeroSection({ transfer_percentage, title, description }) {
   const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
-
+  // console.log(description)  
   // get countries api using react query
   const {
     isPending: pendingCountries,
@@ -76,7 +76,7 @@ function HeroSection({ transfer_percentage, title, description }) {
 
   const sentTo = "lebanon";
   const sendFrom = selectedOption?.attributes?.name;
-  console.log(sendFrom);
+  // console.log(sendFrom);
   const handleCardButton = () => {
     let customAmount = customAmmountRef.value;
     if (clickedCustomAmount == true && customAmount == "") {
