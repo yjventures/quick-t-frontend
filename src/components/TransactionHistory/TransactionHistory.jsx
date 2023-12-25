@@ -13,8 +13,12 @@ function TransactionHistory() {
         `https://api.quickt.com.au/api/transactions?populate=*&filters[users_permissions_user][id][$eq]=${userId}`
       )
       .then((res) => {
-        console.log("transaction data is", res.data.data);
-        setTransactionData(res.data.data);
+        const sortedTransactions = res.data.data.sort(
+          (a, b) =>
+            b.attributes.transaction_date - a.attributes.transaction_date
+        );
+        console.log("transaction data is", sortedTransactions);
+        setTransactionData(sortedTransactions);
       })
       .catch((err) => {
         console.log(err.message);
