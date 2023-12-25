@@ -355,7 +355,11 @@ const Settings = (props) => {
         </div>
       </div>
 
-      <div ref={(div) => (contentRef = div)} className="  max-w-full bg-white h-screen">
+      <div
+        ref={(div) => (contentRef = div)}
+        className="  max-w-full h-screen"
+        style={{ backgroundColor: "#f5f5f5" }}
+      >
         {props.children}
       </div>
     </div>

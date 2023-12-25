@@ -19,10 +19,10 @@
   width: 90%;
   max-width: 650px;
   margin: 0 auto;
-  background: #f9f9f9;
+  background: red;
   border-radius: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 50px;
+  
   padding: 40px 20px;
   z-index: 1;
 }
