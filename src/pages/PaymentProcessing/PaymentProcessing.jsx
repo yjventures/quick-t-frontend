@@ -10,7 +10,7 @@ function PaymentProcessing() {
   const navigate = useNavigate();
 
   const saveTransaction = async () => {
-    const res = await axios.post("https://microservice.quickt.com.au/save-transaction/", {
+    const res = await axios.post("https://microservice.quickt.com.au/save-transaction", {
       data: {
         session_id: session_id,
         user_id: localStorage.getItem("user_id"),
@@ -20,13 +20,13 @@ function PaymentProcessing() {
       }
     });
 
-    if (res.data.statusCode === 200) {
+    if (res?.data?.statusCode === 200) {
       console.log(res.data);
       localStorage.setItem("transaction_id", res.data.id);
       localStorage.setItem("transaction_time", res.data.transaction_time);
       showSuccessAlert("Payment Successfull");
       return res.data;
-    } else if (res.data.statusCode === 403) {
+    } else if (res?.data?.statusCode === 403) {
       showFailedAlert("You have already paid for this transaction, Thank you");
       localStorage.setItem("transaction_id", res.data.id);
       localStorage.setItem("transaction_time", res.data.transaction_time);

@@ -5,7 +5,7 @@ import Headers from "../../components/Headers";
 import { NavLink, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, QueryClient, useQueryClient } from "@tanstack/react-query";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
 
 function SendingMoney() {
@@ -85,7 +85,7 @@ function SendingMoney() {
 
   const [selectedContact, setSelectedContact] = useState(false);
 
-  console.log();
+
   const showData = () => {
     const contactCelectedId = contactSelectRef.current.value;
     if (contactCelectedId == "Select saved contact") {
@@ -126,7 +126,29 @@ function SendingMoney() {
       setPhone(phone);
     }
   };
+
+  // get user details
+  const { isPending: pendingUser, error: userError, data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: () =>
+      fetch("https://api.quickt.com.au/api/users/me", {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((res) => res.json())
+  });
+  if (userError) return showFailedAlert("Something went wrong");
+
   const handleSelectChange = async () => {
+    // get user details form query key "user"
+    // console.log(user)
+    if (user.kyc_approved == false || user.kyc_approved == null) {
+      showFailedAlert("Please verify your KYC to proceed with the transaction.")
+      return;
+    }
+
     const contactSelectedValue = contactSelectRef.current.value;
     const receiverAreaSelectedValue = receiverAreaSelectRef.current.value;
     // const purposeCelectedValue = purposeSelectRef.current.value;

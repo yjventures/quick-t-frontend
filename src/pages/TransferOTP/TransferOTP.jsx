@@ -79,7 +79,7 @@ function TransferOTP() {
       console.log(res?.data?.statusCode);
       // 200 = success | 404 = wrong otp | 403 = System error or wrong jwt
       const amountData = localStorage.getItem("amountData");
-      console.log(amountData);
+      // console.log(amountData);
       const statusCode = res?.data?.statusCode;
       if (statusCode === 200) {
         // window.location.href = "/paymentSuccess";

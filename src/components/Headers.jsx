@@ -82,11 +82,19 @@ const Navbar = () => {
             className="user-profile hidingUserProfile"
             onClick={handleDropdownToggle}
           >
-            <img
-              src={user?.image ? `https://api.quickt.com.au` + user?.image : "https://www.w3schools.com/howto/img_avatar.png"}
-              alt="User"
-              className="user-image"
-            />
+            {
+              pendingUser ? <img
+                src="https://www.w3schools.com/howto/img_avatar.png"
+                alt="User"
+                className="user-image"
+              />
+                :
+                <img
+                  src={user?.image ? `https://api.quickt.com.au` + user?.image : "https://www.w3schools.com/howto/img_avatar.png"}
+                  alt="User"
+                  className="user-image"
+                />
+            }
 
             <span className="user-name">{user?.first_name}</span>
             <span className="arrow-icon">
