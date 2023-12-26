@@ -33,6 +33,7 @@ function SecurityCode() {
   const handleInputChange = (value) => {
     if (
       [
+        "0000",
         "1111",
         "2222",
         "3333",
@@ -149,7 +150,10 @@ function SecurityCode() {
             </div>
           </div>
           <br />
-
+          <p className="text-left">
+            PIN must not be birth year, birth date, <br />
+            or contain the same digit
+          </p>
           {shouldShowImage ? (
             <button className="securityCodeButton" onClick={handleOnClick}>
               Continue

@@ -145,7 +145,7 @@ function SendingMoney() {
     // get user details form query key "user"
     // console.log(user)
     if (user.kyc_approved == false || user.kyc_approved == null) {
-      showFailedAlert("Please verify your KYC to proceed with the transaction.")
+      showFailedAlert("KYC need to be approved to proceed with the transaction.")
       return;
     }
 
