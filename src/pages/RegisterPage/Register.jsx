@@ -98,11 +98,13 @@ function Register() {
       return;
     }
     // if dob is less than 18 years old
-    else if (new Date(dob) > new Date(new Date().setFullYear(new Date().getFullYear() - 18))) {
+    else if (
+      new Date(dob) >
+      new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+    ) {
       showFailedAlert("Invalid date of birth. Must be at least 18 years old.");
       return;
-    }
-    else if (password.length < 8) {
+    } else if (password.length < 8) {
       showFailedAlert("Password must be atleast 8 characters long");
       return;
     } else if (password !== confirmPassword) {
@@ -216,7 +218,7 @@ function Register() {
       {/* Left Part */}
       <div
         className="w-full md:w-1/3 px-2"
-        style={{ height: "120vh", backgroundColor: "#043BA0" }}
+        style={{ height: "150vh", backgroundColor: "#043BA0" }}
       >
         <div>
           <img
@@ -321,7 +323,9 @@ function Register() {
 
                       if (selectedDate > minAgeDate) {
                         // Show warning or handle invalid date of birth
-                        showFailedAlert("Invalid date of birth. Must be at least 18 years old.");
+                        showFailedAlert(
+                          "Invalid date of birth. Must be at least 18 years old."
+                        );
                       } else {
                         // Valid date of birth
                         console.log("Valid date of birth.");
