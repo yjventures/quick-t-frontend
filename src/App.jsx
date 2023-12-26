@@ -18,6 +18,7 @@ import Settings from "./components/settings/Settings";
 import TransactionHistoryPage from "./pages/TransactionHistory/TransactionHistoryPage";
 import PaymentCancel from "./pages/paymentCancel/PaymentCancel";
 import PersonalInfoEditPage from "./pages/EditPersonalInfo/PersonalInfoEditPage";
+import LiveChatPage from "./pages/LiveChatPage/LiveChatPage";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -47,6 +48,10 @@ function App() {
           <Route
             path="/editPersonalInfo"
             element={<PersonalInfoEditPage />}
+          />
+          <Route
+            path="/liveChat"
+            element={<LiveChatPage />}
           />
           <Route
             path="/transactionHistory"

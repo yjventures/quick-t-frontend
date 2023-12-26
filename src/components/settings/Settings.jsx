@@ -279,7 +279,7 @@ const Settings = (props) => {
                 ? "side-bar-item-active side-bar-item mt-2"
                 : "side-bar-item mt-2"
             }
-            to="/transactionHistory"
+            to="/liveChat"
             end
           >
             {({ isActive }) => (
