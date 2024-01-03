@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import whiteLogo from "../../assets/images/whiteLogo.png";
 import registerImage from "../../assets/images/registerImage.png";
 import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
@@ -6,9 +6,9 @@ import googleLogo from "../../assets/images/googleLogo.png";
 import { NavLink, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
+import { Eye, EyeOff } from "lucide-react";
 function LoginPage() {
-  // do not user let refresh page 
-
+  // do not user let refresh page
 
   let emailRef = useRef(null);
   let passwordRef = useRef(null);
@@ -23,9 +23,10 @@ function LoginPage() {
     };
 
     // Make the axios request
-    const res = await axios.post("https://api.quickt.com.au/api/auth/local", userData)
-      .then(response => {
-        console.log(response.data)
+    const res = await axios
+      .post("https://api.quickt.com.au/api/auth/local", userData)
+      .then((response) => {
+        console.log(response.data);
         if (response.data) {
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user.id);
@@ -45,11 +46,21 @@ function LoginPage() {
           showFailedAlert("Invalid Credentials");
         }
       })
-      .catch(error => {
-        console.log('Error:', error)
+      .catch((error) => {
+        console.log("Error:", error);
         showFailedAlert("Invalid Credentials");
       });
   };
+
+  //////////////////////////////////
+  //show login
+  /////////////////////////////////
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
     <div className="flex flex-col md:flex-row">
       {/* Left Part */}
@@ -96,12 +107,28 @@ function LoginPage() {
               <div className="mb-4">
                 <label className="registerPagelabel">Password</label>
                 <br />
-                <input
-                  type="password"
-                  placeholder="password"
-                  className="registerPageInput"
-                  ref={(input) => (passwordRef = input)}
-                />
+                <div style={{ position: "relative" }}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    className="registerPageInput"
+                    ref={(input) => (passwordRef = input)}
+                  />
+                  <button
+                    onClick={handleTogglePassword}
+                    style={{
+                      position: "absolute",
+                      right: "10px", 
+                      top: "45%", 
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                      backgroundColor: "transparent",
+                      border: "none",
+                    }}
+                  >
+                    {showPassword ? <EyeOff /> : <Eye />}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -30,7 +30,7 @@ function ConfirmCode() {
   const [showImage, setShowImage] = useState(false);
   let securityCodeRef = useRef();
   // console.log(securityCodeRef.value)
-  // get 
+  // get
   // useEffect(() => {
   //   const confirmSecurityCode = securityCodeRef.value;
   //   if (securityCode === confirmSecurityCode) {
@@ -60,47 +60,56 @@ function ConfirmCode() {
   };
   // if matches both code then do this
   const confirmSecurityCode = async () => {
-    const res = await axios.post('https://api.quickt.com.au/api/security-codes', {
-      "data": {
-        "code": securityCode
+    const res = await axios.post(
+      "https://api.quickt.com.au/api/security-codes",
+      {
+        data: {
+          code: securityCode,
+        },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
       }
-    }, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
-      }
-    });
+    );
 
     if (res.data.error) {
-      showFailedAlert('Something went wrong, please try again')
-      return
+      showFailedAlert("Something went wrong, please try again");
+      return;
     } else {
       const securityCodeID = res?.data?.data?.id;
       // relate security code to user
-      const userResponse = await axios.put(`https://api.quickt.com.au/api/users/${localStorage.getItem("user_id")}`, {
-        "security_code": securityCodeID,
-        "security_complete": true
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+      const userResponse = await axios.put(
+        `https://api.quickt.com.au/api/users/${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          security_code: securityCodeID,
+          security_complete: true,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
         }
-      });
+      );
       if (userResponse.data.error) {
-        showFailedAlert('Something went wrong, please try again')
-        return
+        showFailedAlert("Something went wrong, please try again");
+        return;
       }
       localStorage.removeItem("security_code");
-      showSuccessAlert('Security Code added successfully')
+      showSuccessAlert("Security Code added successfully");
       // check amount data is available in local storage or not
-      if(localStorage.getItem('amountData')){
-        navigate('/sendingMoney');
-      }else{
-        navigate('/');
+      if (localStorage.getItem("amountData")) {
+        navigate("/sendingMoney");
+      } else {
+        navigate("/");
       }
     }
-
-  }
+  };
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -138,7 +147,6 @@ function ConfirmCode() {
           <div className="flex flex-row items-center justify-between">
             <div>
               <ReactCodeInput
-                type="number"
                 inputStyle={defaultInputStyle}
                 fields={4}
                 onChange={handleOnChange}
@@ -190,10 +198,7 @@ function ConfirmCode() {
             </div>
           </div>
           <br />
-          <button
-            className="securityCodeButton"
-            onClick={handleContinueButton}
-          >
+          <button className="securityCodeButton" onClick={handleContinueButton}>
             Continue
           </button>
           <p className="securityCodeSmallText">

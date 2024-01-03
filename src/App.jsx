@@ -19,6 +19,7 @@ import TransactionHistoryPage from "./pages/TransactionHistory/TransactionHistor
 import PaymentCancel from "./pages/paymentCancel/PaymentCancel";
 import PersonalInfoEditPage from "./pages/EditPersonalInfo/PersonalInfoEditPage";
 import LiveChatPage from "./pages/LiveChatPage/LiveChatPage";
+import TermsConditionPage from "./pages/TermsCondition/TermsConditionPage";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/sendingMoney" element={<SendingMoney />} />
+          <Route path="/termsAndCondition" element={<TermsConditionPage />} />
           <Route path="/sendingMoneyInfo" element={<SendingMoneyInfo />} />
           <Route path="/sendOTP" element={<TransferOTP />} />
           <Route path="/kyc" element={<KycPage />} />

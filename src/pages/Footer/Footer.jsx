@@ -1,4 +1,4 @@
-
+import { NavLink } from "react-router-dom/dist";
 import "./footer.css";
 function Footer() {
   return (
@@ -14,8 +14,12 @@ function Footer() {
         <p className="footerHeading">Help</p>
         <p className="footerText">Customer Support</p>
         <p className="footerText">Delivery Details</p>
-        <p className="footerText">Terms & condition</p>
-        <p className="footerText">Privacy Policy</p>
+        <NavLink to="/termsAndCondition">
+          <p className="footerText cursor-pointer">Terms And Condition</p>
+        </NavLink>
+        <NavLink to="/termsAndCondition">
+          <p className="footerText cursor-pointer">Privacy Policy</p>
+        </NavLink>
       </div>
       <div className="hidden sm:block">
         <p className="footerHeading">Resources</p>

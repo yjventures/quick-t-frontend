@@ -8,16 +8,31 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
 import PhoneInput from "react-phone-input-2";
+import { Eye, EyeOff, ImagePlus, UserIcon } from "lucide-react";
 function Register() {
   const [error, setError] = useState(null);
   const [warning, setWarning] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  /////////////////////////////////////
+  //password show and hide
+  ////////////////////////////////////
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleToggleConfirmPassword = () => {
+    setShowConfirmPassword((prevShowPassword) => !prevShowPassword);
+  };
   /////////////////////////////////////
   //photo upload handling
   /////////////////////////////////////
   const [phone, setPhone] = useState(null);
-  const [image, setImage] = useState(imagePlaceholder);
+  const [image, setImage] = useState();
   const [strapiImage, setStrapiImage] = useState(null);
   console.log(image);
 
@@ -249,19 +264,46 @@ function Register() {
           <div
             onClick={handleImageClick}
             style={{
-              height: "161px",
-              width: "252px",
+              height: "162px",
+              width: "253px",
             }}
           >
-            <img
-              src={image}
-              alt=""
-              style={{
-                height: "100%",
-                width: "100%",
-                borderRadius: "10px",
-              }}
-            />
+            {image ? (
+              <img
+                src={image}
+                alt=""
+                style={{
+                  borderRadius: "10px",
+                  backgroundColor: "transparent",
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                  cursor: "pointer",
+                }}
+              />
+            ) : (
+              <div
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  borderRadius: "3.5px",
+                  backgroundColor: "#fff",
+                  cursor: "pointer",
+                  border: "1px solid #D1D1D1",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ImagePlus width={"26px"} height={"50px"} />
+                <div>
+                  <p style={{ fontSize: "12px" }}>
+                    Click to upload your Profile Picture
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
           <p className="registerNormalText mt-6">
             Enter Your basic information
@@ -350,24 +392,56 @@ function Register() {
               </div>
               <div className="flex flex-col lg:flex-row gap-x-10">
                 <div className="registerPagelabel">
-                  <label htmlFor="phone1">Password</label>
+                  <label htmlFor="password">Password</label>
                   <br />
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    className="registerPageInput"
-                    ref={(input) => (passwordRef = input)}
-                  />
+                  <div style={{ position: "relative" }}>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Password"
+                      className="registerPageInput"
+                      ref={(input) => (passwordRef = input)}
+                    />
+                    <button
+                      onClick={handleTogglePassword}
+                      style={{
+                        position: "absolute",
+                        right: "10px", // Adjust the position based on your design
+                        top: "45%", // Center vertically
+                        transform: "translateY(-50%)", // Center vertically
+                        cursor: "pointer",
+                        backgroundColor: "transparent",
+                        border: "none",
+                      }}
+                    >
+                      {showPassword ? <EyeOff /> : <Eye />}
+                    </button>
+                  </div>
                 </div>
                 <div className="mb-4">
                   <label className="registerPagelabel">Confirm Password</label>
                   <br />
-                  <input
-                    type="password"
-                    placeholder="Confirm Password"
-                    className="registerPageInput"
-                    ref={(input) => (confirmPasswordRef = input)}
-                  />
+                  <div style={{ position: "relative" }}>
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Confirm Password"
+                      className="registerPageInput"
+                      ref={(input) => (confirmPasswordRef = input)}
+                    />
+                    <button
+                      onClick={handleToggleConfirmPassword}
+                      style={{
+                        position: "absolute",
+                        right: "10px",
+                        top: "45%", 
+                        transform: "translateY(-50%)", 
+                        cursor: "pointer",
+                        backgroundColor: "transparent",
+                        border: "none",
+                      }}
+                    >
+                      {showConfirmPassword ? <EyeOff /> : <Eye />}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -396,8 +470,12 @@ function Register() {
                 }}
               />
               <label className="registerPageCheckBoxLabel">
-                I agree to the <span>Terms</span> and
-                <span>Privacy Policy</span>
+                I agree to the{" "}
+                <NavLink to="/termsAndCondition" target="_blank">
+                  <span className="cursor-pointer">
+                    Terms and Privacy Policy
+                  </span>
+                </NavLink>
               </label>
             </div>
           </div>

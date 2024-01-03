@@ -8,9 +8,10 @@ import backPlaceholder from "../../assets/images/backPlaceHolder.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
+import { ImagePlus } from "lucide-react";
 function KycPage() {
   //for the front image
-  const [frontImage, setFrontImage] = useState(frontPlaceholder);
+  const [frontImage, setFrontImage] = useState();
   const [strapiFrontImage, setStrapiFrontImage] = useState(null);
   console.log(frontImage);
 
@@ -45,7 +46,7 @@ function KycPage() {
   };
 
   //back image
-  const [backImage, setBackImage] = useState(backPlaceholder);
+  const [backImage, setBackImage] = useState();
 
   const [strapiBackImage, setStrapiBackImage] = useState(null);
   const handleBackImageClick = () => {
@@ -113,7 +114,6 @@ function KycPage() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
- 
   //////////////////////////
   //onClick handler
   //////////////////////////
@@ -173,7 +173,9 @@ function KycPage() {
       const kycID = response?.data?.data?.id;
       // relate kyc to user
       const userResponse = await axios.put(
-        `https://api.quickt.com.au/api/users/${localStorage.getItem("user_id")}`,
+        `https://api.quickt.com.au/api/users/${localStorage.getItem(
+          "user_id"
+        )}`,
         {
           kyc: kycID,
           kyc_complete: true,
@@ -286,15 +288,42 @@ function KycPage() {
                 style={{ width: "252px", height: "135px" }}
                 onClick={handleFrontImageClick}
               >
-                <img
-                  src={frontImage}
-                  alt=""
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    borderRadius: "12px",
-                  }}
-                />
+                {frontImage ? (
+                  <img
+                    src={frontImage}
+                    alt=""
+                    style={{
+                      borderRadius: "10px",
+                      backgroundColor: "transparent",
+                      objectFit: "cover",
+                      width: "100%",
+                      height: "100%",
+                      cursor: "pointer",
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      borderRadius: "3.5px",
+                      backgroundColor: "#fff",
+                      cursor: "pointer",
+                      border: "1px solid #D1D1D1",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <ImagePlus width={"26px"} height={"50px"} />
+                    <div>
+                      <p style={{ fontSize: "10px" }}>
+                        Click to upload your Photo ID (Front)
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div
@@ -306,11 +335,42 @@ function KycPage() {
                 }}
                 onClick={handleBackImageClick}
               >
-                <img
-                  src={backImage}
-                  alt=""
-                  style={{ height: "100%", width: "100%" }}
-                />
+                {backImage ? (
+                  <img
+                    src={backImage}
+                    alt=""
+                    style={{
+                      borderRadius: "10px",
+                      backgroundColor: "transparent",
+                      objectFit: "cover",
+                      width: "100%",
+                      height: "100%",
+                      cursor: "pointer",
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      borderRadius: "3.5px",
+                      backgroundColor: "#fff",
+                      cursor: "pointer",
+                      border: "1px solid #D1D1D1",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <ImagePlus width={"26px"} height={"50px"} />
+                    <div>
+                      <p style={{ fontSize: "10px" }}>
+                        Click to upload your Photo ID (Back)
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
