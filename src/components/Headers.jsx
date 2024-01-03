@@ -10,16 +10,19 @@ const Navbar = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const navigate = useNavigate();
   // get user details
-  const { isPending: pendingUser, error: userError, data: user } = useQuery({
+  const {
+    isPending: pendingUser,
+    error: userError,
+    data: user,
+  } = useQuery({
     queryKey: ["user"],
     queryFn: () =>
       fetch("https://api.quickt.com.au/api/users/me", {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
-      })
-        .then((res) => res.json())
+      }).then((res) => res.json()),
   });
   if (userError) return showFailedAlert("Something went wrong");
   // console.log(user);
@@ -82,19 +85,23 @@ const Navbar = () => {
             className="user-profile hidingUserProfile"
             onClick={handleDropdownToggle}
           >
-            {
-              pendingUser ? <img
+            {pendingUser ? (
+              <img
                 src="https://www.w3schools.com/howto/img_avatar.png"
                 alt="User"
                 className="user-image"
               />
-                :
-                <img
-                  src={user?.image ? `https://api.quickt.com.au` + user?.image : "https://www.w3schools.com/howto/img_avatar.png"}
-                  alt="User"
-                  className="user-image"
-                />
-            }
+            ) : (
+              <img
+                src={
+                  user?.image
+                    ? `https://api.quickt.com.au` + user?.image
+                    : "https://www.w3schools.com/howto/img_avatar.png"
+                }
+                alt="User"
+                className="user-image"
+              />
+            )}
 
             <span className="user-name">{user?.first_name}</span>
             <span className="arrow-icon">
@@ -102,10 +109,17 @@ const Navbar = () => {
             </span>
           </div>
         ) : (
-          <div className="user-profile hidingUserProfile">
-            <NavLink to="/register">
-              <button className="headerSignUp">Sign Up</button>
-            </NavLink>
+          <div className="flex">
+            <div className="user-profile hidingUserProfile">
+              <NavLink to="/register">
+                <button className="headerSignUp">Login</button>
+              </NavLink>
+            </div>
+            <div className="user-profile hidingUserProfile">
+              <NavLink to="/register">
+                <button className="headerSignUp">Sign Up</button>
+              </NavLink>
+            </div>
           </div>
         )}
 
@@ -140,9 +154,9 @@ const Navbar = () => {
         {isSmallScreen && (
           <div className="menu-icon" onClick={handleMobileMenuToggle}>
             {showMobileMenu ? (
-              <span style={{ fontSize: "30px" }}>&times;</span> // Cross icon
+              <span className="cursor-pointer" style={{ fontSize: "40px" }}>&times;</span> // Cross icon
             ) : (
-              <span style={{ fontSize: "20px" }}>&#9776;</span> // Three-line icon
+              <span className="cursor-pointer" style={{ fontSize: "40px" }}>&#9776;</span> // Three-line icon
             )}
           </div>
         )}
@@ -177,10 +191,17 @@ const Navbar = () => {
                     </span>
                   </div>
                 ) : (
-                  <div className="user-profile ">
-                    <NavLink to="/register">
-                      <button className="headerSignUp">Sign Up</button>
-                    </NavLink>
+                  <div className="ms-2">
+                    <div className="user-profile mb-2 ms-2">
+                      <NavLink to="/login">
+                        <button className="headerSignUp">Log In</button>
+                      </NavLink>
+                    </div>
+                    <div className="user-profile ">
+                      <NavLink to="/register">
+                        <button className="headerSignUp">Sign Up</button>
+                      </NavLink>
+                    </div>
                   </div>
                 )}
               </li>
