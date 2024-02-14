@@ -269,7 +269,7 @@ function HeroSection({ transfer_percentage, title, description }) {
           <input
             onClick={() => setClickedCustomAmount(true)}
             ref={(input) => (customAmmountRef = input)}
-            placeholder="or custom ammount"
+            placeholder="or custom amount"
             className="mt-6 rounded-xl border-none text-black heroSectionCustommunt"
           />
           {

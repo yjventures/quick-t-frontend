@@ -18,7 +18,7 @@ function ChooseUs({
         <p className="chooseUsTextIntro ">WE HELP FOR YOU</p>
         <p className="chooseUsTextIntroHeading text-4xl md:text-5xl lg:text-5xl xl:text-5xl pt-5">
           {/* look here image is showing,  */}
-          Why Chooes Us
+          Why Choose Us
         </p>
       </div>
       <div className="container mx-auto">

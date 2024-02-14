@@ -21,7 +21,7 @@ function HowTransfer() {
         className="w-full md:w-1/2 flex items-center sm:items-start md:items-center xl:items-center lg:items-cneter justify-center container pl-5"
         style={{ height: "90vh", backgroundColor: "#FFFFFF" }}
       >
-        <div>
+        <div className="flex flex-col gap-3">
           <p className="howTranferHeadingText">HOW TO TRANSFER</p>
           <p className="howTransferCountDown font-bold text-3xl sm:text-3xl md:text-5xl lg:text-5xl xl:text-5xl">
             Easy as 1 - 2 - 3
