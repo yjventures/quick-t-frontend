@@ -36,7 +36,7 @@ function SendingMoneyInfo() {
     queryKey: 'userData',
     queryFn: fetchIUserData,
   })
-  if(error) showFailedAlert('Something went wrong, please try again later');
+  if (error) showFailedAlert('Something went wrong, please try again later');
   // console.log(userData)
   const userFullName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
   const userPhone = localStorage.getItem("phone");
@@ -44,7 +44,7 @@ function SendingMoneyInfo() {
   const phone = receiverDataInfo.phone;
   const address = receiverDataInfo.city + ", " + receiverDataInfo.country;
   // console.log(address);
-
+  const transection_password = receiverDataInfo.transection_password
   return (
     <div>
       <Headers />
@@ -123,19 +123,21 @@ function SendingMoneyInfo() {
             <div>
               <p className="font-bold pb-5">Transfer Details</p>
               <div className="flex justify-between">
-                <div>
+                <div className="flex flex-col gap-1">
                   <p className="font-normal text-sm pb-1">Transfer amount</p>
                   <p className="font-normal text-sm pb-1">Transfer fee</p>
                   <p className="font-normal text-sm pb-1">Total payable</p>
+                  <p className="font-normal text-sm p2-1">Transection password</p>
                 </div>
-                <div style={{textAlign: 'right'}}>
-                  <p className="font-bold font-bold pb-1">
+                <div style={{ textAlign: 'right' }} className="flex flex-col gap-0">
+                  <p className="font-bold pb-1">
                     {amountDataInfo.transfer_amount} USD
                   </p>
                   <p className="font-normal text-sm pb-1">
                     {amountDataInfo.transfer_fees} USD
                   </p>
-                  <p className="font-bold font-bold pb-1">{amountDataInfo.transfer_total} USD</p>
+                  <p className="font-bold pb-1">{amountDataInfo.transfer_total} USD</p>
+                  <p className="font-bold pb-1">{transection_password} </p>
                 </div>
               </div>
             </div>
@@ -148,7 +150,7 @@ function SendingMoneyInfo() {
                   <p className="font-normal text-sm pb-1">Phone Number</p>
                   <p className="font-normal text-sm pb-1">Address</p>
                 </div>
-                <div style={{textAlign: 'right'}}>
+                <div style={{ textAlign: 'right' }}>
                   <p className="font-normal text-sm pb-1">{fullName}</p>
                   <p className="font-normal text-sm pb-1">+{phone}</p>
                   <p className="font-normal text-sm pb-1">{address}</p>
@@ -164,7 +166,7 @@ function SendingMoneyInfo() {
                   <p className="font-normal text-sm pb-1">Phone Number</p>
                   <p className="font-normal text-sm pb-1">Address</p>
                 </div>
-                <div style={{textAlign: 'right'}}>
+                <div style={{ textAlign: 'right' }}>
                   <p className="font-normal text-sm pb-1">{userFullName}</p>
                   <p className="font-normal text-sm pb-1">+{userPhone}</p>
                   <p className="font-normal text-sm pb-1">{userData && userData[0]?.attributes?.street_address + ", " + userData[0]?.attributes?.city + ", " + userData[0]?.attributes?.country}</p>

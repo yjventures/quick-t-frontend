@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Rectangle from "../../assets/images/Rectangle.png";
 import "./sendingMoney.css";
 import Headers from "../../components/Headers";
@@ -81,10 +81,25 @@ function SendingMoney() {
   let cityRef = useRef(null);
   let noteRef = useRef(null);
   let purposeRef = useRef(null);
-  let transectionPasswordRef = useRef(null);
-
+  // let transectionPasswordRef = useRef(null);
+  const [transactionPassword, setTransactionPassword] = useState("");
   const [selectedContact, setSelectedContact] = useState(false);
+  // Function to generate a random password
+  const generateTransactionPassword = () => {
+    // Example: Generate a random 8-character password with alphanumeric characters
+    const length = 8;
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let retVal = "";
+    for (let i = 0, n = charset.length; i < length; ++i) {
+      retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
+  };
 
+  // Use useEffect to set the initial transaction password when the component mounts
+  useEffect(() => {
+    setTransactionPassword(generateTransactionPassword());
+  }, []);
 
   const showData = () => {
     const contactCelectedId = contactSelectRef.current.value;
@@ -161,7 +176,7 @@ function SendingMoney() {
     const city = cityRef.value;
     const note = noteRef.value;
     const purpose = purposeRef.value;
-    const transectionPassword = transectionPasswordRef.value;
+    // const transectionPassword = transectionPasswordRef.value;
     if (
       !contactSelectedValue ||
       !receiverAreaSelectedValue ||
@@ -173,7 +188,7 @@ function SendingMoney() {
       !streetAddress ||
       !city ||
       !purpose ||
-      !transectionPassword
+      !transactionPassword
     ) {
       showFailedAlert("Please fill all the fields correctly");
       return;
@@ -189,7 +204,7 @@ function SendingMoney() {
       receiverAreaSelectedValue: receiverAreaSelectedValue,
       purpose: purpose,
       note: note,
-      transection_password: transectionPassword,
+      transection_password: transactionPassword,
     };
     // console.log(receiverData);
     localStorage.setItem("receiverData", JSON.stringify(receiverData));
@@ -437,7 +452,8 @@ function SendingMoney() {
               <input
                 type="text"
                 className="block w-full sendingInputField"
-                ref={(input) => (transectionPasswordRef = input)}
+                value={transactionPassword}
+                onChange={(e) => setTransactionPassword(e.target.value)}
               />
             </div>
 

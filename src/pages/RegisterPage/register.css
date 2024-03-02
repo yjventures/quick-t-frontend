@@ -29,11 +29,13 @@
   color: black;
   margin-top: 10px;
   margin-bottom: 20px;
+  outline: none;
 }
 
-.registerPageInput:focus {
+/* .registerPageInput:focus {
   background-color: white;
-}
+} */
+
 .registerPagelabel {
   color: black;
   font-size: 16px;

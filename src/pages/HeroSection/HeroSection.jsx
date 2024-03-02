@@ -223,17 +223,16 @@ function HeroSection({ transfer_percentage, title, description }) {
               <p>Loading...</p>
             ) : (
               // sorting quick transfers by amount
-              quickTransfers?.sort((a,b) => a?.attributes?.amount-b?.attributes?.amount)?.map(
+              quickTransfers?.sort((a, b) => a?.attributes?.amount - b?.attributes?.amount)?.map(
                 (transfer, index) =>
                   transfer?.attributes?.enabled == true && (
                     <div
                       key={index}
-                      className={`flex items-center w-1/3 justify-between p-3 cursor-pointer ${
-                        clickedCustomAmount == false &&
-                        selectedCard === index + 1
-                          ? "bg-gray-200 rounded-xl"
-                          : ""
-                      }`}
+                      className={`flex items-center w-1/3 justify-between p-3 cursor-pointer ${clickedCustomAmount == false &&
+                          selectedCard === index + 1
+                          ? "bg-gray-100 rounded-lg"
+                          : "border-[1px] rounded-lg"
+                        }`}
                       onClick={() => {
                         customAmmountRef.value = "";
                         handleCardClick(
@@ -245,6 +244,14 @@ function HeroSection({ transfer_percentage, title, description }) {
                       }}
                     >
                       <div>
+                        {clickedCustomAmount == false &&
+                          selectedCard === index + 1 ? (
+                          <img src={tickCircle} alt="" />
+                        ) : (
+                          <img src={stopCircle} alt="" />
+                        )}
+                      </div>
+                      <div className="pe-2">
                         <p className="heroSectionRightSideUSD">
                           $ {transfer?.attributes?.amount}
                         </p>
@@ -252,14 +259,7 @@ function HeroSection({ transfer_percentage, title, description }) {
                           fees: {transfer?.attributes?.fee}
                         </p>
                       </div>
-                      <div>
-                        {clickedCustomAmount == false &&
-                        selectedCard === index + 1 ? (
-                          <img src={tickCircle} alt="" />
-                        ) : (
-                          <img src={stopCircle} alt="" />
-                        )}
-                      </div>
+
                     </div>
                   )
               )
@@ -270,7 +270,7 @@ function HeroSection({ transfer_percentage, title, description }) {
             onClick={() => setClickedCustomAmount(true)}
             ref={(input) => (customAmmountRef = input)}
             placeholder="or custom amount"
-            className="mt-6 rounded-xl border-none text-black heroSectionCustommunt"
+            className="mt-6 rounded-xl border-none text-black heroSectionCustommunt outline-none"
           />
           {
             <button
