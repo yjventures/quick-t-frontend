@@ -86,7 +86,9 @@ function TransferOTP() {
         // showSuccessAlert("Payment Successfull")
 
         const response = await axios.post(
+          // "http://localhost:5000/checkout-session",
           "https://microservice.quickt.com.au/checkout-session",
+          // "http://localhost:5000/checkout-session-new",
           {
             data: amountData,
           },

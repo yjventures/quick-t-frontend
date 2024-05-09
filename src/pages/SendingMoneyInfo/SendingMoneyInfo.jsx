@@ -127,7 +127,7 @@ function SendingMoneyInfo() {
                   <p className="font-normal text-sm pb-1">Transfer amount</p>
                   <p className="font-normal text-sm pb-1">Transfer fee</p>
                   <p className="font-normal text-sm pb-1">Total payable</p>
-                  <p className="font-normal text-sm p2-1">Transection password</p>
+                  <p className="font-normal text-sm p2-1">Transaction password</p>
                 </div>
                 <div style={{ textAlign: 'right' }} className="flex flex-col gap-0">
                   <p className="font-bold pb-1">
@@ -159,7 +159,7 @@ function SendingMoneyInfo() {
             </div>
 
             <div className="pt-10">
-              <p className="font-bold pb-5">Recipient Details</p>
+              <p className="font-bold pb-5">Sender Details</p>
               <div className="flex justify-between">
                 <div>
                   <p className="font-normal text-sm pb-1">Name</p>
