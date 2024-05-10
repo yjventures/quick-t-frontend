@@ -55,7 +55,7 @@ const Navbar = () => {
           src={logo}
           alt="Logo"
           className="logo"
-          style={{ width: "208px", height: "66px" }}
+          style={{ width: "208px", height: "70px", objectFit: 'cover' }}
         />
       </div>
       {/* Middle section with Nav Links for Large Screens */}

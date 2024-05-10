@@ -8,7 +8,9 @@ import ReactCodeInput from "react-code-input";
 import securityTick from "../../assets/images/securityTick.png";
 import axios from "axios";
 import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
+import { useNavigate } from "react-router-dom";
 function TransferOTP() {
+  const navigate = useNavigate()
   const [countWrongOtp, setCountWrongOtp] = useState(1);
   const [inputValue, setInputValue] = useState("");
   const [timer, setTimer] = useState(false);
@@ -81,14 +83,17 @@ function TransferOTP() {
       const amountData = localStorage.getItem("amountData");
       // console.log(amountData);
       const statusCode = res?.data?.statusCode;
+      navigate('/areeba-payment-gateway')
+      return;
+
       if (statusCode === 200) {
         // window.location.href = "/paymentSuccess";
         // showSuccessAlert("Payment Successfull")
 
         const response = await axios.post(
           // "http://localhost:5000/checkout-session",
-          "https://microservice.quickt.com.au/checkout-session",
-          // "http://localhost:5000/checkout-session-new",
+          // "https://microservice.quickt.com.au/checkout-session",
+          "http://localhost:5000/checkout-session-new",
           {
             data: amountData,
           },

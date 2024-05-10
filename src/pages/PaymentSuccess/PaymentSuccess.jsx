@@ -48,10 +48,12 @@ function PaymentSuccess() {
   const amountDataInfo = JSON.parse(localStorage.getItem("amountData"));
   const userName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
   const time = new Date().toLocaleString();
-  
+
   const unixTimestamp = localStorage.getItem("transaction_time");
   const date = new Date(unixTimestamp * 1000);
   const localTime = date.toLocaleString();
+  const rndInt = Math.floor(Math.random() * 6) + 1
+
   // console.log(localTime);
   return (
     <div className="mb-10">
@@ -84,7 +86,7 @@ function PaymentSuccess() {
           <p className="paymentSuccessHeaderSectionFrontText text-center">
             Payment Success!
           </p>
-          <p className="paymentSuccessHeaderSectionSecondText">US ${amountDataInfo.transfer_amount}</p>
+          <p className="paymentSuccessHeaderSectionSecondText">US ${Number(amountDataInfo.transfer_amount) + Number(amountDataInfo.transfer_fees)}</p>
         </div>
 
         <p className="paymentSuccessLine mx-auto"></p>
@@ -114,7 +116,7 @@ function PaymentSuccess() {
                 showSuccessAlert("Copied to clipboard")
               }}>
               <p className="paymentSuccessEnding transfernumber text-base lg:text-xl">
-                QT-{localStorage.getItem("transaction_id")}
+                QT-{rndInt}
               </p>
               <div
                 style={{

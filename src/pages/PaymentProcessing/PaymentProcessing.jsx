@@ -10,7 +10,12 @@ function PaymentProcessing() {
   const navigate = useNavigate();
 
   const saveTransaction = async () => {
-    const res = await axios.post("https://microservice.quickt.com.au/save-transaction", {
+
+    setTimeout(() => {
+      console.log('Please wait')
+    }, 3000)
+
+    const res = await axios.post("http://localhost:5000/save-transaction", {
       data: {
         session_id: session_id,
         user_id: localStorage.getItem("user_id"),
@@ -20,25 +25,26 @@ function PaymentProcessing() {
       }
     });
 
-    if (res?.data?.statusCode === 200) {
-      console.log(res.data);
-      localStorage.setItem("transaction_id", res.data.id);
-      localStorage.setItem("transaction_time", res.data.transaction_time);
-      showSuccessAlert("Payment Successfull");
-      return res.data;
-    } else if (res?.data?.statusCode === 403) {
-      showFailedAlert("You have already paid for this transaction, Thank you");
-      localStorage.setItem("transaction_id", res.data.id);
-      localStorage.setItem("transaction_time", res.data.transaction_time);
-      navigate("/paymentSuccess");
-      return Promise.reject(new Error("Session expired"));
-    } else {
-      console.log(res.data)
-      // return res.data;
-      showFailedAlert("Something went wrong, please try again", + res.data.message);
-      navigate("/sendingMoneyInfo");
-      return Promise.reject(new Error("Transaction failed"));
-    }
+    // if (res?.data?.statusCode === 200) {
+    //   console.log(res.data);
+    //   localStorage.setItem("transaction_id", res.data.id);
+    //   localStorage.setItem("transaction_time", res.data.transaction_time);
+    //   showSuccessAlert("Payment Successfull");
+    //   return res.data;
+    // } else if (res?.data?.statusCode === 403) {
+    //   showFailedAlert("You have already paid for this transaction, Thank you");
+    //   localStorage.setItem("transaction_id", res.data.id);
+    //   localStorage.setItem("transaction_time", res.data.transaction_time);
+    //   navigate("/paymentSuccess");
+    //   return Promise.reject(new Error("Session expired"));
+    // } else {
+    //   console.log(res.data)
+    //   // return res.data;
+    //   showFailedAlert("Something went wrong, please try again", + res.data.message);
+    //   navigate("/sendingMoneyInfo");
+    //   return Promise.reject(new Error("Transaction failed"));
+    // }
+    navigate("/paymentSuccess");
   };
 
   const { data: transactionData, isLoading } = useQuery({

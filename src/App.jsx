@@ -20,6 +20,7 @@ import PaymentCancel from "./pages/paymentCancel/PaymentCancel";
 import PersonalInfoEditPage from "./pages/EditPersonalInfo/PersonalInfoEditPage";
 import LiveChatPage from "./pages/LiveChatPage/LiveChatPage";
 import TermsConditionPage from "./pages/TermsCondition/TermsConditionPage";
+import DummyPayment from "./pages/dummyPayment/DummyPayment";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -59,6 +60,8 @@ function App() {
             path="/transactionHistory"
             element={<TransactionHistoryPage />}
           />
+          <Route path="/areeba-payment-gateway" element={<DummyPayment />} />
+
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
