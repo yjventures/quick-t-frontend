@@ -8,7 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
 
-function HeroSection({ transfer_percentage, title, description }) {
+function HeroSection({ transfer_percentage, title, description, platform_fee }) {
   const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
@@ -86,18 +86,20 @@ function HeroSection({ transfer_percentage, title, description }) {
     const data = {
       sendFrom: sendFrom,
       sendTo: sentTo,
+      platform_fee: platform_fee
     };
     // if custom amount is clicked then take custom amount else take default amount
     if (clickedCustomAmount) {
       data.transfer_amount = Number(customAmount);
       data.transfer_fees =
         (Number(customAmount) * Number(transfer_percentage)) / 100;
-      data.transfer_total = Number(customAmount) + Number(data.transfer_fees);
+      data.transfer_total = Number(customAmount) + Number(data.transfer_fees) + Number(platform_fee);
     } else {
       data.transfer_amount = Number(defaultAmount);
       data.transfer_fees = Number(transferFee);
-      data.transfer_total = Number(defaultAmount) + Number(transferFee);
+      data.transfer_total = Number(defaultAmount) + Number(transferFee) + Number(platform_fee);
     }
+
     localStorage.setItem("amountData", JSON.stringify(data));
     if (data.sendFrom) {
       if (jwt) {
@@ -229,9 +231,9 @@ function HeroSection({ transfer_percentage, title, description }) {
                     <div
                       key={index}
                       className={`flex items-center w-1/3 justify-between p-3 cursor-pointer ${clickedCustomAmount == false &&
-                          selectedCard === index + 1
-                          ? "bg-gray-100 rounded-lg"
-                          : "border-[1px] rounded-lg"
+                        selectedCard === index + 1
+                        ? "bg-gray-100 rounded-lg"
+                        : "border-[1px] rounded-lg"
                         }`}
                       onClick={() => {
                         customAmmountRef.value = "";

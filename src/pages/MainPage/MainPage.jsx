@@ -30,7 +30,7 @@ function MainPage() {
   return (
     <div>
       <Headers />
-      <HeroSection transfer_percentage={generalSettings?.transfer_percentage} title={generalSettings?.main_banner_title} description={generalSettings?.main_banner_desc} />
+      <HeroSection platform_fee={generalSettings?.platform_fee} transfer_percentage={generalSettings?.transfer_percentage} title={generalSettings?.main_banner_title} description={generalSettings?.main_banner_desc} />
       <GetStart title={generalSettings?.get_started_title} second_title={generalSettings?.get_started_second_title} description={generalSettings?.get_started_description} />
       <ChooseUs
         service_box_one_icon={generalSettings?.service_box_one_icon}

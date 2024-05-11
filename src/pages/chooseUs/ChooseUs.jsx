@@ -22,8 +22,8 @@ function ChooseUs({
         </p>
       </div>
       <div className="container mx-auto">
-        <div className="flex flex-wrap justify-center lg:justify-between items-center mt-20">
-          <div className="w-full sm:w-2/2 md:w-auto lg:w-auto p-4 mt-20">
+        <div className="flex flex-wrap lg:flex-nowrap justify-center lg:justify-between items-center mt-20">
+          <div className="w-full sm:w-2/2 md:w-auto lg:w-auto p-4 mt-20 flex justify-center items-center">
             <div style={{ position: "relative" }}>
               <div className="services_bgCard"></div>
               <div className="services_card">
@@ -55,7 +55,7 @@ function ChooseUs({
               </div>
             </div>
           </div>
-          <div className="w-full sm:w-2/2 md:w-auto lg:w-auto p-4 mt-20">
+          <div className="w-full sm:w-2/2 md:w-auto lg:w-auto p-4 mt-20 flex justify-center items-center">
             <div style={{ position: "relative" }}>
               <div className="services_bgCard" style={{}}></div>
               <div className="services_card">
@@ -87,7 +87,7 @@ function ChooseUs({
               </div>
             </div>
           </div>
-          <div className="w-full sm:w-2/2 md:w-auto lg:w-auto p-4 mt-20">
+          <div className="w-full sm:w-2/2 md:w-auto lg:w-auto p-4 mt-20 flex justify-center items-center">
             <div style={{ position: "relative" }}>
               <div className="services_bgCard" style={{}}></div>
               <div className="services_card">

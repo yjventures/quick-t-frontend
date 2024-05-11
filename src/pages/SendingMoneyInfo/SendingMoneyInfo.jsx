@@ -126,6 +126,7 @@ function SendingMoneyInfo() {
                 <div className="flex flex-col gap-1">
                   <p className="font-normal text-sm pb-1">Transfer amount</p>
                   <p className="font-normal text-sm pb-1">Transfer fee</p>
+                  <p className="font-normal text-sm pb-1">Platform fee</p>
                   <p className="font-normal text-sm pb-1">Total payable</p>
                   <p className="font-normal text-sm p2-1">Transaction password</p>
                 </div>
@@ -135,6 +136,9 @@ function SendingMoneyInfo() {
                   </p>
                   <p className="font-normal text-sm pb-1">
                     {amountDataInfo.transfer_fees} USD
+                  </p>
+                  <p className="font-normal text-sm pb-1">
+                    {amountDataInfo.platform_fee} USD
                   </p>
                   <p className="font-bold pb-1">{amountDataInfo.transfer_total} USD</p>
                   <p className="font-bold pb-1">{transection_password} </p>
