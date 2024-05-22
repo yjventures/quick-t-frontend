@@ -51,6 +51,12 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
       image:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_Lebanon.svg/1200px-Flag_of_Lebanon.svg.png?20190109154742",
     },
+    {
+      value: "australia",
+      label: "Australia",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Australia.svg/2560px-Flag_of_Australia.svg.png",
+    },
   ];
   const [selectedCard, setSelectedCard] = useState(1);
   const [defaultAmount, setDefaultAmount] = useState(
@@ -166,7 +172,7 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
           className="heroSectionCard shadow-xl w-full sm:w-3/3 md:w-4/5 xl:w-2/4 md:h-3/3 xl:h-3/3"
           style={{
             backgroundColor: "#FFF",
-            padding: "24px",
+            padding: "18px 24px",
             zIndex: "1",
           }}
         >
@@ -176,13 +182,13 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
             Send From
           </p>
           <Select
-            defaultValue={selectedOption}
-            options={countries}
-            onChange={setSelectedOption}
+            defaultValue={options[1]}
+            isDisabled
+            options={options}
             formatOptionLabel={(country) => (
               <div className="flex">
                 <img
-                  src={`https://api.quickt.com.au` + country.attributes?.icon}
+                  src={country.image}
                   alt="country-image"
                   style={{
                     height: "24px",
@@ -191,7 +197,7 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
                     marginRight: "10px",
                   }}
                 />
-                <span>{country.attributes.name}</span>
+                <span>{country.label}</span>
               </div>
             )}
           />
@@ -230,10 +236,10 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
                   transfer?.attributes?.enabled == true && (
                     <div
                       key={index}
-                      className={`flex items-center w-1/3 justify-between p-3 cursor-pointer ${clickedCustomAmount == false &&
+                      className={`flex items-center justify-between p-3 cursor-pointer relative border-[1px] ${clickedCustomAmount == false &&
                         selectedCard === index + 1
                         ? "bg-gray-100 rounded-lg"
-                        : "border-[1px] rounded-lg"
+                        : " rounded-lg"
                         }`}
                       onClick={() => {
                         customAmmountRef.value = "";
@@ -245,20 +251,21 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
                         setClickedCustomAmount(false);
                       }}
                     >
-                      <div>
+                      <div className=" absolute top-2 right-2">
                         {clickedCustomAmount == false &&
                           selectedCard === index + 1 ? (
-                          <img src={tickCircle} alt="" />
+                          <img src={tickCircle} alt="tick" className="max-w-5 max-h-5" />
                         ) : (
-                          <img src={stopCircle} alt="" />
+                          <img src={stopCircle} alt="tick-false" className="max-w-4 max-h-4" />
                         )}
                       </div>
                       <div className="pe-2">
                         <p className="heroSectionRightSideUSD">
                           $ {transfer?.attributes?.amount}
                         </p>
-                        <p className="heroSectionRightSideFee">
-                          fees: {transfer?.attributes?.fee}
+                        <p className="heroSectionRightSideFee text-[10px]">
+                          Amount in <span className="font-bold">AUD 167</span>
+                          {/* {transfer?.attributes?.fee} */}
                         </p>
                       </div>
 
@@ -267,12 +274,29 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
               )
             )}
           </div>
+
+          {/* amount send and receive section  */}
+          <div className="w-full mt-4 flex justify-between">
+            <div className="">
+              <p className="text-center uppercase">You send </p>
+              <p className="py-4 px-8 border-[1px] rounded-md mt-3 border-gray-200 font-bold">
+                AUD 167.00
+              </p>
+            </div>
+            <div className="">
+              <p className="text-center uppercase">You Receive </p>
+              <p className="py-4 px-8 border-[1px] rounded-md mt-3 border-gray-200 font-bold">
+                USD 100
+              </p>
+            </div>
+          </div>
+
           {/* custom amount */}
           <input
             onClick={() => setClickedCustomAmount(true)}
             ref={(input) => (customAmmountRef = input)}
-            placeholder="or custom amount"
-            className="mt-6 rounded-xl border-none text-black heroSectionCustommunt outline-none"
+            placeholder="or custom (USD) amount "
+            className="mt-4 rounded-xl border-none text-black heroSectionCustommunt outline-none"
           />
           {
             <button
