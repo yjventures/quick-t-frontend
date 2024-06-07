@@ -54,7 +54,7 @@ const Navbar = () => {
         <img
           src={logo}
           alt="Logo"
-          className="logo"
+          className="logo scale-125 pt-3 sm:pt-0"
           style={{ width: "208px", height: "70px", objectFit: 'cover' }}
         />
       </div>

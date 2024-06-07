@@ -83,8 +83,8 @@ function TransferOTP() {
       const amountData = localStorage.getItem("amountData");
       // console.log(amountData);
       const statusCode = res?.data?.statusCode;
-      navigate('/areeba-payment-gateway')
-      return;
+      // navigate('/areeba-payment-gateway')
+      // return;
 
       if (statusCode === 200) {
         // window.location.href = "/paymentSuccess";
@@ -103,6 +103,9 @@ function TransferOTP() {
             },
           }
         );
+
+        console.log(response)
+        return;
         const sessionUrl = response?.data;
         if (sessionUrl) {
           // Redirect the user to the Stripe checkout session URL

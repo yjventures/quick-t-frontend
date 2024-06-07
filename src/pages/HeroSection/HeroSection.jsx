@@ -276,16 +276,16 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
           </div>
 
           {/* amount send and receive section  */}
-          <div className="w-full mt-4 flex justify-between">
-            <div className="">
+          <div className="w-full mt-4 flex justify-between gap-4">
+            <div className="w-full">
               <p className="text-center uppercase">You send </p>
-              <p className="py-4 px-8 border-[1px] rounded-md mt-3 border-gray-200 font-bold">
+              <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center">
                 AUD 167.00
               </p>
             </div>
-            <div className="">
+            <div className="w-full">
               <p className="text-center uppercase">You Receive </p>
-              <p className="py-4 px-8 border-[1px] rounded-md mt-3 border-gray-200 font-bold">
+              <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center text-nowrap">
                 USD 100
               </p>
             </div>
