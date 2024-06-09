@@ -8,12 +8,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
 
-function HeroSection({ transfer_percentage, title, description, platform_fee }) {
+function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title, description }) {
   const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
-  console.log(transfer_percentage)  
-  console.log(platform_fee)  
+  // console.log(currency_buffer, gateway_fee)  
   // get countries api using react query
   const {
     isPending: pendingCountries,
@@ -22,7 +21,7 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
   } = useQuery({
     queryKey: ["countries"],
     queryFn: () =>
-      fetch("https://api.quickt.com.au/api/countries")
+      fetch("http://localhost:1337/api/countries")
         .then((res) => res.json())
         .then((data) => data?.data),
   });
@@ -37,7 +36,7 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
   } = useQuery({
     queryKey: ["quick-transfers"],
     queryFn: () =>
-      fetch("https://api.quickt.com.au/api/quick-transfers")
+      fetch("http://localhost:1337/api/quick-transfers")
         .then((res) => res.json())
         .then((data) => data?.data),
   });
