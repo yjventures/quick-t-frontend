@@ -21,6 +21,7 @@ import PersonalInfoEditPage from "./pages/EditPersonalInfo/PersonalInfoEditPage"
 import LiveChatPage from "./pages/LiveChatPage/LiveChatPage";
 import TermsConditionPage from "./pages/TermsCondition/TermsConditionPage";
 import DummyPayment from "./pages/dummyPayment/DummyPayment";
+import Payment from "./pages/payment/Payment";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -60,7 +61,8 @@ function App() {
             path="/transactionHistory"
             element={<TransactionHistoryPage />}
           />
-          <Route path="/areeba-payment-gateway" element={<DummyPayment />} />
+          {/* <Route path="/areeba-payment-gateway" element={<DummyPayment />} /> */}
+          <Route path="/payment" element={<Payment />} />
 
         </Routes>
       </BrowserRouter>

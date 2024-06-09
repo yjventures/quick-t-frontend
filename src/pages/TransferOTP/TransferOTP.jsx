@@ -104,7 +104,22 @@ function TransferOTP() {
           }
         );
 
-        console.log(response)
+        // console.log(response)
+        // console.log(response?.data?.id)
+        // console.log(response?.data?.status)
+
+        try {
+          localStorage.setItem("sessionId", response?.data.id);
+          window.location.href = 'http://127.0.0.1:5500/test/index.html?sessionId=' + response?.data.id;
+        } catch (error) {
+          console.log(error)
+        }
+        // if (response?.data?.status === 200) {
+        //   localStorage.setItem("sessionId", response?.data.id);
+        //   navigate('/payment')
+        // } else {
+        //   alert("Something went wrong, please try again later");
+        // }
         return;
         const sessionUrl = response?.data;
         if (sessionUrl) {

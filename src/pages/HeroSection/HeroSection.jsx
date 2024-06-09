@@ -12,7 +12,8 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
   const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
-  // console.log(description)  
+  console.log(transfer_percentage)  
+  console.log(platform_fee)  
   // get countries api using react query
   const {
     isPending: pendingCountries,
@@ -89,8 +90,9 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
       showFailedAlert("Please enter amount");
       return;
     }
+
     const data = {
-      sendFrom: sendFrom,
+      sendFrom: 'australia',
       sendTo: sentTo,
       platform_fee: platform_fee
     };
@@ -118,6 +120,21 @@ function HeroSection({ transfer_percentage, title, description, platform_fee }) 
     }
   };
 
+  const  {
+    isPending: pendingCurrency,
+    error: currencyError,
+    data: currencyData,
+  } = useQuery({
+    queryKey: ["currency"],
+    queryFn: () =>
+      fetch("https://api.currencyapi.com/v3/latest?apikey=cur_live_1HnUkfPeJ8qgc51MvCH6bsagF4BnIsWWzganmxu9")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+        }),
+  });
+
+  console.log(currencyData)
   return (
     <div className="flex flex-col md:flex-row" style={{ paddingTop: "80px" }}>
       {/* Left Part */}
