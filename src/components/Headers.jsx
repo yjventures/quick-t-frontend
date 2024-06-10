@@ -54,8 +54,11 @@ const Navbar = () => {
         <img
           src={logo}
           alt="Logo"
-          className="logo scale-125 pt-3 sm:pt-0"
+          className="logo scale-125 pt-3 sm:pt-0 cursor-pointer"
           style={{ width: "208px", height: "70px", objectFit: 'cover' }}
+          onClick={() => {
+            navigate("/");
+          }}
         />
       </div>
       {/* Middle section with Nav Links for Large Screens */}

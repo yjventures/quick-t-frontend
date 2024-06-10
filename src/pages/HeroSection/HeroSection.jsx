@@ -8,7 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
 
-function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title, description }) {
+function HeroSection({ title, description }) {
   const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
@@ -102,14 +102,13 @@ function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title,
 
   let customAmmountRef = useRef(null);
 
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const sentTo = "lebanon";
-  const sendFrom = selectedOption?.attributes?.name;
+  // console.log(convertedAmountInfo)
+  // const [selectedOption, setSelectedOption] = useState(null);
+  // const sentTo = "lebanon";
+  // const sendFrom = selectedOption?.attributes?.name;
   // console.log(sendFrom);
   const handleCardButton = () => {
-    let customAmount = customAmmountRef.value;
-    if (clickedCustomAmount == true && customAmount == "" || customAmount == 0 || convertedAmountInfo == undefined) {
+    if (customAmount == "" || customAmount == 0 || convertedAmountInfo == undefined) {
       showFailedAlert("Please enter amount");
       return;
     }
@@ -186,7 +185,7 @@ function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title,
 
       {/* Right Part */}
       <div
-        className="w-full md:w-1/2 flex items-center justify-center pl-5 pr-5 md:pl-1 md:pr-1"
+        className="w-full md:w-1/2 flex items-center justify-center sm:pl-5 pr-5"
         style={{ height: "90vh", backgroundColor: "#EEE" }}
       >
         <div
