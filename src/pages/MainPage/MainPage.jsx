@@ -26,7 +26,7 @@ function MainPage() {
   if (generalSettingsError) return showFailedAlert("Something went wrong")
   // console.log(pendingGeneralSettings)
   // console.log(generalSettingsError)
-  console.log(generalSettings)
+  // console.log(generalSettings)
   return (
     <div>
       <Headers />

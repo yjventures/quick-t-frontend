@@ -120,34 +120,26 @@ function SendingMoneyInfo() {
               Review Details of your Transfer
             </p>
 
+            {/* sender */}
             <div>
-              <p className="font-bold pb-5">Transfer Details</p>
+              <p className="font-bold pb-2">Sender Details</p>
               <div className="flex justify-between">
-                <div className="flex flex-col gap-1">
-                  <p className="font-normal text-sm pb-1">Transfer amount</p>
-                  <p className="font-normal text-sm pb-1">Transfer fee</p>
-                  <p className="font-normal text-sm pb-1">Platform fee</p>
-                  <p className="font-normal text-sm pb-1">Total payable</p>
-                  <p className="font-normal text-sm p2-1">Transaction password</p>
+                <div>
+                  <p className="font-normal text-sm pb-1">Name</p>
+                  <p className="font-normal text-sm pb-1">Phone Number</p>
+                  <p className="font-normal text-sm pb-1">Address</p>
                 </div>
-                <div style={{ textAlign: 'right' }} className="flex flex-col gap-0">
-                  <p className="font-bold pb-1">
-                    {amountDataInfo.transfer_amount} USD
-                  </p>
-                  <p className="font-normal text-sm pb-1">
-                    {amountDataInfo.transfer_fees} USD
-                  </p>
-                  <p className="font-normal text-sm pb-1">
-                    {amountDataInfo.platform_fee} USD
-                  </p>
-                  <p className="font-bold pb-1">{amountDataInfo.transfer_total} USD</p>
-                  <p className="font-bold pb-1">{transection_password} </p>
+                <div style={{ textAlign: 'right' }}>
+                  <p className="font-normal text-sm pb-1">{userFullName}</p>
+                  <p className="font-normal text-sm pb-1">+{userPhone}</p>
+                  <p className="font-normal text-sm pb-1">{userData && userData[0]?.attributes?.street_address + ", " + userData[0]?.attributes?.city + ", " + userData[0]?.attributes?.country}</p>
                 </div>
               </div>
             </div>
 
+            {/* receiver */}
             <div className="pt-10">
-              <p className="font-bold pb-5">Receiver Details</p>
+              <p className="font-bold pb-2">Receiver Details</p>
               <div className="flex justify-between">
                 <div>
                   <p className="font-normal text-sm pb-1">Name</p>
@@ -162,20 +154,51 @@ function SendingMoneyInfo() {
               </div>
             </div>
 
+            {/* details */}
             <div className="pt-10">
-              <p className="font-bold pb-5">Sender Details</p>
+              <p className="font-bold pb-2">Transfer Details</p>
               <div className="flex justify-between">
-                <div>
-                  <p className="font-normal text-sm pb-1">Name</p>
-                  <p className="font-normal text-sm pb-1">Phone Number</p>
-                  <p className="font-normal text-sm pb-1">Address</p>
+                <div className="flex flex-col gap-1">
+                  <p className="font-normal text-sm pb-1">Transfer amount</p>
+                  <p className="font-normal text-sm pb-1">Transfer fee</p>
+                  <p className="font-normal text-sm pb-1">Platform fee</p>
+                  <p className="font-normal text-sm pb-1">Total payable</p>
+                  <p className="font-normal text-sm p2-1">Transaction password</p>
                 </div>
-                <div style={{ textAlign: 'right' }}>
-                  <p className="font-normal text-sm pb-1">{userFullName}</p>
-                  <p className="font-normal text-sm pb-1">+{userPhone}</p>
-                  <p className="font-normal text-sm pb-1">{userData && userData[0]?.attributes?.street_address + ", " + userData[0]?.attributes?.city + ", " + userData[0]?.attributes?.country}</p>
+                <div style={{ textAlign: 'right' }} className="flex flex-col gap-0">
+                  <p className="font-bold pb-1">
+                    {amountDataInfo.givenAmount} USD
+                  </p>
+                  <p className="font-normal text-sm pb-1">
+                    {amountDataInfo.transferFee} USD
+                  </p>
+                  <p className="font-normal text-sm pb-1">
+                    {amountDataInfo.gatewayFee} USD
+                  </p>
+                  <p className="font-bold pb-1">{amountDataInfo.totalAmount} USD</p>
+                  <p className="font-bold pb-1">{transection_password} </p>
                 </div>
               </div>
+            </div>
+
+
+            {/* converted amount details */}
+            <div className="pt-10">
+              <div className="w-full mt-4 flex justify-between gap-4">
+                <div className="w-full">
+                  <p className="text-center uppercase">TOTAL IN USD</p>
+                  <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center text-nowrap text-lg">
+                    ${amountDataInfo.totalAmount}
+                  </p>
+                </div>
+                <div className="w-full">
+                  <p className="text-center uppercase">TOTAL IN AUD</p>
+                  <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center text-nowrap text-lg">
+                    ${amountDataInfo.convertedAmount}
+                  </p>
+                </div>
+              </div>
+
             </div>
 
             <NavLink to="/sendOTP">

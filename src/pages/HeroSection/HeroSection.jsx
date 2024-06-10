@@ -25,9 +25,8 @@ function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title,
         .then((res) => res.json())
         .then((data) => data?.data),
   });
-  // console.log(pendingGeneralSettings)
-  // console.log(generalSettingsError)
-  // console.log(countries)
+
+
   // get quick transfer api using react query
   const {
     isPending: pendingQuickTransfers,
@@ -36,13 +35,10 @@ function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title,
   } = useQuery({
     queryKey: ["quick-transfers"],
     queryFn: () =>
-      fetch("http://localhost:1337/api/quick-transfers")
+      fetch("http://localhost:5000/get-quick-transfers")
         .then((res) => res.json())
         .then((data) => data?.data),
   });
-  // console.log(pendingQuickTransfers)
-  // console.log(transfersError)
-  // console.log(quickTransfers)
 
   const options = [
     {
@@ -58,6 +54,7 @@ function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title,
         "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Australia.svg/2560px-Flag_of_Australia.svg.png",
     },
   ];
+  const [customAmount, setCustomAmount] = useState(null);
   const [selectedCard, setSelectedCard] = useState(1);
   const [defaultAmount, setDefaultAmount] = useState(
     quickTransfers ? quickTransfers[0]?.attributes?.amount : 100
@@ -70,8 +67,35 @@ function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title,
     setSelectedCard(index);
     setDefaultAmount(amount);
     setTransferFee(transferfee);
+    setCustomAmount(null);
   };
+  // console.log(defaultAmount)
+  // console.log(customAmount)
 
+  const {
+    isPending: pendingConvertedAmount,
+    error: convertedAmountError,
+    data: convertedAmountInfo,
+  } = useQuery({
+    queryKey: ["convert-amount", defaultAmount, customAmount],
+    queryFn: () =>
+      fetch("http://localhost:5000/get-currency-rate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: clickedCustomAmount ? Number(customAmount) : Number(defaultAmount),
+          // from: "aud",
+          // to: "usd",
+        }),
+
+      })
+        .then((res) => res.json())
+        .then((data) => data?.data),
+  });
+
+  // console.log(convertedAmountInfo)
   /////////////////////////////////////////////
   //input value take
   /////////////////////////////////////////////
@@ -85,55 +109,36 @@ function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title,
   // console.log(sendFrom);
   const handleCardButton = () => {
     let customAmount = customAmmountRef.value;
-    if (clickedCustomAmount == true && customAmount == "") {
+    if (clickedCustomAmount == true && customAmount == "" || customAmount == 0 || convertedAmountInfo == undefined) {
       showFailedAlert("Please enter amount");
       return;
     }
+    // console.log(convertedAmountInfo)
+    // return
+    // const data = {
+    //   sendFrom: 'australia',
+    //   sendTo: sentTo,
+    // };
+    // // if custom amount is clicked then take custom amount else take default amount
+    // if (clickedCustomAmount) {
+    //   data.transfer_amount = Number(customAmount);
+    //   data.transfer_fees = (Number(customAmount) * Number(transfer_percentage)) / 100;
+    //   data.transfer_total = Number(customAmount) + Number(data.transfer_fees) + Number(platform_fee);
+    // } else {
+    //   data.transfer_amount = Number(defaultAmount);
+    //   data.transfer_fees = Number(transferFee);
+    //   data.transfer_total = Number(defaultAmount) + Number(transferFee) + Number(platform_fee);
+    // }
 
-    const data = {
-      sendFrom: 'australia',
-      sendTo: sentTo,
-      platform_fee: platform_fee
-    };
-    // if custom amount is clicked then take custom amount else take default amount
-    if (clickedCustomAmount) {
-      data.transfer_amount = Number(customAmount);
-      data.transfer_fees =
-        (Number(customAmount) * Number(transfer_percentage)) / 100;
-      data.transfer_total = Number(customAmount) + Number(data.transfer_fees) + Number(platform_fee);
+    localStorage.setItem("amountData", JSON.stringify(convertedAmountInfo));
+    if (jwt) {
+      navigate("/sendingMoney");
     } else {
-      data.transfer_amount = Number(defaultAmount);
-      data.transfer_fees = Number(transferFee);
-      data.transfer_total = Number(defaultAmount) + Number(transferFee) + Number(platform_fee);
-    }
-
-    localStorage.setItem("amountData", JSON.stringify(data));
-    if (data.sendFrom) {
-      if (jwt) {
-        navigate("/sendingMoney");
-      } else {
-        navigate("/register");
-      }
-    } else {
-      showFailedAlert("Please select country to proceed");
+      navigate("/register");
     }
   };
 
-  const  {
-    isPending: pendingCurrency,
-    error: currencyError,
-    data: currencyData,
-  } = useQuery({
-    queryKey: ["currency"],
-    queryFn: () =>
-      fetch("https://api.currencyapi.com/v3/latest?apikey=cur_live_1HnUkfPeJ8qgc51MvCH6bsagF4BnIsWWzganmxu9")
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data)
-        }),
-  });
 
-  console.log(currencyData)
   return (
     <div className="flex flex-col md:flex-row" style={{ paddingTop: "80px" }}>
       {/* Left Part */}
@@ -280,7 +285,7 @@ function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title,
                           $ {transfer?.attributes?.amount}
                         </p>
                         <p className="heroSectionRightSideFee text-[10px]">
-                          Amount in <span className="font-bold">AUD 167</span>
+                          Amount in <span className="font-bold">AUD {transfer?.attributes?.convertedAmount}</span>
                           {/* {transfer?.attributes?.fee} */}
                         </p>
                       </div>
@@ -296,20 +301,25 @@ function HeroSection({ currency_buffer, gateway_fee, transfer_percentage, title,
             <div className="w-full">
               <p className="text-center uppercase">You send </p>
               <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center">
-                AUD 167.00
+                AUD {pendingConvertedAmount ? "..." : clickedCustomAmount ? customAmount == 0 ? 0 : convertedAmountInfo?.convertedAmount : convertedAmountInfo?.convertedAmount}
               </p>
             </div>
             <div className="w-full">
               <p className="text-center uppercase">You Receive </p>
               <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center text-nowrap">
-                USD 100
+                USD {clickedCustomAmount ? customAmount == 0 ? 0 : customAmount : defaultAmount}
               </p>
             </div>
           </div>
 
           {/* custom amount */}
           <input
-            onClick={() => setClickedCustomAmount(true)}
+            // onClick={() => setClickedCustomAmount(true)}
+            onChange={(e) => {
+              setClickedCustomAmount(true);
+              setCustomAmount(e.target.value);
+            }}
+            value={customAmount}
             ref={(input) => (customAmmountRef = input)}
             placeholder="or custom (USD) amount "
             className="mt-4 rounded-xl border-none text-black heroSectionCustommunt outline-none"

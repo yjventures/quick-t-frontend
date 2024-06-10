@@ -156,6 +156,7 @@ function SendingMoney() {
   });
   if (userError) return showFailedAlert("Something went wrong");
 
+  console.log(user)
   const handleSelectChange = async () => {
     // get user details form query key "user"
     // console.log(user)
