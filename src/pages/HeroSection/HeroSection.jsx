@@ -133,7 +133,7 @@ function HeroSection({ title, description }) {
     if (jwt) {
       navigate("/sendingMoney");
     } else {
-      navigate("/register");
+      navigate("/login");
     }
   };
 
@@ -328,7 +328,7 @@ function HeroSection({ title, description }) {
               className="heroSectionRightSideButton"
               onClick={handleCardButton}
             >
-              {jwt ? "Send Money" : "Sign Up/Login to transfer"}
+              {jwt ? "Send Money" : "Register / Login to transfer"}
             </button>
           }
         </div>

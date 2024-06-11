@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./register.css";
-import whiteLogo from "../../assets/images/whiteLogo.png";
+import logo from "../../assets/images/logo.png";
 import registerImage from "../../assets/images/registerImage.png";
 import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
 import googleLogo from "../../assets/images/googleLogo.png";
@@ -233,29 +233,32 @@ function Register() {
       {/* Left Part */}
       <div
         className="w-full md:w-1/3 px-2"
-        style={{ height: "150vh", backgroundColor: "#043BA0" }}
+        style={{ backgroundColor: "#043BA0" }}
       >
         <div>
           <img
-            src={whiteLogo}
-            alt=""
-            style={{ width: "210px", height: "60px" }}
+            src={logo}
+            alt="logo"
+            style={{ width: "210px", height: "60px", objectFit: 'cover', cursor: 'pointer'}}
+            onClick={() => {
+              navigate("/");
+            }}
           />
         </div>
-        <p className="text-center mt-32 mb-20 registerLeftSideText">
+        <p className="text-center mt-10 registerLeftSideText">
           Send money to Lebanon, anytime, instantly
         </p>
-        <div className="flex items-center justify-center mt-10 text-center">
+        <div className="flex items-center justify-center text-center mt-10">
           <img src={registerImage} alt="" />
         </div>
       </div>
 
       {/* Right Part */}
       <div
-        className="w-full md:w-2/3 flex items-center justify-center container max-sm:my-72 mt-20"
-        style={{ height: "100vh", backgroundColor: "#FFFFFF" }}
+        className="w-full md:w-2/3 flex items-center justify-center container px-4"
+        style={{ backgroundColor: "#FFFFFF" }}
       >
-        <div className="mt-32">
+        <div className="mt-10">
           <p className="registerHeadingText">Create account</p>
 
           <p className="registerNormalText mb-6 mt-6">
@@ -432,8 +435,8 @@ function Register() {
                       style={{
                         position: "absolute",
                         right: "10px",
-                        top: "45%", 
-                        transform: "translateY(-50%)", 
+                        top: "45%",
+                        transform: "translateY(-50%)",
                         cursor: "pointer",
                         backgroundColor: "transparent",
                         border: "none",

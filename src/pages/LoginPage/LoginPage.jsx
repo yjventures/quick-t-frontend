@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import whiteLogo from "../../assets/images/whiteLogo.png";
+import logo from "../../assets/images/logo.png";
 import registerImage from "../../assets/images/registerImage.png";
 import imagePlaceholder from "../../assets/images/imagePlaceholder.png";
 import googleLogo from "../../assets/images/googleLogo.png";
@@ -67,20 +67,23 @@ function LoginPage() {
 
       <div
         className="w-full md:w-1/3 px-2"
-        style={{ height: "120vh", backgroundColor: "#043BA0" }}
+        style={{ backgroundColor: "#043BA0" }}
       >
         <div>
           <img
-            src={whiteLogo}
-            alt=""
-            style={{ width: "210px", height: "60px" }}
+            src={logo}
+            alt="logo"
+            style={{ width: "210px", height: "60px", objectFit: "cover", cursor: 'pointer' }}
+            onClick={() => {
+              navigate("/");
+            }}
           />
         </div>
-        <p className="text-center mt-32 mb-20 registerLeftSideText">
+        <p className="text-center mt-10 registerLeftSideText">
           Send money to Lebanon, anytime, instantly
         </p>
-        <div className="flex items-center justify-center mt-10 text-center">
-          <img src={registerImage} alt="" />
+        <div className="flex items-center justify-center text-center">
+          <img src={registerImage} alt="logo" />
         </div>
       </div>
 
@@ -89,7 +92,7 @@ function LoginPage() {
         className="w-full md:w-2/3 flex items-center justify-center p-2"
         style={{ height: "100vh", backgroundColor: "#FFFFFF" }}
       >
-        <div className="w-3/4 md:w-3/5 sm:w-2/5 lg:w-2/5">
+        <div className="w-3/4 md:w-3/5 sm:w-2/5 lg:w-2/5 mt-20 sm:mt-4">
           <p className="registerHeadingText">Login</p>
           <p className="registerNormalText">Enter Your Credential</p>
           <div className="flex flex-col md:flex-row md:justify-between md:gap-x-32">
@@ -118,8 +121,8 @@ function LoginPage() {
                     onClick={handleTogglePassword}
                     style={{
                       position: "absolute",
-                      right: "10px", 
-                      top: "45%", 
+                      right: "10px",
+                      top: "45%",
                       transform: "translateY(-50%)",
                       cursor: "pointer",
                       backgroundColor: "transparent",
