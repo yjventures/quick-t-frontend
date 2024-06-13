@@ -114,7 +114,7 @@ const Navbar = () => {
         ) : (
           <div className="flex">
             <div className="user-profile hidingUserProfile">
-              <NavLink to="/register">
+              <NavLink to="/login">
                 <button className="headerSignUp">Login</button>
               </NavLink>
             </div>

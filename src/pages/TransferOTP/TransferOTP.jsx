@@ -57,7 +57,8 @@ function TransferOTP() {
   };
 
   const handleSubmit = async () => {
-    // if not 3 times wrong otp
+    try {
+      // if not 3 times wrong otp
     if (inputValue.length < 4) {
       showFailedAlert("Please enter 4 digit PIN");
       return;
@@ -70,32 +71,26 @@ function TransferOTP() {
       };
       JSON.stringify(data);
       const res = await axios.post(
-        "https://microservice.quickt.com.au/checkSecurity",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        "http://localhost:5000/checkSecurity", data
       );
-      console.log(res?.data?.statusCode);
       // 200 = success | 404 = wrong otp | 403 = System error or wrong jwt
+      // transaction_id of db is order id here
+      // console.log(res?.data)
+      const order_id = res?.data?.order_id;
+      // order_id.toString();
       const amountData = localStorage.getItem("amountData");
+      localStorage.setItem("order_id", order_id);
       // console.log(amountData);
-      const statusCode = res?.data?.statusCode;
-      // navigate('/areeba-payment-gateway')
-      // return;
-
-      if (statusCode === 200) {
-        // window.location.href = "/paymentSuccess";
+      // return
+      if (res.data.statusCode == 200) {
         // showSuccessAlert("Payment Successfull")
-
         const response = await axios.post(
-          // "http://localhost:5000/checkout-session",
-          // "https://microservice.quickt.com.au/checkout-session",
           "http://localhost:5000/checkout-session-new",
           {
-            data: amountData,
+            data: {
+              amount: amountData,
+              order_id: order_id,
+            }
           },
           {
             headers: {
@@ -107,28 +102,24 @@ function TransferOTP() {
         // console.log(response)
         // console.log(response?.data?.id)
         // console.log(response?.data?.status)
+        // localStorage.setItem("sessionId", response?.data.id);
+        window.location.href = 'http://127.0.0.1:5500/test/index.html?sessionId=' + response?.data.id;
 
-        try {
-          localStorage.setItem("sessionId", response?.data.id);
-          window.location.href = 'http://127.0.0.1:5500/test/index.html?sessionId=' + response?.data.id;
-        } catch (error) {
-          console.log(error)
-        }
-        // if (response?.data?.status === 200) {
-        //   localStorage.setItem("sessionId", response?.data.id);
-        //   navigate('/payment')
+        // // if (response?.data?.status === 200) {
+        // //   localStorage.setItem("sessionId", response?.data.id);
+        // //   navigate('/payment')
+        // // } else {
+        // //   alert("Something went wrong, please try again later");
+        // // }
+        // return;
+        // const sessionUrl = response?.data;
+        // if (sessionUrl) {
+        //   // Redirect the user to the Stripe checkout session URL
+        //   window.open(sessionUrl, "_self");
         // } else {
-        //   alert("Something went wrong, please try again later");
+        //   // Handle the case where sessionUrl is not available
+        //   showFailedAlert("Something went wrong, please try again later");
         // }
-        return;
-        const sessionUrl = response?.data;
-        if (sessionUrl) {
-          // Redirect the user to the Stripe checkout session URL
-          window.open(sessionUrl, "_self");
-        } else {
-          // Handle the case where sessionUrl is not available
-          showFailedAlert("Something went wrong, please try again later");
-        }
       } else if (statusCode === 403) {
         showFailedAlert("Something went wrong, please try again later");
       } else {
@@ -141,6 +132,10 @@ function TransferOTP() {
       );
       setTimer(true);
       return;
+    }
+    } catch (error) {
+      console.log(error)
+      showFailedAlert("Something went wrong, please try again later");
     }
   };
 

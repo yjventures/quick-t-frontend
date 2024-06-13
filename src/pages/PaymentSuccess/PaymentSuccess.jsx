@@ -49,21 +49,48 @@ function PaymentSuccess() {
   const userName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
   const time = new Date().toLocaleString();
 
-  const unixTimestamp = localStorage.getItem("transaction_time");
-  const date = new Date(unixTimestamp * 1000);
-  const localTime = date.toLocaleString();
-  const rndInt = Math.floor(Math.random() * 6) + 1
+  // const unixTimestamp = localStorage.getItem("transaction_time");
+  // const date = new Date(unixTimestamp * 1000);
+  // const localTime = date.toLocaleString();
+
+  function formatISODate(isoDate) {
+    const date = new Date(isoDate);
+
+    // Define month names
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    const day = date.getDate();
+    const month = months[date.getMonth()]; // Get month name
+    const year = date.getFullYear();
+
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
+    // Format hours and determine AM/PM
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+
+    // Construct the formatted date string
+    const formattedDate = `${day} ${month} ${year}, ${hours}:${minutes}${ampm}`;
+
+    return formattedDate;
+  }
 
   // console.log(localTime);
   return (
-    <div className="mb-10">
+    <div className="my-10">
       <div
         className="card pl-7 pr-10"
         ref={cardRef}
         style={{ backgroundColor: "#fff" }}
       >
-        <div className="flex flex-col items-center mb-12">
+        <div className="flex flex-col items-center">
           <svg
+            className="-mt-4"
             width="95"
             height="95"
             viewBox="0 0 95 95"
@@ -83,13 +110,13 @@ function PaymentSuccess() {
             />
           </svg>
 
-          <p className="paymentSuccessHeaderSectionFrontText text-center">
+          <p className="paymentSuccessHeaderSectionFrontText text-center mt-3">
             Payment Success!
           </p>
-          <p className="paymentSuccessHeaderSectionSecondText">US ${Number(amountDataInfo.transfer_amount) + Number(amountDataInfo.transfer_fees)}</p>
+          <p className="paymentSuccessHeaderSectionSecondText">US ${Number(amountDataInfo.totalAmount)}</p>
         </div>
 
-        <p className="paymentSuccessLine mx-auto"></p>
+        <p className="mx-auto h-[1px] bg-gray-200 my-8"></p>
 
         <div className="flex justify-between items-center ">
           <div>
@@ -110,13 +137,16 @@ function PaymentSuccess() {
             </p>
           </div>
           <div className="text-end">
-            <div style={{ position: "relative" }}
+            <div
+              className="me-6"
+              style={{ position: "relative" }}
               onClick={() => {
                 navigator.clipboard.writeText(`QT-${localStorage.getItem("transaction_id")}`)
                 showSuccessAlert("Copied to clipboard")
-              }}>
+              }}
+            >
               <p className="paymentSuccessEnding transfernumber text-base lg:text-xl">
-                QT-{rndInt}
+                QT-{localStorage.getItem("order_id")}
               </p>
               <div
                 style={{
@@ -133,7 +163,7 @@ function PaymentSuccess() {
               </div>
             </div>
             <p className="paymentSuccessEnding text-base lg:text-xl">
-              {localTime}
+              {formatISODate(localStorage.getItem("transaction_time"))}
             </p>
             <p className="paymentSuccessEnding text-base lg:text-xl">Card</p>
             <p className="paymentSuccessEnding text-base lg:text-xl">
@@ -145,7 +175,7 @@ function PaymentSuccess() {
           </div>
         </div>
 
-        <div className="flex justify-between items-center mt-7">
+        <div className="flex justify-between items-center ">
           <div>
             <p className="paymentSuccessStarting text-base lg:text-xl">
               Amount
@@ -153,17 +183,36 @@ function PaymentSuccess() {
             <p className="paymentSuccessStarting text-base lg:text-xl">
               Transfer Fee
             </p>
+            <p className="paymentSuccessStarting text-base lg:text-xl">
+              Gateway Fee
+            </p>
           </div>
           <div className="text-end">
-            <p className="paymentSuccessEnding text-base lg:text-xl">$ {amountDataInfo.transfer_amount}</p>
-            <p className="paymentSuccessEnding text-base lg:text-xl">$ {amountDataInfo.transfer_fees}</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.givenAmount).toFixed(2)}</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.transferFee).toFixed(2)}</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.gatewayFee).toFixed(2)}</p>
+          </div>
+        </div>
+        {/* amount send and receive section  */}
+        <div className="w-full mt-4 flex justify-between gap-4">
+          <div className="w-full">
+            <p className="text-center uppercase">You sent </p>
+            <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center">
+              AUD {amountDataInfo.convertedAmount}
+            </p>
+          </div>
+          <div className="w-full">
+            <p className="text-center uppercase">You Received </p>
+            <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center text-nowrap">
+              USD {amountDataInfo.givenAmount}
+            </p>
           </div>
         </div>
 
         <div className="flex justify-center" >
           <button
             onClick={downloadAsPdf}
-            className="mt-10 flex items-center gap-4 paymentSuccessButton"
+            className="mt-10 flex items-center gap-4 paymentSuccessButton outline-none border-2 hover:bg-green-100 transition"
           >
             <svg
               width="41"

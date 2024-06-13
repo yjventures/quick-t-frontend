@@ -25,9 +25,7 @@
   padding: 10px 16px;
   border-radius: 12px;
 }
-.paymentSuccessButton:hover {
-  border: 1px solid black;
-}
+
 
 .paymentSuccessLine {
   width: 70%;
