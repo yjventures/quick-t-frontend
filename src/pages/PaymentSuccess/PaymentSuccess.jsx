@@ -124,6 +124,9 @@ function PaymentSuccess() {
               Transfer Number
             </p>
             <p className="paymentSuccessStarting text-base lg:text-xl">
+              Transection Password
+            </p>
+            <p className="paymentSuccessStarting text-base lg:text-xl">
               Payment Time
             </p>
             <p className="paymentSuccessStarting text-base lg:text-xl">
@@ -162,6 +165,31 @@ function PaymentSuccess() {
                 <img ref={imgRef} src={Copy} alt="icon" />
               </div>
             </div>
+            <div
+              className="me-6"
+              style={{ position: "relative" }}
+              onClick={() => {
+                navigator.clipboard.writeText(`${receiverDataInfo.transection_password}`)
+                showSuccessAlert("Copied to clipboard")
+              }}
+            >
+              <p className="paymentSuccessEnding transfernumber text-base lg:text-xl">
+                {receiverDataInfo.transection_password}
+              </p>
+              <div
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  right: "-25px",
+                  height: "24px",
+                  width: "24px",
+                  cursor: "pointer",
+                }}
+              // onClick={handleCopyText}
+              >
+                <img ref={imgRef} src={Copy} alt="icon" />
+              </div>
+            </div>
             <p className="paymentSuccessEnding text-base lg:text-xl">
               {formatISODate(localStorage.getItem("transaction_time"))}
             </p>
@@ -172,6 +200,7 @@ function PaymentSuccess() {
             <p className="paymentSuccessEnding text-base lg:text-xl">
               {receiverDataInfo.first_name} {receiverDataInfo.last_name}
             </p>
+
           </div>
         </div>
 
