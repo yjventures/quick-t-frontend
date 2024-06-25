@@ -14,17 +14,17 @@ function HeroSection({ title, description }) {
   const jwt = localStorage.getItem("jwt");
   // console.log(currency_buffer, gateway_fee)  
   // get countries api using react query
-  const {
-    isPending: pendingCountries,
-    error: countriesError,
-    data: countries,
-  } = useQuery({
-    queryKey: ["countries"],
-    queryFn: () =>
-      fetch("http://localhost:1337/api/countries")
-        .then((res) => res.json())
-        .then((data) => data?.data),
-  });
+  // const {
+  //   isPending: pendingCountries,
+  //   error: countriesError,
+  //   data: countries,
+  // } = useQuery({
+  //   queryKey: ["countries"],
+  //   queryFn: () =>
+  //     fetch("http://localhost:1337/api/countries")
+  //       .then((res) => res.json())
+  //       .then((data) => data?.data),
+  // });
 
 
   // get quick transfer api using react query
@@ -139,13 +139,13 @@ function HeroSection({ title, description }) {
 
 
   return (
-    <div className="flex flex-col md:flex-row" style={{ paddingTop: "80px" }}>
+    <div className="flex flex-col gap-4 md:flex-row items-center justify-between h-full pb-10 max-w-7xl mx-auto" style={{ paddingTop: "80px" }}>
       {/* Left Part */}
       <div
-        className="w-full md:w-1/2 flex items-center justify-center pl-5"
-        style={{ height: "90vh", backgroundColor: "#EEE" }}
+        className="w-full flex items-center justify-center px-5 pt-2"
+        // style={{ height: "90vh"}}
       >
-        <div className="container lg:ms-40">
+        <div className="container">
           <p className="font-bold text-5xl sm:md:text-6xl lg:text-6xl xl:text-6xl herosectionLeftSideHeadingText">
             {title ? (
               <React.Fragment>
@@ -185,11 +185,11 @@ function HeroSection({ title, description }) {
 
       {/* Right Part */}
       <div
-        className="w-full md:w-1/2 flex items-center justify-center sm:pl-5 pr-5"
-        style={{ height: "90vh", backgroundColor: "#EEE" }}
+        className="w-full flex items-center justify-center px-5"
+        // style={{ height: "90vh"}}
       >
         <div
-          className="heroSectionCard shadow-xl w-full sm:w-3/3 md:w-4/5 xl:w-2/4 md:h-3/3 xl:h-3/3"
+          className="heroSectionCard shadow-xl w-full max-w-[400px] mt-4"
           style={{
             backgroundColor: "#FFF",
             padding: "18px 24px",

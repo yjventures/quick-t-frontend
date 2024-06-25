@@ -3,6 +3,7 @@ import "./Headers.css";
 import logo from "../assets/images/logo.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { showFailedAlert } from "../utils/Tooast.Utils";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false); // State to handle the dropdown visibility
@@ -48,7 +49,7 @@ const Navbar = () => {
 
   const jwt = localStorage.getItem("jwt");
   return (
-    <nav className="navbar">
+    <nav className="flex justify-between items-center ">
       <div className="navbar-left">
         {/* Website Logo */}
         <img
@@ -62,25 +63,25 @@ const Navbar = () => {
         />
       </div>
       {/* Middle section with Nav Links for Large Screens */}
-      {!isSmallScreen && (
-        <div className="navbar-middle">
-          <ul className="nav-links">
-            <li>
-              <a href="/how-it-works">How It Works</a>
-            </li>
-            <li>
-              <a href="/about">Pricing</a>
-            </li>
-            <li>
-              <a href="/works">Help Center</a>
-            </li>
-            <li>
-              <a href="/">News</a>
-            </li>
-          </ul>
-        </div>
-      )}
-
+      {/* {!isSmallScreen && (
+        
+      )} */}
+      <div className="navbar-middle hidden md:block">
+        <ul className="nav-links">
+          <li>
+            <a href="/how-it-works">How It Works</a>
+          </li>
+          <li>
+            <a href="/about">Pricing</a>
+          </li>
+          <li>
+            <a href="/works">Help Center</a>
+          </li>
+          <li>
+            <a href="/">News</a>
+          </li>
+        </ul>
+      </div>
       <div className="navbar-right">
         {/* User Profile */}
         {jwt ? (

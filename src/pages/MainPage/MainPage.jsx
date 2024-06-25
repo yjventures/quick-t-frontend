@@ -30,7 +30,9 @@ function MainPage() {
   return (
     <div>
       <Headers />
-      <HeroSection title={generalSettings?.main_banner_title} description={generalSettings?.main_banner_desc} />
+      <div className="bg-[#EEE]">
+        <HeroSection title={generalSettings?.main_banner_title} description={generalSettings?.main_banner_desc} />
+      </div>
       <GetStart title={generalSettings?.get_started_title} second_title={generalSettings?.get_started_second_title} description={generalSettings?.get_started_description} />
       <ChooseUs
         service_box_one_icon={generalSettings?.service_box_one_icon}

@@ -64,7 +64,7 @@
   border-radius: 7px;
 }
 
-.services_card {
+/* .services_card {
   width: 375px;
   height: 247px;
   position: absolute;
@@ -73,7 +73,7 @@
   left: -10px;
   border-radius: 7px;
   box-shadow: 0px 0px 5px #edf0f6;
-}
+} */
 
 .card_topImage {
   position: absolute;
