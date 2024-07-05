@@ -447,7 +447,7 @@ function SendingMoney() {
               ></textarea>
             </div>
 
-            <div className="relative z-0 w-full mb-6 group">
+            {/* <div className="relative z-0 w-full mb-6 group">
               <label className="transectionLabel">Transaction Password</label>
               <br />
               <input
@@ -456,7 +456,7 @@ function SendingMoney() {
                 value={transactionPassword}
                 onChange={(e) => setTransactionPassword(e.target.value)}
               />
-            </div>
+            </div> */}
 
             <div className="relative z-0 w-full mb-6 group">
               <label className="transectionLabel">Note (Optional)</label>
