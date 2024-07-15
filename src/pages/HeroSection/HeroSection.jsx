@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./HeroSection.css";
+import "./heroSection.css";
 import verifiedtick from "../../assets/images/verifiedtick.png";
 import Select from "react-select";
 import stopCircle from "../../assets/images/stop-circle.png";
