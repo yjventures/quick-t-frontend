@@ -29,7 +29,7 @@ function KycPage() {
         formData.append("files", file);
 
         axios
-          .post("http://localhost:1337/api/upload", formData)
+          .post("https://api.quickt.com.au/api/upload", formData)
           .then((response) => {
             console.log("File uploaded successfully: ", response.data);
             showSuccessAlert("Image uploaded successfully");
@@ -64,7 +64,7 @@ function KycPage() {
         formData.append("files", file);
 
         axios
-          .post("http://localhost:1337/api/upload", formData)
+          .post("https://api.quickt.com.au/api/upload", formData)
           .then((response) => {
             console.log("File uploaded successfully: ", response.data);
             showSuccessAlert("Image uploaded successfully");
@@ -154,7 +154,7 @@ function KycPage() {
       };
       const data = JSON.stringify();
       const response = await axios.post(
-        "http://localhost:1337/api/kycs",
+        "https://api.quickt.com.au/api/kycs",
         {
           data: addressData,
         },
@@ -173,7 +173,7 @@ function KycPage() {
       const kycID = response?.data?.data?.id;
       // relate kyc to user
       const userResponse = await axios.put(
-        `http://localhost:1337/api/users/${localStorage.getItem(
+        `https://api.quickt.com.au/api/users/${localStorage.getItem(
           "user_id"
         )}`,
         {

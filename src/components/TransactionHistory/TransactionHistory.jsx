@@ -9,7 +9,7 @@ function TransactionHistory() {
     let userId = localStorage.getItem("user_id");
     axios
       .get(
-        `http://localhost:1337/api/transactions?populate=*&filters[users_permissions_user][id][$eq]=${userId}`
+        `https://api.quickt.com.au/api/transactions?populate=*&filters[users_permissions_user][id][$eq]=${userId}`
       )
       .then((res) => {
         const sortedTransactions = res.data.data.sort(

@@ -71,7 +71,7 @@ function TransferOTP() {
       };
       JSON.stringify(data);
       const res = await axios.post(
-        "http://localhost:5000/checkSecurity", data
+        "https://microservice.quickt.com.au/checkSecurity", data
       );
       // 200 = success | 404 = wrong otp | 403 = System error or wrong jwt
       // transaction_id of db is order id here
@@ -85,7 +85,7 @@ function TransferOTP() {
       if (res.data.statusCode == 200) {
         // showSuccessAlert("Payment Successfull")
         const response = await axios.post(
-          "http://localhost:5000/checkout-session-new",
+          "https://microservice.quickt.com.au/checkout-session-new",
           {
             data: {
               amount: amountData,
