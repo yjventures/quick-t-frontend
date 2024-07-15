@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import "./PersonalInfo.css";
+import "./personalInfo.css";
 import axios from "axios";
 function PersonalInfo() {
   const [userData, setUserData] = useState({});
