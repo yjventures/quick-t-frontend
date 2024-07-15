@@ -205,7 +205,7 @@ function SendingMoney() {
       receiverAreaSelectedValue: receiverAreaSelectedValue,
       purpose: purpose,
       note: note,
-      transection_password: transactionPassword,
+      // transection_password: transactionPassword,
     };
     // console.log(receiverData);
     localStorage.setItem("receiverData", JSON.stringify(receiverData));

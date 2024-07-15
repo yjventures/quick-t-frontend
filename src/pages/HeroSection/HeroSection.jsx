@@ -1,15 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./HeroSection.css";
 import verifiedtick from "../../assets/images/verifiedtick.png";
 import Select from "react-select";
 import stopCircle from "../../assets/images/stop-circle.png";
 import tickCircle from "../../assets/images/tick-circle.png";
+import flag from "../../assets/images/flag.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
+import axios from "axios";
+
 
 function HeroSection({ title, description }) {
   const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState('Lebanon');
+  console.log(selectedCountry)
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
   // console.log(currency_buffer, gateway_fee)  
@@ -40,6 +45,20 @@ function HeroSection({ title, description }) {
         .then((data) => data?.data),
   });
 
+
+  const {
+    data: countries,
+    error: countriesError,
+    isLoading: pendingCountries }
+    = useQuery({
+      queryKey: ['countries'],
+      queryFn: () => axios.get("http://localhost:5000/api/countries")
+        .then(res => res.data.data)
+    });
+
+  console.log(countries, countriesError, pendingCountries)
+  // console.log(countries?.list)
+  
   const options = [
     {
       value: "lebanon",
@@ -112,6 +131,10 @@ function HeroSection({ title, description }) {
       showFailedAlert("Please enter amount");
       return;
     }
+    if(selectedCountry == ""){
+      showFailedAlert("Please select country");
+      return;
+    }
     // console.log(convertedAmountInfo)
     // return
     // const data = {
@@ -130,6 +153,7 @@ function HeroSection({ title, description }) {
     // }
 
     localStorage.setItem("amountData", JSON.stringify(convertedAmountInfo));
+    localStorage.setItem("sendFrom", selectedCountry);
     if (jwt) {
       navigate("/sendingMoney");
     } else {
@@ -143,7 +167,7 @@ function HeroSection({ title, description }) {
       {/* Left Part */}
       <div
         className="w-full flex items-center justify-center px-5 pt-2"
-        // style={{ height: "90vh"}}
+      // style={{ height: "90vh"}}
       >
         <div className="container">
           <p className="font-bold text-5xl sm:md:text-6xl lg:text-6xl xl:text-6xl herosectionLeftSideHeadingText">
@@ -186,7 +210,7 @@ function HeroSection({ title, description }) {
       {/* Right Part */}
       <div
         className="w-full flex items-center justify-center px-5"
-        // style={{ height: "90vh"}}
+      // style={{ height: "90vh"}}
       >
         <div
           className="heroSectionCard shadow-xl w-full max-w-[400px] mt-4"
@@ -194,6 +218,7 @@ function HeroSection({ title, description }) {
             backgroundColor: "#FFF",
             padding: "18px 24px",
             zIndex: "1",
+            position: "relative"
           }}
         >
           <p
@@ -201,26 +226,47 @@ function HeroSection({ title, description }) {
           >
             Send From
           </p>
-          <Select
-            defaultValue={options[1]}
-            isDisabled
-            options={options}
-            formatOptionLabel={(country) => (
-              <div className="flex">
-                <img
-                  src={country.image}
-                  alt="country-image"
-                  style={{
-                    height: "24px",
-                    width: "24px",
-                    borderRadius: "50%",
-                    marginRight: "10px",
-                  }}
-                />
-                <span>{country.label}</span>
-              </div>
-            )}
-          />
+
+          <img src={flag} alt="flag" style={{
+            width: "20px", height: "20px", padding: '1px',
+            position: 'absolute',
+            top: '60px',
+            left: '40px'
+          }} />
+
+          <select
+            onChange={(e) => {
+              setSelectedCountry(e.target.value);
+            }}
+            disabled={countries?.list?.length == 0 ? true : false}
+            style={{
+              width: "100%",
+              padding: "10px",
+              paddingLeft: "50px",
+              borderRadius: "5px",
+              border: "1px solid #E5E7EB",
+              marginBottom: "10px",
+              outline: "none",
+              appearance: "none",
+            }}
+          >
+
+            {
+              countries?.list?.map((country, index) => (
+                <option
+                  key={index}
+                  value={country.name}
+                  style={{ padding: "10px" }}
+                >
+                  {/* capitalize first letter and rest is lower case */}
+                  {
+                    country.name.charAt(0).toUpperCase() + country.name.slice(1).toLowerCase()
+                  }
+
+                </option>
+              ))
+            }
+          </select>
 
           <p className="heroSectionSendTo">Send To</p>
           <Select

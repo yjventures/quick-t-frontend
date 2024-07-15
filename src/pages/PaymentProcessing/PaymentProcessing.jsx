@@ -26,6 +26,7 @@ function PaymentProcessing() {
         jwt: localStorage.getItem("jwt"),
         receiverData: localStorage.getItem("receiverData"),
         amountData: localStorage.getItem("amountData"),
+        sendFrom: localStorage.getItem("sendFrom"),
       }
     });
 
