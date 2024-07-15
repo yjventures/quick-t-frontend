@@ -4,7 +4,7 @@ import registerImage from "../../assets/images/registerImage.png";
 import "./kyc.css";
 import Select from "react-select";
 import frontPlaceholder from "../../assets/images/frontPlaceholder.png";
-import backPlaceholder from "../../assets/images/backPlaceHolder.png";
+import backPlaceholder from "../../assets/images/backPlaceholder.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
