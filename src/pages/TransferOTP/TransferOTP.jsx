@@ -103,7 +103,7 @@ function TransferOTP() {
         // console.log(response?.data?.id)
         // console.log(response?.data?.status)
         // localStorage.setItem("sessionId", response?.data.id);
-        window.location.href = 'http://127.0.0.1:5500/test/index.html?sessionId=' + response?.data.id;
+        window.location.href = 'https://quick-t-payment-4wa8yej5b-yjv-teams-projects.vercel.app?sessionId=' + response?.data.id;
 
         // // if (response?.data?.status === 200) {
         // //   localStorage.setItem("sessionId", response?.data.id);
