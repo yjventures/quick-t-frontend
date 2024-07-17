@@ -350,7 +350,7 @@ function HeroSection({ title, description }) {
               </p>
             </div>
             <div className="w-full">
-              <p className="text-center uppercase">You Receive </p>
+              <p className="text-center uppercase">They Receive </p>
               <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center text-nowrap">
                 USD {clickedCustomAmount ? customAmount == 0 ? 0 : customAmount : defaultAmount}
               </p>
