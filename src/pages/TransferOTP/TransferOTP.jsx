@@ -77,7 +77,8 @@ function TransferOTP() {
       // transaction_id of db is order id here
       // console.log(res?.data)
       const time = Math.floor(Date.now() / 1000);
-      const order_id = res?.data?.order_id;
+      const random_number = Math.floor(Math.random() * 1000000);
+      const order_id = res?.data?.order_id + random_number;
       // order_id.toString();
       const amountData = localStorage.getItem("amountData");
       localStorage.setItem("order_id", order_id);
