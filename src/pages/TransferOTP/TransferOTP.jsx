@@ -10,6 +10,7 @@ import axios from "axios";
 import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
 import { useNavigate } from "react-router-dom";
 function TransferOTP() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
   const [countWrongOtp, setCountWrongOtp] = useState(1);
   const [inputValue, setInputValue] = useState("");
@@ -54,9 +55,11 @@ function TransferOTP() {
     backgroundColor: "white",
     borderColor: "lightgrey",
     textAlign: "center",
+    outline: "none",
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       // if not 3 times wrong otp
     if (inputValue.length < 4) {
@@ -138,6 +141,8 @@ function TransferOTP() {
     } catch (error) {
       console.log(error)
       showFailedAlert("Something went wrong, please try again later");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -231,13 +236,13 @@ function TransferOTP() {
               {/* <img src={securityTick} alt="icon" /> */}
             </div>
             <button
-              disabled={countTime < 300}
+              disabled={countTime < 300 || loading}
               onClick={handleSubmit}
               className="flex justify-center items-center w-2/3 pt-2 pb-2 ps-5 pe-5 rounded-xl text-white mt-5 mx-auto"
               // change background color to #ccc when disabled
               style={{ backgroundColor: countTime < 300 ? "#999" : "#043BA0" }}
             >
-              {countTime < 300 ? `Try again in ${countTime} seconds` : "Send"}
+              {countTime < 300 ? `Try again in ${countTime} seconds` : loading ? "Checking Security.." : "Send"}
             </button>
           </div>
         </div>
