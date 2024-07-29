@@ -231,7 +231,7 @@ function PaymentSuccess() {
             </p>
           </div>
           <div className="w-full">
-            <p className="text-center uppercase">You Received </p>
+            <p className="text-center uppercase">They Received </p>
             <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center text-nowrap">
               USD {amountDataInfo.givenAmount}
             </p>
