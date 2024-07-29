@@ -11,6 +11,7 @@ import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
 import { useNavigate } from "react-router-dom";
 function TransferOTP() {
   const [loading, setLoading] = useState(false);
+  const [sentClickedAndNoError, setSentClickedAndNoError] = useState(false);
   const navigate = useNavigate()
   const [countWrongOtp, setCountWrongOtp] = useState(1);
   const [inputValue, setInputValue] = useState("");
@@ -62,82 +63,83 @@ function TransferOTP() {
     setLoading(true);
     try {
       // if not 3 times wrong otp
-    if (inputValue.length < 4) {
-      showFailedAlert("Please enter 4 digit PIN");
-      return;
-    }
-
-    if (countWrongOtp < 3) {
-      const data = {
-        code: inputValue,
-        jwt: localStorage.getItem("jwt"),
-      };
-      JSON.stringify(data);
-      const res = await axios.post(
-        "https://microservice.quickt.com.au/checkSecurity", data
-      );
-      // 200 = success | 404 = wrong otp | 403 = System error or wrong jwt
-      // transaction_id of db is order id here
-      // console.log(res?.data)
-      const time = Math.floor(Date.now() / 1000);
-      const random_number = Math.floor(Math.random() * 1000000);
-      const order_id = res?.data?.order_id + random_number;
-      // order_id.toString();
-      const amountData = localStorage.getItem("amountData");
-      localStorage.setItem("order_id", order_id);
-      // console.log(amountData);
-      // return
-      if (res.data.statusCode == 200) {
-        // showSuccessAlert("Payment Successfull")
-        const response = await axios.post(
-          "https://microservice.quickt.com.au/checkout-session-new",
-          {
-            data: {
-              amount: amountData,
-              order_id: order_id,
-            }
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        // console.log(response)
-        // console.log(response?.data?.id)
-        // console.log(response?.data?.status)
-        // localStorage.setItem("sessionId", response?.data.id);
-        window.location.href = 'https://pay.quickt.com.au?sessionId=' + response?.data.id;
-
-        // // if (response?.data?.status === 200) {
-        // //   localStorage.setItem("sessionId", response?.data.id);
-        // //   navigate('/payment')
-        // // } else {
-        // //   alert("Something went wrong, please try again later");
-        // // }
-        // return;
-        // const sessionUrl = response?.data;
-        // if (sessionUrl) {
-        //   // Redirect the user to the Stripe checkout session URL
-        //   window.open(sessionUrl, "_self");
-        // } else {
-        //   // Handle the case where sessionUrl is not available
-        //   showFailedAlert("Something went wrong, please try again later");
-        // }
-      } else if (statusCode === 403) {
-        showFailedAlert("Something went wrong, please try again later");
-      } else {
-        showFailedAlert("Wrong PIN")
-        setCountWrongOtp(countWrongOtp + 1)
+      if (inputValue.length < 4) {
+        showFailedAlert("Please enter 4 digit PIN");
+        return;
       }
-    } else {
-      showFailedAlert(
-        "You have entered wrong PIN 3 times, Please try after 5 minutes"
-      );
-      setTimer(true);
-      return;
-    }
+
+      if (countWrongOtp < 3) {
+        const data = {
+          code: inputValue,
+          jwt: localStorage.getItem("jwt"),
+        };
+        JSON.stringify(data);
+        const res = await axios.post(
+          "https://microservice.quickt.com.au/checkSecurity", data
+        );
+        // 200 = success | 404 = wrong otp | 403 = System error or wrong jwt
+        // transaction_id of db is order id here
+        // console.log(res?.data)
+        const time = Math.floor(Date.now() / 1000);
+        const random_number = Math.floor(Math.random() * 1000000);
+        const order_id = res?.data?.order_id + random_number;
+        // order_id.toString();
+        const amountData = localStorage.getItem("amountData");
+        localStorage.setItem("order_id", order_id);
+        // console.log(amountData);
+        // return
+        if (res.data.statusCode == 200) {
+          // showSuccessAlert("Payment Successfull")
+          const response = await axios.post(
+            "https://microservice.quickt.com.au/checkout-session-new",
+            {
+              data: {
+                amount: amountData,
+                order_id: order_id,
+              }
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          // console.log(response)
+          // console.log(response?.data?.id)
+          // console.log(response?.data?.status)
+          // localStorage.setItem("sessionId", response?.data.id);
+          setSentClickedAndNoError(true);
+          window.location.href = 'https://pay.quickt.com.au?sessionId=' + response?.data.id;
+
+          // // if (response?.data?.status === 200) {
+          // //   localStorage.setItem("sessionId", response?.data.id);
+          // //   navigate('/payment')
+          // // } else {
+          // //   alert("Something went wrong, please try again later");
+          // // }
+          // return;
+          // const sessionUrl = response?.data;
+          // if (sessionUrl) {
+          //   // Redirect the user to the Stripe checkout session URL
+          //   window.open(sessionUrl, "_self");
+          // } else {
+          //   // Handle the case where sessionUrl is not available
+          //   showFailedAlert("Something went wrong, please try again later");
+          // }
+        } else if (statusCode === 403) {
+          showFailedAlert("Something went wrong, please try again later");
+        } else {
+          showFailedAlert("Wrong PIN")
+          setCountWrongOtp(countWrongOtp + 1)
+        }
+      } else {
+        showFailedAlert(
+          "You have entered wrong PIN 3 times, Please try after 5 minutes"
+        );
+        setTimer(true);
+        return;
+      }
     } catch (error) {
       console.log(error)
       showFailedAlert("Something went wrong, please try again later");
@@ -236,13 +238,13 @@ function TransferOTP() {
               {/* <img src={securityTick} alt="icon" /> */}
             </div>
             <button
-              disabled={countTime < 300 || loading}
+              disabled={countTime < 300 || loading || sentClickedAndNoError}
               onClick={handleSubmit}
               className="flex justify-center items-center w-2/3 pt-2 pb-2 ps-5 pe-5 rounded-xl text-white mt-5 mx-auto"
               // change background color to #ccc when disabled
               style={{ backgroundColor: countTime < 300 ? "#999" : "#043BA0" }}
             >
-              {countTime < 300 ? `Try again in ${countTime} seconds` : loading ? "Checking Security.." : "Send"}
+              {countTime < 300 ? `Try again in ${countTime} seconds` : sentClickedAndNoError ? "Processing..." : loading ? "Checking Security.." : "Submit"}
             </button>
           </div>
         </div>
