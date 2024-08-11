@@ -23,7 +23,7 @@ function SendingMoney() {
   const fetchReceivers = async () => {
     const user_id = localStorage.getItem("user_id");
     const res = await fetch(
-      `https://api.quickt.com.au/api/saved-receivers?filters[users_permissions_user][id][$eq]=${user_id}`,
+      `http://localhost:1337/api/saved-receivers?filters[users_permissions_user][id][$eq]=${user_id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
@@ -44,7 +44,7 @@ function SendingMoney() {
   });
 
   const fetchAreas = async () => {
-    const res = await fetch(`https://api.quickt.com.au/api/areas`, {
+    const res = await fetch(`http://localhost:1337/api/areas`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
@@ -146,7 +146,7 @@ function SendingMoney() {
   const { isPending: pendingUser, error: userError, data: user } = useQuery({
     queryKey: ["user"],
     queryFn: () =>
-      fetch("https://api.quickt.com.au/api/users/me", {
+      fetch("http://localhost:1337/api/users/me", {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
@@ -156,7 +156,7 @@ function SendingMoney() {
   });
   if (userError) return showFailedAlert("Something went wrong");
 
-  console.log(user)
+  // console.log(user)
   const handleSelectChange = async () => {
     // get user details form query key "user"
     // console.log(user)
@@ -213,7 +213,7 @@ function SendingMoney() {
     if (!selectedContact) {
       const saveReceiver = async () => {
         const user_id = localStorage.getItem("user_id");
-        const res = await fetch(`https://api.quickt.com.au/api/saved-receivers`, {
+        const res = await fetch(`http://localhost:1337/api/saved-receivers`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

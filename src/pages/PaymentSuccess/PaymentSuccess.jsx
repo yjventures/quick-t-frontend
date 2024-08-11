@@ -47,6 +47,8 @@ function PaymentSuccess() {
   const receiverDataInfo = JSON.parse(localStorage.getItem("receiverData"));
   const amountDataInfo = JSON.parse(localStorage.getItem("amountData"));
   const userName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
+  const transaction_password = localStorage.getItem("transaction_password");
+
   const time = new Date().toLocaleString();
 
   // const unixTimestamp = localStorage.getItem("transaction_time");
@@ -124,14 +126,14 @@ function PaymentSuccess() {
               Transfer Number
             </p>
             <p className="paymentSuccessStarting text-base lg:text-xl">
-              Transection Password
+              Transaction Password
             </p>
             <p className="paymentSuccessStarting text-base lg:text-xl">
               Payment Time
             </p>
-            <p className="paymentSuccessStarting text-base lg:text-xl">
+            {/* <p className="paymentSuccessStarting text-base lg:text-xl">
               Payment Method
-            </p>
+            </p> */}
             <p className="paymentSuccessStarting text-base lg:text-xl">
               Sender Name
             </p>
@@ -169,12 +171,12 @@ function PaymentSuccess() {
               className="me-6"
               style={{ position: "relative" }}
               onClick={() => {
-                navigator.clipboard.writeText(`${receiverDataInfo.transection_password}`)
+                navigator.clipboard.writeText(localStorage.getItem("transaction_password"))
                 showSuccessAlert("Copied to clipboard")
               }}
             >
               <p className="paymentSuccessEnding transfernumber text-base lg:text-xl">
-                {receiverDataInfo.transection_password}
+                {transaction_password}
               </p>
               <div
                 style={{
@@ -193,7 +195,7 @@ function PaymentSuccess() {
             <p className="paymentSuccessEnding text-base lg:text-xl">
               {formatISODate(localStorage.getItem("transaction_time"))}
             </p>
-            <p className="paymentSuccessEnding text-base lg:text-xl">Card</p>
+            {/* <p className="paymentSuccessEnding text-base lg:text-xl">Card</p> */}
             <p className="paymentSuccessEnding text-base lg:text-xl">
               {userName}
             </p>
@@ -210,7 +212,7 @@ function PaymentSuccess() {
               Amount
             </p>
             <p className="paymentSuccessStarting text-base lg:text-xl">
-              Transfer Fee
+              Platform Fee
             </p>
             <p className="paymentSuccessStarting text-base lg:text-xl">
               Gateway Fee
@@ -218,8 +220,8 @@ function PaymentSuccess() {
           </div>
           <div className="text-end">
             <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.givenAmount).toFixed(2)}</p>
-            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.transferFee).toFixed(2)}</p>
-            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.gatewayFee).toFixed(2)}</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.transferFee + amountDataInfo.gatewayFee).toFixed(2)}</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.whishFee).toFixed(2)}</p>
           </div>
         </div>
         {/* amount send and receive section  */}
@@ -227,7 +229,7 @@ function PaymentSuccess() {
           <div className="w-full">
             <p className="text-center uppercase">You sent </p>
             <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center">
-              AUD {amountDataInfo.convertedAmount}
+              AUD {amountDataInfo.convertedAmount} | USD {amountDataInfo.totalAmount}
             </p>
           </div>
           <div className="w-full">

@@ -18,7 +18,7 @@ function PaymentProcessing() {
 
   const saveTransaction = async () => {
 
-    const res = await axios.post("https://microservice.quickt.com.au/save-transaction", {
+    const res = await axios.post("http://localhost:5000/save-transaction", {
       data: {
         session_id: localStorage.getItem("sessionId"),
         order_id: order_id,
@@ -27,19 +27,25 @@ function PaymentProcessing() {
         receiverData: localStorage.getItem("receiverData"),
         amountData: localStorage.getItem("amountData"),
         sendFrom: localStorage.getItem("sendFrom"),
+        sender_first_name: localStorage.getItem("first_name"),
+        sender_last_name: localStorage.getItem("last_name"),
+        sender_phone: localStorage.getItem("phone"),
       }
     });
 
     if (res?.data?.statusCode === 200) {
       console.log(res.data);
+      console.log(res.data.transaction_password)
       localStorage.setItem("transaction_id", res.data.id);
       localStorage.setItem("transaction_time", res.data.transaction_time);
+      localStorage.setItem("transaction_password", res.data.transaction_password);
       showSuccessAlert("Payment Successfull");
       return res.data;
     } else if (res?.data?.statusCode === 403) {
       showFailedAlert("You have already paid for this transaction, Thank you");
       localStorage.setItem("transaction_id", res.data.id);
       localStorage.setItem("transaction_time", res.data.transaction_time);
+      localStorage.setItem("transaction_password", res.data.transaction_password);
       navigate("/paymentSuccess");
       return Promise.reject(new Error("Session expired"));
     } else {

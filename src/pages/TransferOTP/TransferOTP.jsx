@@ -75,7 +75,7 @@ function TransferOTP() {
         };
         JSON.stringify(data);
         const res = await axios.post(
-          "https://microservice.quickt.com.au/checkSecurity", data
+          "http://localhost:5000/checkSecurity", data
         );
         // 200 = success | 404 = wrong otp | 403 = System error or wrong jwt
         // transaction_id of db is order id here
@@ -91,7 +91,7 @@ function TransferOTP() {
         if (res.data.statusCode == 200) {
           // showSuccessAlert("Payment Successfull")
           const response = await axios.post(
-            "https://microservice.quickt.com.au/checkout-session-new",
+            "http://localhost:5000/checkout-session-new",
             {
               data: {
                 amount: amountData,
@@ -110,7 +110,7 @@ function TransferOTP() {
           // console.log(response?.data?.status)
           // localStorage.setItem("sessionId", response?.data.id);
           setSentClickedAndNoError(true);
-          window.location.href = 'https://pay.quickt.com.au?sessionId=' + response?.data.id;
+          window.location.href = 'http://127.0.0.1:5500/test/index.html?sessionId=' + response?.data.id;
 
           // // if (response?.data?.status === 200) {
           // //   localStorage.setItem("sessionId", response?.data.id);

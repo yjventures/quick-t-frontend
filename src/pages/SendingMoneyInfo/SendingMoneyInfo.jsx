@@ -21,7 +21,7 @@ function SendingMoneyInfo() {
 
   const fetchIUserData = async () => {
     const user_id = localStorage.getItem("user_id");
-    const response = await fetch(`https://api.quickt.com.au/api/kycs?filters[user][id][$eq]=${user_id}&fields[0]=city&fields[1]=country&fields[2]=street_address`, {
+    const response = await fetch(`http://localhost:1337/api/kycs?filters[user][id][$eq]=${user_id}&fields[0]=city&fields[1]=country&fields[2]=street_address`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ function SendingMoneyInfo() {
   const phone = receiverDataInfo.phone;
   const address = receiverDataInfo.city + ", " + receiverDataInfo.country;
   // console.log(address);
-  const transection_password = receiverDataInfo.transection_password
+  // const transection_password = receiverDataInfo.transection_password
   return (
     <div>
       <Headers />
@@ -160,23 +160,23 @@ function SendingMoneyInfo() {
               <div className="flex justify-between">
                 <div className="flex flex-col gap-1">
                   <p className="font-normal text-sm pb-1">Transfer amount</p>
-                  <p className="font-normal text-sm pb-1">Transfer fee</p>
                   <p className="font-normal text-sm pb-1">Platform fee</p>
+                  <p className="font-normal text-sm pb-1">Transfer fee</p>
                   <p className="font-normal text-sm pb-1">Total payable</p>
-                  <p className="font-normal text-sm p2-1">Transaction password</p>
+                  {/* <p className="font-normal text-sm p2-1">Transaction password</p> */}
                 </div>
                 <div style={{ textAlign: 'right' }} className="flex flex-col gap-0">
                   <p className="font-bold pb-1">
                     {amountDataInfo.givenAmount} USD
                   </p>
                   <p className="font-normal text-sm pb-1">
-                    {amountDataInfo.transferFee} USD
+                    {amountDataInfo.transferFee + amountDataInfo.gatewayFee} USD
                   </p>
                   <p className="font-normal text-sm pb-1">
-                    {amountDataInfo.gatewayFee} USD
+                    {amountDataInfo.whishFee} USD
                   </p>
                   <p className="font-bold pb-1">{amountDataInfo.totalAmount} USD</p>
-                  <p className="font-bold pb-1">{transection_password} </p>
+                  {/* <p className="font-bold pb-1">{transection_password} </p> */}
                 </div>
               </div>
             </div>

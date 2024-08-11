@@ -13,7 +13,7 @@ import axios from "axios";
 
 function HeroSection({ title, description }) {
   const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState('Lebanon');
+  const [selectedCountry, setSelectedCountry] = useState('Australia');
   console.log(selectedCountry)
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
@@ -26,7 +26,7 @@ function HeroSection({ title, description }) {
   // } = useQuery({
   //   queryKey: ["countries"],
   //   queryFn: () =>
-  //     fetch("https://api.quickt.com.au/api/countries")
+  //     fetch("http://localhost:1337/api/countries")
   //       .then((res) => res.json())
   //       .then((data) => data?.data),
   // });
@@ -40,7 +40,7 @@ function HeroSection({ title, description }) {
   } = useQuery({
     queryKey: ["quick-transfers"],
     queryFn: () =>
-      fetch("https://microservice.quickt.com.au/get-quick-transfers")
+      fetch("http://localhost:5000/get-quick-transfers")
         .then((res) => res.json())
         .then((data) => data?.data),
   });
@@ -52,13 +52,13 @@ function HeroSection({ title, description }) {
     isLoading: pendingCountries }
     = useQuery({
       queryKey: ['countries'],
-      queryFn: () => axios.get("https://microservice.quickt.com.au/api/countries")
+      queryFn: () => axios.get("http://localhost:5000/api/countries")
         .then(res => res.data.data)
     });
 
   console.log(countries, countriesError, pendingCountries)
   // console.log(countries?.list)
-  
+
   const options = [
     {
       value: "lebanon",
@@ -88,8 +88,7 @@ function HeroSection({ title, description }) {
     setTransferFee(transferfee);
     setCustomAmount(null);
   };
-  // console.log(defaultAmount)
-  // console.log(customAmount)
+
 
   const {
     isPending: pendingConvertedAmount,
@@ -98,7 +97,7 @@ function HeroSection({ title, description }) {
   } = useQuery({
     queryKey: ["convert-amount", defaultAmount, customAmount],
     queryFn: () =>
-      fetch("https://microservice.quickt.com.au/get-currency-rate", {
+      fetch("http://localhost:5000/get-currency-rate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -131,7 +130,7 @@ function HeroSection({ title, description }) {
       showFailedAlert("Please enter amount");
       return;
     }
-    if(selectedCountry == ""){
+    if (selectedCountry == "") {
       showFailedAlert("Please select country");
       return;
     }
@@ -163,9 +162,9 @@ function HeroSection({ title, description }) {
 
 
   return (
-    <div className="flex flex-col gap-4 md:flex-row items-center justify-between h-full pb-10 max-w-7xl mx-auto" style={{ paddingTop: "80px" }}>
+    <div className="flex flex-col gap-4 md:flex-row items-center justify-between h-full pb-10 max-w-7xl mx-auto" style={{ paddingTop: "80px" }} >
       {/* Left Part */}
-      <div
+      <div div
         className="w-full flex items-center justify-center px-5 pt-2"
       // style={{ height: "90vh"}}
       >
@@ -208,7 +207,7 @@ function HeroSection({ title, description }) {
       </div>
 
       {/* Right Part */}
-      <div
+      <div div
         className="w-full flex items-center justify-center px-5"
       // style={{ height: "90vh"}}
       >
@@ -255,7 +254,7 @@ function HeroSection({ title, description }) {
               countries?.list?.map((country, index) => (
                 <option
                   key={index}
-                  value={country.name}
+                  value={country.id}
                   style={{ padding: "10px" }}
                 >
                   {/* capitalize first letter and rest is lower case */}
@@ -379,7 +378,7 @@ function HeroSection({ title, description }) {
           }
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -12,7 +12,7 @@ export default function PaymentCancel() {
             justifyContent: 'center',
             height: '100vh'
         }}>
-            <p className='mb-3'>Opps payment canceled!</p>
+            <p className='mb-3'>Opps payment canceled! Please try again</p>
             <Button onClick={()=> {
                 navigate('/')
             }}>Go Home</Button>

@@ -19,7 +19,7 @@ function MainPage() {
   const { isPending: pendingGeneralSettings, error: generalSettingsError, data: generalSettings } = useQuery({
     queryKey: ['general-settings'],
     queryFn: () =>
-      fetch('https://api.quickt.com.au/api/general-settings?populate=*')
+      fetch('http://localhost:1337/api/general-settings?populate=*')
         .then(res => res.json())
         .then(data => data?.data?.[0]?.attributes),
   })
