@@ -165,10 +165,18 @@ function SendingMoney() {
       return;
     }
 
+    // lebanon phone number validation regex 
+    const lebanesePhoneNumberRegex = /^(?:\+961|961|0)?(?:1|2|3|5|7)\d{7}$/;
+    if (!lebanesePhoneNumberRegex.test(phone)) {
+      showFailedAlert("Please enter a valid phone number");
+      return;
+    }
+
     const contactSelectedValue = contactSelectRef.current.value;
     const receiverAreaSelectedValue = receiverAreaSelectRef.current.value;
     // const purposeCelectedValue = purposeSelectRef.current.value;
     console.log(contactSelectedValue, receiverAreaSelectedValue);
+
     const firstName = firstNameRef.value;
     const lastName = lastNameRef.value;
     const country = countryRef.value;
@@ -370,7 +378,7 @@ function SendingMoney() {
             <div className="relative w-full mb-6 group">
               <label className="transectionLabel">Phone Number</label> <br />
               <PhoneInput
-                country={"au"}
+                country={"lb"}
                 enableSearch={true}
                 value={phone}
                 onChange={(phone) => setPhone(phone)}

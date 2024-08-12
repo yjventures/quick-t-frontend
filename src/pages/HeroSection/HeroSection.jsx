@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./heroSection.css";
 import verifiedtick from "../../assets/images/verifiedtick.png";
+import approximate from "../../assets/images/approximate.png";
 import Select from "react-select";
 import stopCircle from "../../assets/images/stop-circle.png";
 import tickCircle from "../../assets/images/tick-circle.png";
@@ -161,6 +162,27 @@ function HeroSection({ title, description }) {
   };
 
 
+  const QuickTransferSkeleton = () => {
+
+    return (
+      <div className="flex justify-between items-center w-full gap-2">
+        {
+          [1, 2, 3].map((_, index) => (
+            <div role="status" className="flex items-start justify-start flex-col h-[85px] w-full bg-gray-300 rounded-lg animate-pulse p-2">
+              <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-full my-2"></div>
+              <div class="h-[10px] bg-gray-200 rounded-full dark:bg-gray-700 w-full mb-2"></div>
+              <div class="h-[8px] bg-gray-200 rounded-full dark:bg-gray-700 w-1/2 ms-[1px]"></div>
+              <span className="sr-only">Loading...</span>
+            </div>
+          ))
+        }
+
+      </div>
+
+
+    )
+  }
+
   return (
     <div className="flex flex-col gap-4 md:flex-row items-center justify-between h-full pb-10 max-w-7xl mx-auto" style={{ paddingTop: "80px" }} >
       {/* Left Part */}
@@ -237,7 +259,7 @@ function HeroSection({ title, description }) {
             onChange={(e) => {
               setSelectedCountry(e.target.value);
             }}
-            disabled={countries?.list?.length == 0 ? true : false}
+            // disabled={countries?.list?.length == 0 ? true : false}
             style={{
               width: "100%",
               padding: "10px",
@@ -250,21 +272,26 @@ function HeroSection({ title, description }) {
             }}
           >
 
-            {
+            {/* {
               countries?.list?.map((country, index) => (
                 <option
                   key={index}
                   value={country.id}
                   style={{ padding: "10px" }}
                 >
-                  {/* capitalize first letter and rest is lower case */}
                   {
                     country.name.charAt(0).toUpperCase() + country.name.slice(1).toLowerCase()
                   }
 
                 </option>
               ))
-            }
+            } */}
+            <option
+              value={'Australia'}
+              style={{ padding: "10px" }}
+            >
+              Australia
+            </option>
           </select>
 
           <p className="heroSectionSendTo">Send To</p>
@@ -293,7 +320,7 @@ function HeroSection({ title, description }) {
           <p className="heroSectionQuickTransfer">Quick Transfer</p>
           <div className="flex gap-2 mt-5 justify-evenly">
             {pendingQuickTransfers ? (
-              <p>Loading...</p>
+              <QuickTransferSkeleton />
             ) : (
               // sorting quick transfers by amount
               quickTransfers?.sort((a, b) => a?.attributes?.amount - b?.attributes?.amount)?.map(
@@ -344,8 +371,10 @@ function HeroSection({ title, description }) {
           <div className="w-full mt-4 flex justify-between gap-4">
             <div className="w-full">
               <p className="text-center uppercase">You send </p>
-              <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center">
-                AUD {pendingConvertedAmount ? "..." : clickedCustomAmount ? customAmount == 0 ? 0 : convertedAmountInfo?.convertedAmount : convertedAmountInfo?.convertedAmount}
+              <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center flex justify-center">
+                AUD
+                <img src={approximate} alt="" className="w-6 h-6" />
+                {pendingConvertedAmount ? "..." : clickedCustomAmount ? customAmount == 0 ? 0 : convertedAmountInfo?.convertedAmount : convertedAmountInfo?.convertedAmount}
               </p>
             </div>
             <div className="w-full">
