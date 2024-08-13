@@ -229,7 +229,7 @@ function PaymentSuccess() {
           <div className="w-full">
             <p className="text-center uppercase">You sent </p>
             <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center">
-              AUD {amountDataInfo.convertedAmount} | USD {amountDataInfo.totalAmount}
+              AUD {amountDataInfo.convertedAmount}
             </p>
           </div>
           <div className="w-full">

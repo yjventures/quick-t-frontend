@@ -166,7 +166,7 @@ function SendingMoney() {
     }
 
     // lebanon phone number validation regex 
-    const lebanesePhoneNumberRegex = /^(?:\+961|961|0)?(?:1|2|3|5|7)\d{7}$/;
+    const lebanesePhoneNumberRegex = /^(?:\+961|961|0)?(?:3|70|71|72|73|74|75|76|78|79|81)\d{6}$/;
     if (!lebanesePhoneNumberRegex.test(phone)) {
       showFailedAlert("Please enter a valid phone number");
       return;
