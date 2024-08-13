@@ -18,7 +18,7 @@ function PaymentProcessing() {
 
   const saveTransaction = async () => {
 
-    const res = await axios.post("http://localhost:5000/save-transaction", {
+    const res = await axios.post("https://microservice.quickt.com.au/save-transaction", {
       data: {
         session_id: localStorage.getItem("sessionId"),
         order_id: order_id,

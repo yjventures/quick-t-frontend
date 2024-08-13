@@ -18,7 +18,7 @@ const Navbar = () => {
   } = useQuery({
     queryKey: ["user"],
     queryFn: () =>
-      fetch("http://localhost:1337/api/users/me", {
+      fetch("https://api.quickt.com.au/api/users/me", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,

@@ -27,7 +27,7 @@ function HeroSection({ title, description }) {
   // } = useQuery({
   //   queryKey: ["countries"],
   //   queryFn: () =>
-  //     fetch("http://localhost:1337/api/countries")
+  //     fetch("https://api.quickt.com.au/api/countries")
   //       .then((res) => res.json())
   //       .then((data) => data?.data),
   // });
@@ -41,7 +41,7 @@ function HeroSection({ title, description }) {
   } = useQuery({
     queryKey: ["quick-transfers"],
     queryFn: () =>
-      fetch("http://localhost:5000/get-quick-transfers")
+      fetch("https://microservice.quickt.com.au/get-quick-transfers")
         .then((res) => res.json())
         .then((data) => data?.data),
   });
@@ -53,7 +53,7 @@ function HeroSection({ title, description }) {
     isLoading: pendingCountries }
     = useQuery({
       queryKey: ['countries'],
-      queryFn: () => axios.get("http://localhost:5000/api/countries")
+      queryFn: () => axios.get("https://microservice.quickt.com.au/api/countries")
         .then(res => res.data.data)
     });
 
@@ -98,7 +98,7 @@ function HeroSection({ title, description }) {
   } = useQuery({
     queryKey: ["convert-amount", defaultAmount, customAmount],
     queryFn: () =>
-      fetch("http://localhost:5000/get-currency-rate", {
+      fetch("https://microservice.quickt.com.au/get-currency-rate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
