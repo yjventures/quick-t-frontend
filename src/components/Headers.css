@@ -70,8 +70,8 @@ body {
 
 .dropdown {
   position: absolute;
-  top: 60px; /* Adjust this value based on your design */
-  right: 10px;
+  top: 65px; /* Adjust this value based on your design */
+  right: 20px;
   display: flex;
   flex-direction: column;
   width: 120px;
