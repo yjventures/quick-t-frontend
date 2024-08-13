@@ -86,7 +86,7 @@ const Navbar = () => {
         {/* User Profile */}
         {jwt ? (
           <div
-            className="user-profile hidingUserProfile"
+            className="user-profile hidingUserProfile bg-slate-100 rounded-full p-1"
             onClick={handleDropdownToggle}
           >
             {pendingUser ? (

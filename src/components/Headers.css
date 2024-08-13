@@ -70,13 +70,16 @@ body {
 
 .dropdown {
   position: absolute;
-  top: 50px; /* Adjust this value based on your design */
-  right: 0;
-  padding: 10px;
+  top: 60px; /* Adjust this value based on your design */
+  right: 10px;
   display: flex;
   flex-direction: column;
-  width: 100px;
-  background-color: #eee !important;
+  width: 120px;
+  background-color: #fff !important;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
 }
 
 .dropdown ul {
@@ -85,7 +88,14 @@ body {
 }
 
 .dropdown li {
-  padding: 5px 0;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown li:hover {
+  background-color: #3088f3;
+  color: white;
+  overflow: hidden;
 }
 
 .headerSignUp {
