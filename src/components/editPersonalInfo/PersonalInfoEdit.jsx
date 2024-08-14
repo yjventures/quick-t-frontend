@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import AddImage from "../../assets/images/addImage.png";
 import axios from "axios";
 import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
+
+
 function PersonalInfoEdit() {
   const navigate = useNavigate();
   //////////////////////////////////
@@ -257,25 +259,9 @@ function PersonalInfoEdit() {
       >
         <div className="flex flex-col lg:flex-row md:flex-row justify-around">
           <div>
-            <NavLink to="/" className="flex items-center gap-3">
-              <div>
-                <svg
-                  width="18"
-                  height="13"
-                  viewBox="0 0 18 13"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M18 5.5H3.83L7.41 1.91L6 0.5L0 6.5L6 12.5L7.41 11.08L3.83 7.5H18V5.5Z"
-                    fill="#333333"
-                  />
-                </svg>
-              </div>
-              <p style={{ fontSize: "15px" }}>Back to home</p>
-            </NavLink>
+
             <p
-              className="mb-10 mt-10"
+              className="mb-10"
               style={{
                 color: "#2F80ED",
                 fontSize: "20px",
@@ -296,15 +282,10 @@ function PersonalInfoEdit() {
                 />
                 <img
                   src={
-                    uploadedImage ||
-                    `https://api.quickt.com.au` + userData?.image
+                    uploadedImage ? uploadedImage :
+                      userData?.image ? `https://api.quickt.com.au` + userData?.image : AddImage
                   }
-                  style={{
-                    width: "258px",
-                    height: "280px",
-                    borderRadius: "24px",
-                    cursor: "pointer",
-                  }}
+                  className=" rounded-[40px] h-[280px] w-[280px] object-cover cursor-pointer"
                   onClick={handleAddImageClick}
                   alt="Add Image"
                 />
@@ -454,14 +435,14 @@ function PersonalInfoEdit() {
                             </button>
                           </div>
                           {/*body*/}
-                          <div className="relative p-6 flex-auto">
+                          <div className="relative p-6 flex-auto min-w-[400px]">
                             <p>Enter New Password</p>
                             <input
                               type={showNewPassword ? "text" : "password"}
                               className="changePasswordInput"
                               ref={newPasswordRef}
                             />
-                            <p>
+                            <p className="flex items-center justify-start mt-2">
                               <input
                                 type="checkbox"
                                 onChange={handleToggleNewPassword}
@@ -477,7 +458,7 @@ function PersonalInfoEdit() {
                               className="changePasswordInput"
                               ref={confirmPasswordRef}
                             />
-                            <p>
+                            <p className="flex items-center justify-start mt-2">
                               <input
                                 type="checkbox"
                                 onChange={handleToggleConfirmPassword}
@@ -520,7 +501,7 @@ function PersonalInfoEdit() {
               }}
             >
               <p
-                className="mb-10 md:mt-[-100px] lg:mt-20"
+                className="mb-10"
                 style={{
                   color: "#2F80ED",
                   fontSize: "20px",
@@ -549,7 +530,7 @@ function PersonalInfoEdit() {
                 alt="Add Image"
               />
 
-              <p
+              <div
                 style={{ position: "absolute", bottom: "20px" }}
                 className="w-4/5 flex justify-between items-center absolute start-4 lg:start-10 personalInfoVerificationPhotoText"
               >
@@ -560,7 +541,7 @@ function PersonalInfoEdit() {
                 >
                   1 File
                 </p>
-              </p>
+              </div>
             </div>
             <div style={{ position: "relative" }}>
               <input
@@ -580,7 +561,7 @@ function PersonalInfoEdit() {
                 onClick={handleAddBackImageClick}
                 alt="Add Image"
               />
-              <p
+              <div
                 style={{ position: "absolute", bottom: "20px" }}
                 className="w-4/5 flex justify-between items-center absolute start-4 lg:start-10 personalInfoVerificationPhotoText"
               >
@@ -591,22 +572,35 @@ function PersonalInfoEdit() {
                 >
                   1 File
                 </p>
-              </p>
+              </div>
             </div>
             <div className="flex gap-4">
               <button
-                className="editPersonalInfoDoneButton"
+                className="editPersonalInfoDoneButton w-full flex justify-center items-center gap-2"
                 onClick={handleUpdateUserInfo}
               >
-                Done
+                Confirm update
+                <p className=" w-5 h-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                </p>
+
               </button>
+              {/* revert button */}
               <button
-                className="editPersonalInfoCancelButton"
+                className="editPersonalInfoCancelButton  w-full flex justify-center items-center gap-2"
                 onClick={() => {
                   navigate("/personalInfo");
                 }}
               >
-                Cancel
+                Revert changes
+                <p className=" w-5 h-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                  </svg>
+
+                </p>
               </button>
             </div>
           </div>

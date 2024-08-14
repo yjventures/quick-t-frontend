@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import "./personalInfo.css";
+import AddImage from "../../assets/images/addImage.png";
 import axios from "axios";
+
+
 function PersonalInfo() {
   const [userData, setUserData] = useState({});
   const userEmail = userData?.email;
 
   const croppedEmail = userEmail
     ? userEmail.length > 15
-      ? userEmail.substring(0, 15) + "..."
+      // ? userEmail.substring(0, 3) + "..." + userEmail.substring(15, 50)
+      // first 3 letter + ... + last 3 letter
+      ? userEmail.substring(0, 3) + "..." + userEmail.substring(userEmail.length - 12, userEmail.length)
       : userEmail
     : "";
   useEffect(() => {
@@ -35,31 +39,14 @@ function PersonalInfo() {
       <div
         className="cardPersonalInfo"
         style={{
-          maxWidth: "1400px",
+          // maxWidth: "1400px",
           backgroundColor: "#fff",
         }}
       >
         <div className="flex flex-col lg:flex-row md:flex-row justify-around">
           <div>
-            <NavLink to="/" className="flex items-center gap-3">
-              <div>
-                <svg
-                  width="18"
-                  height="13"
-                  viewBox="0 0 18 13"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M18 5.5H3.83L7.41 1.91L6 0.5L0 6.5L6 12.5L7.41 11.08L3.83 7.5H18V5.5Z"
-                    fill="#333333"
-                  />
-                </svg>
-              </div>
-              <p style={{ fontSize: "15px" }}>Back to home</p>
-            </NavLink>
             <p
-              className="mb-10 mt-10"
+              className="mb-10"
               style={{
                 color: "#2F80ED",
                 fontSize: "20px",
@@ -72,14 +59,9 @@ function PersonalInfo() {
               <div>
                 {/* style={{ position: "relative" }} */}
                 <img
-                  src={`https://api.quickt.com.au` + userData?.image}
-                  alt=""
-                  style={{
-                    borderRadius: "24px",
-                    height: "280px",
-                    width: "258px",
-                    objectFit: "cover",
-                  }}
+                  src={userData?.image ? `https://api.quickt.com.au` + userData?.image : AddImage}
+                  alt="profile"
+                  className=" rounded-[40px] h-[280px] w-[280px] object-cover"
                 />
                 {/* <p
                 style={{ position: "absolute", bottom: "20px" }}
@@ -114,7 +96,7 @@ function PersonalInfo() {
                 </div>
               </div>
             </div>
-            <div className="sm:flex-row md:flex lg:flex  md:gap-28 lg:gap-56">
+            <div className="sm:flex-row md:flex lg:flex md:gap-28 lg:gap-56">
               <div>
                 <p
                   className="mb-10 mt-9"
@@ -183,7 +165,7 @@ function PersonalInfo() {
               }}
             >
               <p
-                className="mb-10 md:mt-[-15px] lg:mt-20"
+                className="mb-10 "
                 style={{
                   color: "#2F80ED",
                   fontSize: "20px",
@@ -234,11 +216,11 @@ function PersonalInfo() {
                 </p>
               </p>
             </div>
-            <NavLink to="/editPersonalInfo">
+            {/* <NavLink to="/editPersonalInfo">
               <p className="text-sky-400 cursor-pointer">
                 Edit Personal Information
               </p>
-            </NavLink>
+            </NavLink> */}
           </div>
         </div>
       </div>
