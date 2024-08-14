@@ -269,7 +269,7 @@ function TransactionHistory() {
                                 <div>
                                   <div className="md:flex gap-2 items-center">
                                     <p className="text-sm text-slate-700">
-                                      Password
+                                     Transaction Password
                                     </p>
                                     <p className="text-md">
                                       {transaction?.attributes?.transaction_password}
@@ -286,7 +286,7 @@ function TransactionHistory() {
                                       </svg>
                                     </p>
                                   </div>
-                                  <sub className=" font-bold">Never share your password*</sub>
+                                  <sub className="font-bold">Only share with receiver*</sub>
 
                                 </div>
                                 <button
