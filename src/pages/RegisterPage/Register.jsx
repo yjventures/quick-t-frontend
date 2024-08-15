@@ -127,8 +127,10 @@ function Register() {
       return;
     } else {
       setLoading(true);
+      const time = new Date().toLocaleTimeString();
+      console.log(time);
       const userData = {
-        username: firstName + " " + lastName,
+        username: firstName + " " + lastName + " " + time,
         first_name: firstName,
         last_name: lastName,
         email: email,
