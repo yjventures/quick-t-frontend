@@ -131,7 +131,7 @@ function Register() {
       const time = new Date().toLocaleTimeString();
       // console.log(time);
       const userData = {
-        username: firstName + " " + lastName + time,
+        username: firstName + " " + lastName + " " + time,
         first_name: firstName,
         last_name: lastName,
         email: email,
