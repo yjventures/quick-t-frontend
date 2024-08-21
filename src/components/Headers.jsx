@@ -68,18 +68,19 @@ const Navbar = () => {
       )} */}
       <div className="navbar-middle hidden md:block">
         <ul className="nav-links">
-          <li>
-            <a href="/how-it-works">How It Works</a>
+          <NavLink to="/about">About</NavLink>
+          <NavLink to="/help-center">Help Center</NavLink>
+          <NavLink to="/about">News</NavLink>
+
+          {/* <li>
+            <NavLink to="/about">About</NavLink>
           </li>
           <li>
-            <a href="/about">Pricing</a>
+            <NavLink to="/help-center">Help Center</NavLink>
           </li>
           <li>
-            <a href="/works">Help Center</a>
-          </li>
-          <li>
-            <a href="/">News</a>
-          </li>
+            <NavLink to="/about">News</NavLink>
+          </li> */}
         </ul>
       </div>
       <div className="navbar-right">

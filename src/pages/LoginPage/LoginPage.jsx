@@ -26,7 +26,7 @@ function LoginPage() {
     const res = await axios
       .post("https://api.quickt.com.au/api/auth/local", userData)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data) {
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user.id);
@@ -154,9 +154,9 @@ function LoginPage() {
             </button>
           </div>
           <p className="registerLogin text-center pt-2 pb-5">
-            Don’t have an account?{" "}
-            <NavLink to="/register">
-              <span>Sign Up</span>
+            Don’t have an account?
+            <NavLink to="/register" className='font-bold ms-2'>
+              Sign Up
             </NavLink>
           </p>
         </div>

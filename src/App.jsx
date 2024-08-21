@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HowWorks from "./pages/howWorks/HowWorks";
 import MainPage from "./pages/MainPage/MainPage";
 import Register from "./pages/RegisterPage/Register";
 import KycPage from "./pages/kycPage/KycPage";
@@ -13,7 +12,6 @@ import PaymentProcessing from "./pages/PaymentProcessing/PaymentProcessing";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PersonalInformationPage from "./pages/PersonalInformationPage/PersonalInformationPage";
-
 import Settings from "./components/settings/Settings";
 import TransactionHistoryPage from "./pages/TransactionHistory/TransactionHistoryPage";
 import PaymentCancel from "./pages/paymentCancel/PaymentCancel";
@@ -22,6 +20,8 @@ import LiveChatPage from "./pages/LiveChatPage/LiveChatPage";
 import TermsConditionPage from "./pages/TermsCondition/TermsConditionPage";
 import DummyPayment from "./pages/dummyPayment/DummyPayment";
 import Payment from "./pages/payment/Payment";
+import HelpCenter from "./pages/HelpCenter/HelpCenter";
+import About from "./pages/About/About";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -45,10 +45,15 @@ function App() {
           <Route path="/paymentProcessing" element={<PaymentProcessing />} />
           <Route path="/paymentSuccess" element={<PaymentSuccess />} />
           <Route path="/cancel" element={<PaymentCancel />} />
-          <Route path="/hello" element={<HowWorks />} />
-          <Route path="/pricing" element={<HowWorks />} />
           <Route path="/setting" element={<Settings />} />
           <Route path="/personalInfo" element={<PersonalInformationPage />} />
+          <Route path="/help-center" element={<HelpCenter />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={
+            <div>
+              <h1>404 Not Found</h1>
+            </div>
+          } />
           <Route
             path="/editPersonalInfo"
             element={<PersonalInfoEditPage />}

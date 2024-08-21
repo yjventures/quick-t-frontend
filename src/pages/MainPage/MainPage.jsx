@@ -1,7 +1,6 @@
 import React from "react";
 import Headers from "../../components/Headers";
 import NewsLetter from "../newsLetter/NewsLetter";
-import HowWorks from "../howWorks/HowWorks";
 import HeroSection from "../HeroSection/HeroSection";
 import GetStart from "../getStarted/GetStart";
 import ChooseUs from "../chooseUs/ChooseUs";

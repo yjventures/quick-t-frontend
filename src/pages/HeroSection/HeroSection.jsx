@@ -184,38 +184,47 @@ function HeroSection({ title, description }) {
   }
 
   return (
-    <div className="flex flex-col gap-4 md:flex-row items-center justify-between h-full pb-10 max-w-7xl mx-auto" style={{ paddingTop: "80px" }} >
+    <div className="flex flex-col gap-4 md:flex-row items-center justify-between h-full pb-10 max-w-7xl mx-auto "  >
       {/* Left Part */}
-      <div div
-        className="w-full flex items-center justify-center px-5 pt-2"
+      <div
+        className="w-full flex items-start justify-center px-5"
       // style={{ height: "90vh"}}
       >
         <div className="container">
-          <p className="font-bold text-5xl sm:md:text-6xl lg:text-6xl xl:text-6xl herosectionLeftSideHeadingText">
-            {title ? (
-              <React.Fragment>
-                {title?.split(" ").map((word, index, array) => (
-                  <React.Fragment key={index}>
-                    {index % 3 === 0 && index !== 0 ? <br /> : null}
-                    {word}{" "}
-                  </React.Fragment>
-                ))}
-              </React.Fragment>
-            ) : (
+          <div className="font-bold text-3xl lg:text-4xl">
+            {title ? <p style={{
+              lineHeight: "1.4",
+            }}>
+              {title?.split(" ").map((word, index, array) => (
+                <React.Fragment key={index} >
+                  {index % 4 === 0 && index !== 0 ? <br /> : null}
+                  {word}{" "}
+                </React.Fragment>
+              ))}
+            </p> : (
               "Fastest way to send money to Lebanon, instantly."
             )}
-          </p>
-          <p className="herosectionLeftSideNormalText">
+          </div>
+          <p className="herosectionLeftSideNormalText text-2xl">
             {description
               ? description
               : "From security and privacy to care and accountability - what matters to you matters to us."}
           </p>
           <div className="herosectionLeftSideButtonSection">
-            <button className="herosectionLeftSideButton">Get Started</button>
-            <a href="/hello" className="herosectionLeftSideLink">
+            <NavLink
+              to={'/login'}
+              className="herosectionLeftSideButton"
+            >
+              Get Started
+            </NavLink>
+            <NavLink
+              to={'/help-center'}
+              className="herosectionLeftSideLink"
+            >
               Learn More
-            </a>
+            </NavLink>
           </div>
+          {/* Licence ASIC */}
           <div className="heroSectionLeftSideVerified">
             <img src={verifiedtick} />
             <p className="heroSectionLeftSideVerifiedLargeText">
@@ -225,11 +234,21 @@ function HeroSection({ title, description }) {
               A.C.N 649535688
             </p>
           </div>
+          {/* AUSTRAC dealer */}
+          <div className="heroSectionLeftSideVerified">
+            <img src={verifiedtick} />
+            <p className="heroSectionLeftSideVerifiedLargeText">
+              Remittance dealer: AUSTRAC
+            </p>
+            <p className="heroSectionLeftSideVerifiedSmallText">
+              IND100789859-001
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Right Part */}
-      <div div
+      <div
         className="w-full flex items-center justify-center px-5"
       // style={{ height: "90vh"}}
       >
