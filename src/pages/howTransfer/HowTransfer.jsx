@@ -53,7 +53,7 @@ function HowTransfer() {
           </p>
           <TransferItems text={'Select your preffered amount'} />
           <TransferItems text={'Wait for KYC approved (only for first time)'} />
-          <TransferItems text={'Enter receriver details'} />
+          <TransferItems text={'Enter receiver details'} />
           <TransferItems text={'Give your card details'} />
           <TransferItems text={'Awesome your money is already sent!!'} />
 

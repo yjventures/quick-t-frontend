@@ -21,21 +21,21 @@ function ChooseUs({
           Why Choose Us
         </p>
       </div>
-      <div className="flex justify-around items-center flex-wrap mt-20 gap-4 px-4" >
+      <div className="flex justify-around items-center flex-wrap mt-20 sm:gap-4 md:px-4" >
         <div className="mt-20 flex justify-center items-center relative">
           <div>
-            <div className="sm:w-[360px] w-[400px] h-[267px] bg-[#edf0f6] rotate-[-3deg] rounded-[7px]"></div>
-            <div className=" sm:w-[330px] w-[375px] h-[247px] absolute top-0 left-[-10px] bg-white rounded-[7px] shadow-md">
+            <div className="w-[300px] md:w-[360px] max-w-[400px] h-[300px] bg-[#edf0f6] rotate-[-3deg] rounded-[7px] "></div>
+            <div className="w-[325px] md:w-[330px] min-h-[300px] h-full absolute top-0 left-[-10px] bg-white rounded-[7px] shadow-md">
               <div
                 className="card_topImage"
                 style={{
-                  backgroundColor: "#40CC9C",
+                  backgroundColor: "#55679C",
                   width: "99px",
                   height: "93px",
                   borderRadius: "12px",
                 }}
               >
-                <img src={`https://api.quickt.com.au${service_box_one_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
+                <img src={`https://api.quickt.com.au${service_box_one_icon}`} style={{ width: "70px", height: "50px", objectFit: 'cover', borderRadius: "5px" }} alt="icon" />
               </div>
               <div className="card_content">
                 <div className="card_content_title">
@@ -56,18 +56,18 @@ function ChooseUs({
         </div>
         <div className="mt-20 flex justify-center items-center relative">
           <div >
-            <div className="sm:w-[360px] w-[400px] h-[267px] bg-[#edf0f6] rotate-[-3deg] rounded-[7px]"></div>
-            <div className=" sm:w-[330px] w-[375px] h-[247px] absolute top-0 left-[-10px] bg-white rounded-[7px] shadow-md">
+            <div className="w-[300px] md:w-[360px] max-w-[400px] h-[300px] bg-[#edf0f6] rotate-[-3deg] rounded-[7px] "></div>
+            <div className="w-[325px] md:w-[330px] min-h-[300px] h-full absolute top-0 left-[-10px] bg-white rounded-[7px] shadow-md">
               <div
                 className="card_topImage"
                 style={{
-                  backgroundColor: "#FFB88A",
+                  backgroundColor: "#F5004F",
                   width: "99px",
                   height: "93px",
                   borderRadius: "12px",
                 }}
               >
-                <img src={`https://api.quickt.com.au${service_box_two_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
+                <img src={`https://api.quickt.com.au${service_box_two_icon}`} style={{ width: "70px", height: "50px", objectFit: 'cover', borderRadius: "5px" }} alt="icon" />
               </div>
               <div className="card_content">
                 <div className="card_content_title">
@@ -88,19 +88,19 @@ function ChooseUs({
         </div>
         <div className="mt-20 flex justify-center items-center relative">
           <div >
-            <div className="sm:w-[360px] w-[400px] h-[267px] bg-[#edf0f6] rotate-[-3deg] rounded-[7px]"></div>
-            <div className=" sm:w-[330px] w-[375px] h-[247px] absolute top-0 left-[-10px] bg-white rounded-[7px] shadow-md">
+            <div className="w-[300px] md:w-[360px] max-w-[400px] h-[300px] bg-[#edf0f6] rotate-[-3deg] rounded-[7px] "></div>
+            <div className="w-[325px] md:w-[330px] min-h-[300px] h-full absolute top-0 left-[-10px] bg-white rounded-[7px] shadow-md">
 
               <div
                 className="card_topImage"
                 style={{
-                  backgroundColor: "#04BEFE",
+                  backgroundColor: "#EBD3F8",
                   width: "99px",
                   height: "93px",
                   borderRadius: "12px",
                 }}
               >
-                <img src={`https://api.quickt.com.au${service_box_three_icon}`} style={{ width: "50px", height: "50px" }} alt="icon" />
+                <img src={`https://api.quickt.com.au${service_box_three_icon}`} style={{ width: "50px", height: "60px", objectFit: 'cover', borderRadius: "5px" }} alt="icon" />
               </div>
               <div className="card_content">
                 <div className="card_content_title">

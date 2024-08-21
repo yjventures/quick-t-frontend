@@ -20,7 +20,7 @@
 .getStartButton {
   padding: 16px 28px;
   border-radius: 10px;
-  background: var(--besic-app-fbaf-5-b, #fbaf5b);
+  background:  #fbaf5b;
   color: #fff;
   font-size: 16px;
   font-weight: 700;

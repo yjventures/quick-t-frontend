@@ -11,14 +11,14 @@ function SendFrom() {
         // style={{ height: "90vh" }}
         >
           <div>
-            <p className="sendFromHeadingText text-4xl md:text-5xl lg:text-5xl xl:text-5xl">
-              Send from anywhere <br /> in the world
+            <p className="sendFromHeadingText text-4xl md:text-5xl text-center sm:text-start">
+              Send from anywhere 
             </p>
-            <p className="sendFromNormalText lg:text-2xl xl:text-2xl md:text-2xl text-lg pt-10">
+            {/* <p className="sendFromNormalText lg:text-2xl xl:text-2xl md:text-2xl text-lg pt-10">
               Investing on Paytm Money is transparent, low-cost <br /> and
               commission-free. Buy stocks & mutual funds that <br /> can help
               you create wealth & realise your dreams.
-            </p>
+            </p> */}
           </div>
         </div>
 
