@@ -22,6 +22,8 @@ import DummyPayment from "./pages/dummyPayment/DummyPayment";
 import Payment from "./pages/payment/Payment";
 import HelpCenter from "./pages/HelpCenter/HelpCenter";
 import About from "./pages/About/About";
+import PrivacyPolicyPage from "./pages/PrivacyPolicy/PrivacyPolicyPage";
+// import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -37,6 +39,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/sendingMoney" element={<SendingMoney />} />
           <Route path="/termsAndCondition" element={<TermsConditionPage />} />
+          <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
           <Route path="/sendingMoneyInfo" element={<SendingMoneyInfo />} />
           <Route path="/sendOTP" element={<TransferOTP />} />
           <Route path="/kyc" element={<KycPage />} />

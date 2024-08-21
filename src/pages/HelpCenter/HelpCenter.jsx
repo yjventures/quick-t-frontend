@@ -1,4 +1,5 @@
 import Headers from "../../components/Headers";
+import Footer from "../Footer/Footer";
 
 const faqs = [
     {
@@ -111,6 +112,7 @@ export default function HelpCenter() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
 
     );

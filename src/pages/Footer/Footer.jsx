@@ -1,33 +1,58 @@
 import { NavLink } from "react-router-dom/dist";
+import Appstore from "../../assets/images/app-store.svg";
+import Playstore from "../../assets/images/google-play.svg";
+
 import "./footer.css";
+import { FacebookIcon, Instagram, Linkedin } from "lucide-react";
 function Footer() {
   return (
-    <div className="flex flex-row md:flex-row lg:flex-row xl:flex-row sm:flex-row justify-around  py-10 sm:py-10 md:py-20 lg:py- xl:py-24 footerMain">
-      <div>
-        <p className="footerHeading">Company</p>
-        <p className="footerText">About</p>
-        <p className="footerText">Features</p>
-        <p className="footerText">Works</p>
-        <p className="footerText">Career</p>
+    <div className="footerMain py-10 md:py-20 px-4 gap-10">
+      <div className="flex flex-col md:flex-row justify-around ">
+        <div>
+          <p className="footerHeading">Company</p>
+          <div className="flex flex-col">
+            <NavLink to={'/about'} className="footerText">About</NavLink>
+            <NavLink to={'/'} className="footerText">ASIC and Austrac Regitrations </NavLink>
+            <div className="flex gap-2">
+              <img src={Playstore} alt="playstore" className="w-30 h-10 cursor-pointer" />
+              <img src={Appstore} alt="playstore" className="w-30 h-10 cursor-pointer" />
+            </div>
+          </div>
+        </div>
+        {/* Help */}
+        <div>
+          <p className="footerHeading">Help</p>
+          <div className="flex flex-col">
+            <NavLink to={'/help-center'} className="footerText">Help Center</NavLink>
+            <NavLink to={'/termsAndCondition'} className="footerText">Terms and Conditions </NavLink>
+            <NavLink to={'/privacyPolicy'} className="footerText">Privacy Policy </NavLink>
+          </div>
+        </div>
+        {/* contact us */}
+        <div>
+          <p className="footerHeading">Contact Us</p>
+          <div className="footerText flex flex-col gap-6">
+            <a href="mailto:ContactUs@quickt.com.au">ContactUs@quickt.com.au</a>
+            <a className="" href="tel:+61490918727">phone +61490918727</a>
+          </div>
+          <div className="flex gap-4 text-white ">
+            <a href="#">
+              <FacebookIcon size={24} />
+            </a>
+            <a href="#">
+              <Instagram size={24} />
+            </a>
+            <a href="#">
+              <Linkedin size={24} />
+            </a>
+          </div>
+        </div>
       </div>
-      <div className="">
-        <p className="footerHeading">Help</p>
-        <p className="footerText">Customer Support</p>
-        <p className="footerText">Delivery Details</p>
-        <NavLink to="/termsAndCondition">
-          <p className="footerText cursor-pointer">Terms And Condition</p>
+      <p className="text-start text-white mt-6">
+        <NavLink to="/about" className="md:ms-36">
+          &copy; 2021 Quickt. All rights reserved.
         </NavLink>
-        <NavLink to="/termsAndCondition">
-          <p className="footerText cursor-pointer">Privacy Policy</p>
-        </NavLink>
-      </div>
-      <div className="hidden sm:block">
-        <p className="footerHeading">Resources</p>
-        <p className="footerText">Free eBooks</p>
-        <p className="footerText">Development Tutorial</p>
-        <p className="footerText">How to - Blog</p>
-        <p className="footerText">Youtube PlayList</p>
-      </div>
+      </p>
     </div>
   );
 }
