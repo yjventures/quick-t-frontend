@@ -170,18 +170,9 @@ const Navbar = () => {
         {showMobileMenu && isSmallScreen && (
           <div className="mobile-menu">
             <ul className="nav-links">
-              <li>
-                <a href="/how-it-works">How It Works</a>
-              </li>
-              <li>
-                <a href="/about">Pricing</a>
-              </li>
-              <li>
-                <a href="/works">Help Center</a>
-              </li>
-              <li>
-                <a href="/">News</a>
-              </li>
+              <NavLink to="/about">About</NavLink>
+              <NavLink to="/help-center">Help Center</NavLink>
+              <NavLink to="/about">News</NavLink>
               <li>
                 {jwt ? (
                   <div className="user-profile " onClick={handleDropdownToggle}>

@@ -4,6 +4,8 @@ import Copy from "../../assets/images/Copy.png";
 import html2pdf from "html2pdf.js";
 import { showSuccessAlert } from "../../utils/Tooast.Utils";
 import { useNavigate } from "react-router-dom";
+import { DownloadCloud, Share2 } from "lucide-react";
+
 function PaymentSuccess() {
   const cardRef = useRef();
   const imgRef = useRef();
@@ -200,7 +202,9 @@ function PaymentSuccess() {
               {userName}
             </p>
             <p className="paymentSuccessEnding text-base lg:text-xl">
-              {receiverDataInfo.first_name} {receiverDataInfo.last_name}
+              {
+                receiverDataInfo.middle_name ? receiverDataInfo.first_name + " " + receiverDataInfo.middle_name + " " + receiverDataInfo.last_name : receiverDataInfo.first_name + " " + receiverDataInfo.last_name
+              }
             </p>
 
           </div>
@@ -209,19 +213,19 @@ function PaymentSuccess() {
         <div className="flex justify-between items-center ">
           <div>
             <p className="paymentSuccessStarting text-base lg:text-xl">
-              Amount
+              Your Transfer Amount
             </p>
             <p className="paymentSuccessStarting text-base lg:text-xl">
-              Platform Fee
+              Charges & Fees
             </p>
             <p className="paymentSuccessStarting text-base lg:text-xl">
-              Gateway Fee
+              Your receiver receives
             </p>
           </div>
           <div className="text-end">
-            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.givenAmount).toFixed(2)}</p>
-            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.transferFee + amountDataInfo.gatewayFee).toFixed(2)}</p>
-            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.whishFee).toFixed(2)}</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.givenAmount * amountDataInfo.currencyRateWithBuffer).toFixed(2)} AUD</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number((amountDataInfo.transferFee + amountDataInfo.gatewayFee + amountDataInfo.whishFee) * amountDataInfo.currencyRateWithBuffer).toFixed(2)} AUD</p>
+            <p className="paymentSuccessEnding text-base lg:text-xl">$ {Number(amountDataInfo.givenAmount).toFixed(2)} USD</p>
           </div>
         </div>
         {/* amount send and receive section  */}
@@ -240,48 +244,23 @@ function PaymentSuccess() {
           </div>
         </div>
 
-        <div className="flex justify-center" >
+        <div className="flex justify-center items-stretch gap-4" >
           <button
             onClick={downloadAsPdf}
-            className="mt-10 flex items-center gap-4 paymentSuccessButton outline-none border-2 hover:bg-green-100 transition"
+            className="mt-10 flex items-center justify-center gap-4 paymentSuccessButton outline-none border-[1px] rounded-md hover:bg-green-100 transition w-full"
           >
-            <svg
-              width="41"
-              height="41"
-              viewBox="0 0 41 41"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15.8594 19.7388L20.1228 24.0022L24.3862 19.7388"
-                stroke="#070707"
-                stroke-opacity="0.72"
-                stroke-width="2.49809"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M20.125 6.94849V23.8855"
-                stroke="#070707"
-                stroke-opacity="0.72"
-                stroke-width="2.49809"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M33.6463 20.5714C33.6463 27.9324 28.6501 33.8945 20.3231 33.8945C11.9962 33.8945 7 27.9324 7 20.5714"
-                stroke="#070707"
-                stroke-opacity="0.72"
-                stroke-width="2.49809"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <DownloadCloud />
             Get PDF Receipt
           </button>
+
+          <button
+            onClick={downloadAsPdf}
+            className="mt-10 flex items-center justify-center gap-4 paymentSuccessButton outline-none border-[1px] rounded-md hover:bg-green-100 transition w-full"
+          >
+            <Share2 />
+            Share Transaction Details with your Receiver
+          </button>
+
 
         </div>
         <button

@@ -40,7 +40,7 @@ function SendingMoneyInfo() {
   // console.log(userData)
   const userFullName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
   const userPhone = localStorage.getItem("phone");
-  const fullName = receiverDataInfo.first_name + " " + receiverDataInfo.last_name;
+  const fullName = receiverDataInfo.middle_name ? receiverDataInfo.first_name + " " + receiverDataInfo.middle_name + " " + receiverDataInfo.last_name : receiverDataInfo.first_name + " " + receiverDataInfo.last_name;
   const phone = receiverDataInfo.phone;
   const address = receiverDataInfo.city + ", " + receiverDataInfo.country;
   // console.log(address);
@@ -159,23 +159,20 @@ function SendingMoneyInfo() {
               <p className="font-bold pb-2">Transfer Details</p>
               <div className="flex justify-between">
                 <div className="flex flex-col gap-1">
-                  <p className="font-normal text-sm pb-1">Transfer amount</p>
-                  <p className="font-normal text-sm pb-1">Platform fee</p>
-                  <p className="font-normal text-sm pb-1">Transfer fee</p>
-                  <p className="font-normal text-sm pb-1">Total payable</p>
+                  <p className="font-normal text-sm pb-1">Your Transfer Amount</p>
+                  <p className="font-normal text-sm pb-1">Charges & Fees</p>
+                  <p className="font-normal text-sm pb-1">Your receiver receives</p>
                   {/* <p className="font-normal text-sm p2-1">Transaction password</p> */}
                 </div>
                 <div style={{ textAlign: 'right' }} className="flex flex-col gap-0">
                   <p className="font-bold pb-1">
-                    {amountDataInfo.givenAmount} USD
+                    {(amountDataInfo.givenAmount * amountDataInfo.currencyRateWithBuffer).toFixed(2)} AUD
                   </p>
                   <p className="font-normal text-sm pb-1">
-                    {amountDataInfo.transferFee + amountDataInfo.gatewayFee} USD
+                    {((amountDataInfo.transferFee + amountDataInfo.gatewayFee + amountDataInfo.whishFee) * amountDataInfo.currencyRateWithBuffer).toFixed(2)} AUD
                   </p>
-                  <p className="font-normal text-sm pb-1">
-                    {amountDataInfo.whishFee} USD
-                  </p>
-                  <p className="font-bold pb-1">{amountDataInfo.totalAmount} USD</p>
+                  
+                  <p className="font-bold pb-1">{amountDataInfo.givenAmount} USD</p>
                   {/* <p className="font-bold pb-1">{transection_password} </p> */}
                 </div>
               </div>
@@ -194,7 +191,7 @@ function SendingMoneyInfo() {
                 <div className="w-full">
                   <p className="text-center uppercase">TOTAL IN AUD</p>
                   <p className="py-4 border-[1px] rounded-md mt-3 border-gray-200 font-bold text-center text-nowrap text-lg">
-                    ${amountDataInfo.convertedAmount}
+                    ${amountDataInfo.convertedAmount} 
                   </p>
                 </div>
               </div>
@@ -206,7 +203,7 @@ function SendingMoneyInfo() {
                 className="w-full pt-2 pb-2 ps-5 pe-5 rounded-xl text-white mt-5"
                 style={{ backgroundColor: "#043BA0" }}
               >
-                Send
+                Approve & Send
               </button>
             </NavLink>
           </form>

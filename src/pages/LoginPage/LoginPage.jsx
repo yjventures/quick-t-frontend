@@ -6,16 +6,41 @@ import googleLogo from "../../assets/images/googleLogo.png";
 import { NavLink, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
-import { Eye, EyeOff } from "lucide-react";
+import { ArrowRightIcon, DownloadCloud, Eye, EyeOff, Share2, ShareIcon } from "lucide-react";
+import Reaptcha from 'reaptcha';
+
 function LoginPage() {
   // do not user let refresh page
-
+  const [loading, setLoading] = useState(false);
   let emailRef = useRef(null);
   let passwordRef = useRef(null);
   const navigate = useNavigate();
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const captchaRef = useRef(null);
+  // console.log(captchaToken)
+  const verify = () => {
+    captchaRef.current.getResponse().then(res => {
+      setCaptchaToken(res)
+    })
+
+  }
+
   const handleLoginButton = async () => {
+    setLoading(true);
     let email = emailRef.value;
     let password = passwordRef.value;
+
+    if (email === '' || password === '') {
+      showFailedAlert("Please provide email and password");
+      setLoading(false);
+      return;
+    }
+
+    if(!captchaToken) {
+      showFailedAlert('Please verify captcha')
+      setLoading(false);
+      return;
+    }
 
     const userData = {
       identifier: email,
@@ -49,6 +74,9 @@ function LoginPage() {
       .catch((error) => {
         console.log("Error:", error);
         showFailedAlert("Invalid Credentials");
+      }).finally(() => {
+        setLoading(false);
+        setCaptchaToken(null);
       });
   };
 
@@ -136,22 +164,35 @@ function LoginPage() {
             </div>
           </div>
 
-          <div className="flex items-center mb-5 gap-2">
+          {/* <div className="flex items-center mb-5 gap-2">
             <input type="checkbox" className="registerPageCheckBox" />
             <label className="registerPageCheckBoxLabel">Remember me</label>
-          </div>
+          </div> */}
+          
+          {/* recaptcha */}
+          <Reaptcha
+            sitekey='6LfzkywqAAAAAJ54zYCrS2L-NocUt7SIkZogkvel'
+            ref={captchaRef}
+            onVerify={verify}
+          />
 
           <div className="flex flex-col sm:flex-row md:flex-col lg:flex-col xl:flex-col gap-4 justify-center mt-10">
             <button
               className="registerCreateAccount sm:w-full md:w-full lg:w-full xl:w-full"
               onClick={handleLoginButton}
+              disabled={loading}
             >
-              Log in
-            </button>{" "}
-            <button className="flex items-center justify-center gap-2 registerGoogle sm:w-full md:w-full lg:w-full xl:w-full mt-4 sm:mt-0 text-center">
+              {loading ? "Processing..." : <span className="flex items-center justify-center gap-2">
+                Log in
+                <ArrowRightIcon className="h-5 text-slate-200" />
+              </span>}
+
+            </button>
+
+            {/* <button className="flex items-center justify-center gap-2 registerGoogle sm:w-full md:w-full lg:w-full xl:w-full mt-4 sm:mt-0 text-center">
               <img src={googleLogo} alt="" />
               <span>Log in with Google</span>
-            </button>
+            </button> */}
           </div>
           <p className="registerLogin text-center pt-2 pb-5">
             Don’t have an account?

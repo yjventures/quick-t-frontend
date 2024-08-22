@@ -8,7 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
 import PhoneInput from "react-phone-input-2";
-import { Eye, EyeOff, ImagePlus, UserIcon } from "lucide-react";
+import { ArrowBigRight, ArrowRight, Eye, EyeOff, ImagePlus, UserIcon } from "lucide-react";
 function Register() {
   const [error, setError] = useState(null);
   const [warning, setWarning] = useState(null);
@@ -77,6 +77,7 @@ function Register() {
   let passwordRef = useRef(null);
   let confirmPasswordRef = useRef(null);
   let dobRef = useRef(null);
+  const [showDOBWarning, setShowDOBWarning] = useState(false);
 
   const registerHandler = async () => {
     let firstName = firstNameRef.value;
@@ -242,7 +243,7 @@ function Register() {
           <img
             src={logo}
             alt="logo"
-            style={{ width: "210px", height: "60px", objectFit: 'cover', cursor: 'pointer'}}
+            style={{ width: "210px", height: "60px", objectFit: 'cover', cursor: 'pointer' }}
             onClick={() => {
               navigate("/");
             }}
@@ -371,15 +372,21 @@ function Register() {
 
                       if (selectedDate > minAgeDate) {
                         // Show warning or handle invalid date of birth
-                        showFailedAlert(
-                          "Invalid date of birth. Must be at least 18 years old."
-                        );
+                        setShowDOBWarning(true);
+                        // console.log(
+                        //   "Invalid date of birth. Must be at least 18 years old."
+                        // );
                       } else {
                         // Valid date of birth
-                        console.log("Valid date of birth.");
+                        // console.log("Valid date of birth.");
+                        setShowDOBWarning(false);
                       }
                     }}
                   />
+                  <br />
+                  {
+                    showDOBWarning && <p className="-mt-4 font-semibold text-[10px] text-red-600">*User must be at least 18 years old</p>
+                  }
                 </div>
               </div>
 
@@ -475,11 +482,17 @@ function Register() {
                   setCheckedTerms(!checkedTerms);
                 }}
               />
-              <label className="registerPageCheckBoxLabel">
-                I agree to the{" "}
-                <NavLink to="/termsAndCondition" target="_blank">
+              <label className=" flex gap-2">
+                I agree to the
+                <NavLink to="/termsAndCondition" target="_blank" className="registerPageCheckBoxLabel">
                   <span className="cursor-pointer">
-                    Terms and Privacy Policy
+                    Terms and Conditions
+                  </span>
+                </NavLink>
+                <span>&</span>
+                <NavLink to="/privacyPolicy" target="_blank" className="registerPageCheckBoxLabel">
+                  <span className="cursor-pointer">
+                    Privacy Policy
                   </span>
                 </NavLink>
               </label>
@@ -491,18 +504,21 @@ function Register() {
               className="registerCreateAccount sm:w-full"
               onClick={registerHandler}
             >
-              {loading ? "Creating Account..." : "Create Account"}
+              {loading ? "Creating Account..." : <span className="flex items-center justify-center gap-4">
+                Create Account
+                <ArrowRight />
+              </span>}
             </button>
 
-            <button className="flex items-center gap-2 registerGoogle sm:w-full mt-4 sm:mt-0">
+            {/* <button className="flex items-center gap-2 registerGoogle sm:w-full mt-4 sm:mt-0">
               <img src={googleLogo} alt="" />
               <span>Sign in with Google</span>
-            </button>
+            </button> */}
           </div>
           <p className="registerLogin text-center pt-2 pb-5">
             have an account?{" "}
-            <NavLink to="/login">
-              <span>Log In</span>
+            <NavLink to="/login" className="font-bold">
+              Log In
             </NavLink>
           </p>
         </div>

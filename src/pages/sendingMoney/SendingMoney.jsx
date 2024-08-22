@@ -74,6 +74,7 @@ function SendingMoney() {
   // const purposeSelectRef = useRef(null);
 
   let firstNameRef = useRef(null);
+  let middleNameRef = useRef(null);
   let lastNameRef = useRef(null);
   let countryRef = useRef(null);
   let zipCodeRef = useRef(null);
@@ -107,6 +108,7 @@ function SendingMoney() {
       setSelectedContact(false);
       // make all fields empty
       firstNameRef.value = "";
+      middleNameRef.value = "";
       lastNameRef.value = "";
       countryRef.value = "";
       zipCodeRef.value = "";
@@ -120,10 +122,12 @@ function SendingMoney() {
     const selectedReceiver = receivers.find(
       (receiver) => Number(receiver.id) === Number(contactCelectedId)
     );
+    console.log(selectedReceiver)
     // console.log(selectedReceiver)
     if (selectedReceiver) {
       const {
         first_name,
+        middle_name,
         last_name,
         phone,
         country,
@@ -133,6 +137,7 @@ function SendingMoney() {
       } = selectedReceiver.attributes;
       // console.log(selectedReceiver.attributes)
       firstNameRef.value = first_name;
+      middleNameRef.value = middle_name;
       lastNameRef.value = last_name;
       countryRef.value = country;
       zipCodeRef.value = zip_code;
@@ -175,10 +180,11 @@ function SendingMoney() {
     const contactSelectedValue = contactSelectRef.current.value;
     const receiverAreaSelectedValue = receiverAreaSelectRef.current.value;
     // const purposeCelectedValue = purposeSelectRef.current.value;
-    console.log(contactSelectedValue, receiverAreaSelectedValue);
+    // console.log(contactSelectedValue, receiverAreaSelectedValue);
 
     const firstName = firstNameRef.value;
     const lastName = lastNameRef.value;
+    const middleName = middleNameRef.value;
     const country = countryRef.value;
     const zipCode = zipCodeRef.value;
     const streetAddress = streetAddressRef.value;
@@ -205,6 +211,7 @@ function SendingMoney() {
     const receiverData = {
       first_name: firstName,
       last_name: lastName,
+      middle_name: middleName,
       phone: phone,
       country: country,
       zip_code: Number(zipCode),
@@ -231,6 +238,7 @@ function SendingMoney() {
             data: {
               first_name: firstName,
               last_name: lastName,
+              middle_name: middleName,
               phone: phone,
               country: country,
               zip_code: Number(zipCode),
@@ -348,7 +356,9 @@ function SendingMoney() {
                       const { id, attributes } = receiver;
                       return (
                         <option key={id} value={id}>
-                          {attributes.first_name} {attributes.last_name}
+                          {
+                            attributes.middle_name ? `${attributes.first_name} ${attributes.middle_name} ${attributes.last_name}` : `${attributes.first_name} ${attributes.last_name}`
+                          }
                         </option>
                       );
                     })
@@ -366,6 +376,18 @@ function SendingMoney() {
                   ref={(input) => (firstNameRef = input)}
                 />
               </div>
+              <div className="z-0 w-full">
+                <p className="transectionLabel">Middle name <span className="text-[10px] font-semibold">(optional)</span></p>
+                <input
+                  type="text"
+                  className="w-full mb-2 sendingInputField"
+                  ref={(input) => (middleNameRef = input)}
+                />
+              </div>
+
+            </div>
+            <div className="grid md:grid-cols-2 md:gap-6">
+
               <div className="relative z-0 w-full mb-6 group">
                 <label className="transectionLabel">Last name</label>
                 <input
@@ -374,16 +396,21 @@ function SendingMoney() {
                   ref={(input) => (lastNameRef = input)}
                 />
               </div>
+
+              <div className="relative z-0 w-full mb-6 group">
+                <label className="transectionLabel">Phone Number</label> <br />
+                <PhoneInput
+                  country={"lb"}
+                  enableSearch={true}
+                  value={phone}
+                  onChange={(phone) => setPhone(phone)}
+                />
+              </div>
             </div>
-            <div className="relative w-full mb-6 group">
-              <label className="transectionLabel">Phone Number</label> <br />
-              <PhoneInput
-                country={"lb"}
-                enableSearch={true}
-                value={phone}
-                onChange={(phone) => setPhone(phone)}
-              />
-            </div>
+
+            {/* <div className="relative w-full mb-6 group">
+              
+            </div> */}
             <div className="grid md:grid-cols-2 md:gap-6">
               <div className="z-0 w-full mb-6 group">
                 <label className="transectionLabel">Country</label>
@@ -467,7 +494,7 @@ function SendingMoney() {
             </div> */}
 
             <div className="relative z-0 w-full mb-6 group">
-              <label className="transectionLabel">Note (Optional)</label>
+              <label className="transectionLabel">Note <span className="text-[10px] font-semibold">(optional)</span></label>
               <br />
               <textarea
                 id="message"
