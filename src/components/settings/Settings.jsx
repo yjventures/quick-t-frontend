@@ -1,4 +1,4 @@
-import {  NavLink, useLocation} from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 // import "./settings.css";
 import logo from "../../assets/images/logo.png";
 
@@ -15,6 +15,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import PersonalInfo from '../PersonalInfo/PersonalInfo'
+import { LogOut } from "lucide-react";
 
 
 function classNames(...classes) {
@@ -22,6 +23,7 @@ function classNames(...classes) {
 }
 
 export default function Settings(props) {
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false)
   // const navigation = [
   //   { name: 'Dashboard', href: '/personalInfo', icon: HomeIcon, current: true },
@@ -256,17 +258,19 @@ export default function Settings(props) {
                 </li>
                 <li className="-mx-6 mt-auto">
                   <div
-                    className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 bg-gray-50"
+                    onClick={() => {
+                      localStorage.clear();
+                      navigate('/login');
+                    }}
+                    className="flex items-center gap-x-4 cursor-pointer px-6 py-3 text-sm font-semibold leading-6 text-gray-900 bg-gray-50"
                   >
-                    <p className=" w-6 h-6 rounded-full border-2 p-[1px] border-slate-200">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                      </svg>
+                    <p className="rounded-full border-2 p-2 border-slate-200">
+                      <LogOut className="w-4 h-4 " />
                     </p>
 
                     <span className="sr-only">Your profile</span>
                     <span aria-hidden="true">{
-                      localStorage.getItem('first_name') ? localStorage.getItem('first_name') + localStorage.getItem('last_name') : "No Name"
+                      localStorage.getItem('first_name') ? localStorage.getItem('first_name') + " " + localStorage.getItem('last_name') : "No Name"
                     }
                     </span>
                   </div>

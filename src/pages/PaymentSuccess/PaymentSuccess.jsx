@@ -5,6 +5,10 @@ import html2pdf from "html2pdf.js";
 import { showSuccessAlert } from "../../utils/Tooast.Utils";
 import { useNavigate } from "react-router-dom";
 import { DownloadCloud, Share2 } from "lucide-react";
+import {
+  WhatsappShareButton,
+} from "react-share";
+
 
 function PaymentSuccess() {
   const cardRef = useRef();
@@ -253,13 +257,19 @@ function PaymentSuccess() {
             Get PDF Receipt
           </button>
 
-          <button
-            onClick={downloadAsPdf}
-            className="mt-10 flex items-center justify-center gap-4 paymentSuccessButton outline-none border-[1px] rounded-md hover:bg-green-100 transition w-full"
-          >
-            <Share2 />
-            Share Transaction Details with your Receiver
-          </button>
+          <WhatsappShareButton
+            className="mt-10 flex items-center justify-center w-full"
+            url=' '
+            title={`Hi ${receiverDataInfo.middle_name ? receiverDataInfo.first_name + " " + receiverDataInfo.middle_name + " " + receiverDataInfo.last_name : receiverDataInfo.first_name + " " + receiverDataInfo.last_name},\nI have sent you through QuickT ${Number(amountDataInfo.givenAmount).toFixed(2)} USD with transaction Id ${localStorage.getItem("transaction_id")}.\nPlease collect it from Any Whish Office in Lebanon.\nMake sure to take a photo ID with you.\n\n ىل ${receiverDataInfo.middle_name ? receiverDataInfo.first_name + " " + receiverDataInfo.middle_name + " " + receiverDataInfo.last_name : receiverDataInfo.first_name + " " + receiverDataInfo.last_name} يكريمأ رلاود ${Number(amountDataInfo.givenAmount).toFixed(2)} غلبم ك مقر ${localStorage.getItem("transaction_id")} ةلاوحلا زكارم نم زكرم نم اهضبق\n\nل تلسرأ كنكمي دق ل Whish Money كتيو ةقاطب كعم لمجت نأ يتايحت بيطأ عم ${userName}`}>
+            <button
+              className="flex items-center justify-center gap-4 paymentSuccessButton outline-none border-[1px] rounded-md hover:bg-green-100 transition w-full"
+            >
+
+              <Share2 />
+              Share Transaction Details with Receiver
+            </button>
+          </WhatsappShareButton>
+
 
 
         </div>
