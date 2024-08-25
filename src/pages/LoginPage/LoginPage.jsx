@@ -6,7 +6,7 @@ import googleLogo from "../../assets/images/googleLogo.png";
 import { NavLink, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
-import { ArrowRightIcon, DownloadCloud, Eye, EyeOff, Share2, ShareIcon } from "lucide-react";
+import { ArrowRightIcon, DownloadCloud, Eye, EyeOff, MessageCircleCode, Share2, ShareIcon} from "lucide-react";
 import Reaptcha from 'reaptcha';
 
 function LoginPage() {
@@ -175,7 +175,7 @@ function LoginPage() {
             ref={captchaRef}
             onVerify={verify}
           />
-
+          
           <div className="flex flex-col sm:flex-row md:flex-col lg:flex-col xl:flex-col gap-4 justify-center mt-10">
             <button
               className="registerCreateAccount sm:w-full md:w-full lg:w-full xl:w-full"
