@@ -36,13 +36,13 @@ function Footer() {
             <a className="" href="tel:+61490918727">phone +61490918727</a>
           </div>
           <div className="flex gap-4 text-white ">
-            <a href="#">
+            <a href="https://www.facebook.com/profile.php?id=61563993369064" target="_blank">
               <FacebookIcon size={24} />
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/quicktmoneytransfer?utm_source=qr&igsh=MTJrajBqZHI0amNoOQ==" target="_blank">
               <Instagram size={24} />
             </a>
-            <a href="#">
+            <a href="https://www.linkedin.com/company/quickt/?viewAsMember=true" target="_blank">
               <Linkedin size={24} />
             </a>
           </div>

@@ -9,12 +9,21 @@ import axios from "axios";
 import { showFailedAlert, showSuccessAlert } from "../../utils/Tooast.Utils";
 import PhoneInput from "react-phone-input-2";
 import { ArrowBigRight, ArrowRight, Eye, EyeOff, ImagePlus, UserIcon } from "lucide-react";
+import Reaptcha from "reaptcha";
 function Register() {
   const [error, setError] = useState(null);
   const [warning, setWarning] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const captchaRef = useRef(null);
+  // console.log(captchaToken)
+  const verify = () => {
+    captchaRef.current.getResponse().then(res => {
+      setCaptchaToken(res)
+    })
 
+  }
   /////////////////////////////////////
   //password show and hide
   ////////////////////////////////////
@@ -80,6 +89,13 @@ function Register() {
   const [showDOBWarning, setShowDOBWarning] = useState(false);
 
   const registerHandler = async () => {
+
+    if (!captchaToken) {
+      showFailedAlert('Please verify captcha')
+      setLoading(false);
+      return;
+    }
+
     let firstName = firstNameRef.value;
     let lastName = lastNameRef.value;
     let email = emailRef.value;
@@ -172,7 +188,10 @@ function Register() {
         .catch((error) => {
           console.log("error", error);
         })
-        .finally(() => setLoading(false));
+        .finally(() => {
+          setLoading(false);
+          setCaptchaToken(null);
+        });
     }
   };
 
@@ -497,6 +516,11 @@ function Register() {
                 </NavLink>
               </label>
             </div>
+            <Reaptcha
+              sitekey='6LfzkywqAAAAAJ54zYCrS2L-NocUt7SIkZogkvel'
+              ref={captchaRef}
+              onVerify={verify}
+            />
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
