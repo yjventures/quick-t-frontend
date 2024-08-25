@@ -265,7 +265,7 @@ function PaymentSuccess() {
           <WhatsappShareButton
             className="mt-10 flex items-center justify-center w-full"
             url=" "
-            title={`I sent you ${Number(amountDataInfo.givenAmount).toFixed(2)} USD through QuickT ID ${localStorage.getItem("transaction_id")}. You can cash it any time at any Whish Money outlet in Lebanon. Please take with you your Photo ID.\n\n ىل ${receiverDataInfo.middle_name ? receiverDataInfo.first_name + " " + receiverDataInfo.middle_name + " " + receiverDataInfo.last_name : receiverDataInfo.first_name + " " + receiverDataInfo.last_name} يكريمأ رلاود ${Number(amountDataInfo.givenAmount).toFixed(2)} غلبم ك مقر ${localStorage.getItem("transaction_id")} ةلاوحلا زكارم نم زكرم نم اهضبق. ل تلسرأ كنكمي دق ل Whish Money كتيو ةقاطب كعم لمجت نأ يتايحت بيطأ عم ${userName}`}>
+            title={`I sent you ${Number(amountDataInfo.givenAmount).toFixed(2)} USD through QuickT ID ${localStorage.getItem("transaction_id")}. You can cash it any time at any Whish Money outlet in Lebanon. Please take with you your Photo ID.\n\nلقد ارسلت لكم مبلغ ${Number(amountDataInfo.givenAmount).toFixed(2)} USD بواسطة Quick T ID ${localStorage.getItem("transaction_id")}. يمكنكم استلامه من اي مركز ل Whish Money في لبنان. ارجو ان تحملوا معكم بطاقة هويتكم.`}>
             <button
               className="flex items-center justify-center gap-4 paymentSuccessButton outline-none border-[1px] rounded-md hover:bg-green-100 transition w-full"
             >
@@ -277,7 +277,7 @@ function PaymentSuccess() {
             className="mt-10 flex items-center justify-center w-full"
             url=" "
             subject="QuickT Transaction Details"
-            body={`I sent you ${Number(amountDataInfo.givenAmount).toFixed(2)} USD through QuickT ID ${localStorage.getItem("transaction_id")}. You can cash it any time at any Whish Money outlet in Lebanon. Please take with you your Photo ID.\n\n ىل ${receiverDataInfo.middle_name ? receiverDataInfo.first_name + " " + receiverDataInfo.middle_name + " " + receiverDataInfo.last_name : receiverDataInfo.first_name + " " + receiverDataInfo.last_name} يكريمأ رلاود ${Number(amountDataInfo.givenAmount).toFixed(2)} غلبم ك مقر ${localStorage.getItem("transaction_id")} ةلاوحلا زكارم نم زكرم نم اهضبق. ل تلسرأ كنكمي دق ل Whish Money كتيو ةقاطب كعم لمجت نأ يتايحت بيطأ عم ${userName}`}>
+            body={`I sent you ${Number(amountDataInfo.givenAmount).toFixed(2)} USD through QuickT ID ${localStorage.getItem("transaction_id")}. You can cash it any time at any Whish Money outlet in Lebanon. Please take with you your Photo ID.\n\nلقد ارسلت لكم مبلغ ${Number(amountDataInfo.givenAmount).toFixed(2)} USD بواسطة Quick T ID ${localStorage.getItem("transaction_id")}. يمكنكم استلامه من اي مركز ل Whish Money في لبنان. ارجو ان تحملوا معكم بطاقة هويتكم.`}>
             <button
               className="flex items-center justify-center gap-4 paymentSuccessButton outline-none border-[1px] rounded-md hover:bg-green-100 transition w-full"
             >
@@ -285,8 +285,7 @@ function PaymentSuccess() {
             </button>
           </EmailShareButton>
 
-
-          {/* <FacebookMessengerShareButton
+            {/* <FacebookMessengerShareButton
             className="mt-10 flex items-center justify-center w-full"
             url=' '
             appId='12345'
