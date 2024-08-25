@@ -157,7 +157,7 @@ function PaymentSuccess() {
               className="me-6"
               style={{ position: "relative" }}
               onClick={() => {
-                navigator.clipboard.writeText(`QT-${localStorage.getItem("transaction_id")}`)
+                navigator.clipboard.writeText(`QT-${localStorage.getItem("order_id")}`)
                 showSuccessAlert("Copied to clipboard")
               }}
             >
@@ -265,7 +265,7 @@ function PaymentSuccess() {
           <WhatsappShareButton
             className="mt-10 flex items-center justify-center w-full"
             url=" "
-            title={`I sent you ${Number(amountDataInfo.givenAmount).toFixed(2)} USD through QuickT ID ${localStorage.getItem("transaction_id")} | Password: ${transaction_password}. You can cash it any time at any Whish Money outlet in Lebanon. Please take with you your Photo ID.\n\nلقد ارسلت لكم مبلغ ${Number(amountDataInfo.givenAmount).toFixed(2)} USD بواسطة Quick T ID ${localStorage.getItem("transaction_id")} | كلمة المرور: ${transaction_password}. يمكنكم استلامه من اي مركز ل Whish Money في لبنان. ارجو ان تحملوا معكم بطاقة هويتكم.`}>
+            title={`I sent you ${Number(amountDataInfo.givenAmount).toFixed(2)} USD through QuickT ID ${localStorage.getItem("order_id")} | Password: ${transaction_password}. You can cash it any time at any Whish Money outlet in Lebanon. Please take with you your Photo ID.\n\nلقد ارسلت لكم مبلغ ${Number(amountDataInfo.givenAmount).toFixed(2)} USD بواسطة Quick T ID ${localStorage.getItem("order_id")} | كلمة المرور: ${transaction_password}. يمكنكم استلامه من اي مركز ل Whish Money في لبنان. ارجو ان تحملوا معكم بطاقة هويتكم.`}>
             <button
               className="flex items-center justify-center gap-4 paymentSuccessButton outline-none border-[1px] rounded-md hover:bg-green-100 transition w-full"
             >
@@ -277,7 +277,7 @@ function PaymentSuccess() {
             className="mt-10 flex items-center justify-center w-full"
             url=" "
             subject="QuickT Transaction Details"
-            body={`I sent you ${Number(amountDataInfo.givenAmount).toFixed(2)} USD through QuickT ID ${localStorage.getItem("transaction_id")} | Password: ${transaction_password}. You can cash it any time at any Whish Money outlet in Lebanon. Please take with you your Photo ID.\n\nلقد ارسلت لكم مبلغ ${Number(amountDataInfo.givenAmount).toFixed(2)} USD بواسطة Quick T ID ${localStorage.getItem("transaction_id")} | كلمة المرور: ${transaction_password}. يمكنكم استلامه من اي مركز ل Whish Money في لبنان. ارجو ان تحملوا معكم بطاقة هويتكم.`}>
+            body={`I sent you ${Number(amountDataInfo.givenAmount).toFixed(2)} USD through QuickT ID ${localStorage.getItem("order_id")} | Password: ${transaction_password}. You can cash it any time at any Whish Money outlet in Lebanon. Please take with you your Photo ID.\n\nلقد ارسلت لكم مبلغ ${Number(amountDataInfo.givenAmount).toFixed(2)} USD بواسطة Quick T ID ${localStorage.getItem("order_id")} | كلمة المرور: ${transaction_password}. يمكنكم استلامه من اي مركز ل Whish Money في لبنان. ارجو ان تحملوا معكم بطاقة هويتكم.`}>
             <button
               className="flex items-center justify-center gap-4 paymentSuccessButton outline-none border-[1px] rounded-md hover:bg-green-100 transition w-full"
             >
