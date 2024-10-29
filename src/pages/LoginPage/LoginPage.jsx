@@ -59,9 +59,9 @@ function LoginPage() {
           localStorage.setItem("last_name", response.data.user?.last_name);
           localStorage.setItem("phone", response.data.user?.phone);
           localStorage.setItem("dob", response.data.user?.dob);
-          localStorage.setItem("jwt", response.data.jwt);
-          if (response.data.user?.kyc_complete == false) {
-            navigate("/kyc");
+          localStorage.setItem("kyc_approved", response.data.user?.kyc_approved);
+          if (response.data.user?.security_complete == false) { //kyc_complete removed
+            navigate("/securityCode");
           } else if (localStorage.getItem("amountData")) {
             navigate("/sendingMoney");
           } else {

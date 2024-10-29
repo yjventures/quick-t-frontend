@@ -249,11 +249,11 @@ function HeroSection({ title, description }) {
 
       {/* Right Part */}
       <div
-        className="w-full flex items-center justify-center px-5"
+        className="w-full flex items-center md:justify-end justify-center px-5 "
       // style={{ height: "90vh"}}
       >
         <div
-          className="heroSectionCard shadow-xl w-full max-w-[400px] mt-4"
+          className="heroSectionCard shadow-xl w-full max-w-[500px] mt-4"
           style={{
             backgroundColor: "#FFF",
             padding: "18px 24px",

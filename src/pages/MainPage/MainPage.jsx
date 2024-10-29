@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Headers from "../../components/Headers";
 import NewsLetter from "../newsLetter/NewsLetter";
 import HeroSection from "../HeroSection/HeroSection";
@@ -10,10 +10,16 @@ import ReceiveFrom from "../receiveFrom/ReceiveFrom";
 import Footer from "../Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
+import Alert from "../../components/Alert/Alert";
 
 function MainPage() {
 
-  const jwt = localStorage.getItem("jwt");
+  const [kyc_approved, setKycApproved] = React.useState(localStorage.getItem("kyc_approved"));
+  useEffect(() => {
+    setKycApproved(localStorage.getItem("kyc_approved"));
+  }, []);
+
+  console.log(kyc_approved)
   // get general setting api using react query
   const { isPending: pendingGeneralSettings, error: generalSettingsError, data: generalSettings } = useQuery({
     queryKey: ['general-settings'],
@@ -29,7 +35,10 @@ function MainPage() {
   return (
     <div>
       <Headers />
-      <div className="bg-[#EEE]">
+      <div className="bg-gray-50 pt-10">
+        {
+          kyc_approved == 'false' && <Alert />
+        }
         <HeroSection title={generalSettings?.main_banner_title} description={generalSettings?.main_banner_desc} />
       </div>
       <GetStart title={generalSettings?.get_started_title} second_title={generalSettings?.get_started_second_title} description={generalSettings?.get_started_description} />

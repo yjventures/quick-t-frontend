@@ -179,7 +179,7 @@ function Register() {
             localStorage.setItem("last_name", result.user?.last_name);
             localStorage.setItem("phone", result.user?.phone);
             // window.location.href = "/dashboard";
-            navigate("/kyc");
+            navigate("/securityCode");
           } else {
             showFailedAlert(result.error.message);
             setError(result.error.message);
