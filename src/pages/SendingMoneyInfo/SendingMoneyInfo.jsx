@@ -127,18 +127,18 @@ function SendingMoneyInfo() {
                 <div>
                   <p className="font-normal text-sm pb-1">Name</p>
                   <p className="font-normal text-sm pb-1">Phone Number</p>
-                  <p className="font-normal text-sm pb-1">Address</p>
+                  {/* <p className="font-normal text-sm pb-1">Address</p> */}
                 </div>
                 <div style={{ textAlign: 'right' }}>
                   <p className="font-normal text-sm pb-1">{userFullName}</p>
                   <p className="font-normal text-sm pb-1">+{userPhone}</p>
-                  <p className="font-normal text-sm pb-1">{userData && userData[0]?.attributes?.street_address + ", " + userData[0]?.attributes?.city + ", " + userData[0]?.attributes?.country}</p>
+                  {/* <p className="font-normal text-sm pb-1">{userData && userData[0]?.attributes?.street_address + ", " + userData[0]?.attributes?.city + ", " + userData[0]?.attributes?.country}</p> */}
                 </div>
               </div>
             </div>
 
             {/* receiver */}
-            <div className="pt-10">
+            <div className="pt-8">
               <p className="font-bold pb-2">Receiver Details</p>
               <div className="flex justify-between">
                 <div>
@@ -155,7 +155,7 @@ function SendingMoneyInfo() {
             </div>
 
             {/* details */}
-            <div className="pt-10">
+            <div className="pt-8">
               <p className="font-bold pb-2">Transfer Details</p>
               <div className="flex justify-between">
                 <div className="flex flex-col gap-1">

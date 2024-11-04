@@ -77,6 +77,7 @@ function TransferOTP() {
         const res = await axios.post(
           "https://microservice.quickt.com.au/checkSecurity", data
         );
+        console.log(res)
         // 200 = success | 404 = wrong otp | 403 = System error or wrong jwt
         // transaction_id of db is order id here
         // console.log(res?.data)
