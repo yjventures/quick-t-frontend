@@ -177,6 +177,8 @@ function Register() {
             localStorage.setItem("dob", result.user?.dob);
             localStorage.setItem("first_name", result.user?.first_name);
             localStorage.setItem("last_name", result.user?.last_name);
+            localStorage.setItem("email", result.user?.email);
+            localStorage.setItem("kyc_approved", result.user?.kyc_approved);
             localStorage.setItem("phone", result.user?.phone);
             // window.location.href = "/dashboard";
             navigate("/securityCode");

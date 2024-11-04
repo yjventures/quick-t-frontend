@@ -57,6 +57,7 @@ function LoginPage() {
           localStorage.setItem("user_id", response.data.user.id);
           localStorage.setItem("first_name", response.data.user?.first_name);
           localStorage.setItem("last_name", response.data.user?.last_name);
+          localStorage.setItem("email", response.data.user?.email);
           localStorage.setItem("phone", response.data.user?.phone);
           localStorage.setItem("dob", response.data.user?.dob);
           localStorage.setItem("kyc_approved", response.data.user?.kyc_approved);

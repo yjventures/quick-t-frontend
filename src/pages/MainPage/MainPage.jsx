@@ -19,7 +19,7 @@ function MainPage() {
     setKycApproved(localStorage.getItem("kyc_approved"));
   }, []);
 
-  console.log(kyc_approved)
+  // console.log(kyc_approved)
   // get general setting api using react query
   const { isPending: pendingGeneralSettings, error: generalSettingsError, data: generalSettings } = useQuery({
     queryKey: ['general-settings'],

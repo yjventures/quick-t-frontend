@@ -1,6 +1,21 @@
 import { ShieldExclamationIcon } from '@heroicons/react/20/solid'
+import axios from 'axios';
 
 export default function Alert() {
+
+    const handleVerifyAccount = async () => {
+        try {
+            const email = localStorage.getItem("email");
+            const res = await axios.post("https://shufty.quickt.com.au/api/verify", { email: email })
+            console.log(res.data)
+            console.log("Verify Account")
+            window.open(res.data.response.verificaion_url, "_blank")
+            // window.open(res.data.url, "_blank")
+        } catch (error) {
+            console.log(error.response.data.error)
+        }
+    }
+
     return (
         <div className="bg-blue-100 p-4 max-w-7xl md:mx-auto  rounded-lg ">
             <div className="flex ">
@@ -15,10 +30,10 @@ export default function Alert() {
                         </div>
                     </div>
                     <button
-                        type="button"
+                        onClick={() => handleVerifyAccount()}
                         className="rounded-md bg-blue-700 px-4 py-2 mt-4 md:mt-0 text-sm font-medium text-white hover:bg-blue-600 transition"
                     >
-                        Verify status
+                        Verify Account
                     </button>
                 </div>
             </div>
