@@ -6,6 +6,9 @@ import secondStepper from "../../assets/images/secondStepper.png";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
+
+
+
 function SendingMoneyInfo() {
   const divStyle = {
     backgroundImage: `url(${Rectangle})`,
@@ -19,24 +22,24 @@ function SendingMoneyInfo() {
   const receiverDataInfo = JSON.parse(localStorage.getItem("receiverData"));
   const amountDataInfo = JSON.parse(localStorage.getItem("amountData"));
 
-  const fetchIUserData = async () => {
-    const user_id = localStorage.getItem("user_id");
-    const response = await fetch(`https://api.quickt.com.au/api/kycs?filters[user][id][$eq]=${user_id}&fields[0]=city&fields[1]=country&fields[2]=street_address`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
-      },
-    });
-    const res = await response.json();
-    // console.log(res.data);
-    return res.data;
-  }
-  const { isPending, error, data: userData } = useQuery({
-    queryKey: 'userData',
-    queryFn: fetchIUserData,
-  })
-  if (error) showFailedAlert('Something went wrong, please try again later');
+  // const fetchIUserData = async () => {
+  //   const user_id = localStorage.getItem("user_id");
+  //   const response = await fetch(`http://localhost:1337/api/kycs?filters[user][id][$eq]=${user_id}&fields[0]=city&fields[1]=country&fields[2]=street_address`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+  //     },
+  //   });
+  //   const res = await response.json();
+  //   // console.log(res.data);
+  //   return res.data;
+  // }
+  // const { isPending, error, data: userData } = useQuery({
+  //   queryKey: 'userData',
+  //   queryFn: fetchIUserData,
+  // })
+  // if (error) showFailedAlert('Something went wrong, please try again later');
   // console.log(userData)
   const userFullName = localStorage.getItem("first_name") + " " + localStorage.getItem("last_name");
   const userPhone = localStorage.getItem("phone");

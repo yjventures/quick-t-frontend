@@ -15,7 +15,7 @@ import axios from "axios";
 function HeroSection({ title, description }) {
   const [clickedCustomAmount, setClickedCustomAmount] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('Australia');
-  console.log(selectedCountry)
+  // console.log(selectedCountry)
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
   // console.log(currency_buffer, gateway_fee)  
@@ -27,7 +27,7 @@ function HeroSection({ title, description }) {
   // } = useQuery({
   //   queryKey: ["countries"],
   //   queryFn: () =>
-  //     fetch("https://api.quickt.com.au/api/countries")
+  //     fetch("http://localhost:1337/api/countries")
   //       .then((res) => res.json())
   //       .then((data) => data?.data),
   // });
@@ -41,23 +41,23 @@ function HeroSection({ title, description }) {
   } = useQuery({
     queryKey: ["quick-transfers"],
     queryFn: () =>
-      fetch("https://microservice.quickt.com.au/get-quick-transfers")
+      fetch("http://localhost:5000/get-quick-transfers")
         .then((res) => res.json())
         .then((data) => data?.data),
   });
 
 
-  const {
-    data: countries,
-    error: countriesError,
-    isLoading: pendingCountries }
-    = useQuery({
-      queryKey: ['countries'],
-      queryFn: () => axios.get("https://microservice.quickt.com.au/api/countries")
-        .then(res => res.data.data)
-    });
+  // const {
+  //   data: countries,
+  //   error: countriesError,
+  //   isLoading: pendingCountries }
+  //   = useQuery({
+  //     queryKey: ['countries'],
+  //     queryFn: () => axios.get("http://localhost:5000/api/countries")
+  //       .then(res => res.data.data)
+  //   });
 
-  console.log(countries, countriesError, pendingCountries)
+  // console.log(countries, countriesError, pendingCountries)
   // console.log(countries?.list)
 
   const options = [
@@ -98,7 +98,7 @@ function HeroSection({ title, description }) {
   } = useQuery({
     queryKey: ["convert-amount", defaultAmount, customAmount],
     queryFn: () =>
-      fetch("https://microservice.quickt.com.au/get-currency-rate", {
+      fetch("http://localhost:5000/get-currency-rate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -169,9 +169,9 @@ function HeroSection({ title, description }) {
         {
           [1, 2, 3].map((_, index) => (
             <div role="status" className="flex items-start justify-start flex-col h-[85px] w-full bg-gray-300 rounded-lg animate-pulse p-2">
-              <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-full my-2"></div>
-              <div class="h-[10px] bg-gray-200 rounded-full dark:bg-gray-700 w-full mb-2"></div>
-              <div class="h-[8px] bg-gray-200 rounded-full dark:bg-gray-700 w-1/2 ms-[1px]"></div>
+              <div className="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-full my-2"></div>
+              <div className="h-[10px] bg-gray-200 rounded-full dark:bg-gray-700 w-full mb-2"></div>
+              <div className="h-[8px] bg-gray-200 rounded-full dark:bg-gray-700 w-1/2 ms-[1px]"></div>
               <span className="sr-only">Loading...</span>
             </div>
           ))

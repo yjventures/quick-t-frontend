@@ -7,7 +7,7 @@ function TransactionHistory() {
   const [transactionData, setTransactionData] = useState([]);
   useEffect(() => {
     let userId = localStorage.getItem("user_id");
-    axios.get(`https://api.quickt.com.au/api/transactions?populate=*&filters[users_permissions_user][id][$eq]=${userId}`, {
+    axios.get(`http://localhost:1337/api/transactions?populate=*&filters[users_permissions_user][id][$eq]=${userId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`
       }
@@ -50,21 +50,10 @@ function TransactionHistory() {
     }
   }
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#f5f5f5", paddingTop: "50px" }}>
-      <div
-        className="card min-h-[90vh]"
-        style={{ maxWidth: "1200px", backgroundColor: "#fff" }}
-      >
-        <p
-          className="mb-10"
-          style={{
-            color: "#2F80ED",
-            fontSize: "20px",
-            fontWeight: "500",
-          }}
-        >
-          Transaction History
-        </p>
+    <div className="bg-gray-100 p-5 min-h-screen">
+      <div className=" bg-white shadow-md rounded-lg p-6">
+        <h1 className="text-2xl font-bold mb-4">Transaction History</h1>
+        <hr className="mb-4" />
         {
           transactionData.length === 0 && (
             <div className="flex justify-center items-center h-[50vh]">
@@ -269,7 +258,7 @@ function TransactionHistory() {
                                 <div>
                                   <div className="md:flex gap-2 items-center">
                                     <p className="text-sm text-slate-700">
-                                     Transaction Password
+                                      Transaction Password
                                     </p>
                                     <p className="text-md">
                                       {transaction?.attributes?.transaction_password}

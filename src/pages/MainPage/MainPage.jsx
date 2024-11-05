@@ -12,18 +12,21 @@ import { useQuery } from "@tanstack/react-query";
 import { showFailedAlert } from "../../utils/Tooast.Utils";
 import Alert from "../../components/Alert/Alert";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 function MainPage() {
   const [user_id, setUser] = useState(localStorage.getItem("user_id"));
+  const location = useLocation();
+  // console.log(location)
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user_id")));
   }, [user_id]);
 
 
   const { isPending: pendingKycApproved, error: kycApprovedError, data: kycApprovedData } = useQuery({
-    queryKey: ['kyc-approved', user_id],
+    queryKey: ['kyc-approved', user_id, location],
     queryFn: () =>
-      fetch(`https://api.quickt.com.au/api/users/${user_id}`, {
+      fetch(`http://localhost:1337/api/users/${user_id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
@@ -37,7 +40,7 @@ function MainPage() {
   const { isPending: pendingGeneralSettings, error: generalSettingsError, data: generalSettings } = useQuery({
     queryKey: ['general-settings'],
     queryFn: () =>
-      fetch('https://api.quickt.com.au/api/general-settings?populate=*')
+      fetch('http://localhost:1337/api/general-settings?populate=*')
         .then(res => res.json())
         .then(data => data?.data?.[0]?.attributes),
   })
@@ -50,7 +53,7 @@ function MainPage() {
       <Headers />
       <div className="bg-gray-50 pt-10">
         {
-          kycApprovedData?.kyc_approved == false && <Alert user_id={user_id} reference={kycApprovedData?.reference} />
+          kycApprovedData?.kyc_approved == false && <Alert user_id={user_id} reference={kycApprovedData?.reference} verificationStatus={kycApprovedData?.kyc_approved} />
         }
         <HeroSection title={generalSettings?.main_banner_title} description={generalSettings?.main_banner_desc} />
       </div>

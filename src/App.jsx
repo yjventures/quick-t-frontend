@@ -49,7 +49,6 @@ function App() {
           <Route path="/paymentSuccess" element={<PaymentSuccess />} />
           <Route path="/cancel" element={<PaymentCancel />} />
           <Route path="/setting" element={<Settings />} />
-          <Route path="/personalInfo" element={<PersonalInformationPage />} />
           <Route path="/help-center" element={<HelpCenter />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={
@@ -57,10 +56,12 @@ function App() {
               <h1>404 Not Found</h1>
             </div>
           } />
-          <Route
+          {/* <Route
             path="/editPersonalInfo"
             element={<PersonalInfoEditPage />}
-          />
+          /> */}
+          <Route path="/personalInfo" element={<PersonalInformationPage />} />
+
           <Route
             path="/liveChat"
             element={<LiveChatPage />}

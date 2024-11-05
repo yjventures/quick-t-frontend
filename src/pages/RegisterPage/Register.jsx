@@ -59,7 +59,7 @@ function Register() {
         formData.append("files", file);
 
         axios
-          .post("https://api.quickt.com.au/api/upload", formData)
+          .post("http://localhost:1337/api/upload", formData)
           .then((response) => {
             console.log("File uploaded successfully: ", response.data);
             showSuccessAlert("Image uploaded successfully");
@@ -161,7 +161,7 @@ function Register() {
       // stringify the data
       const data = JSON.stringify(userData);
 
-      fetch("https://api.quickt.com.au/api/auth/local/register", {
+      fetch("http://localhost:1337/api/auth/local/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

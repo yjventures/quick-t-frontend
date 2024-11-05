@@ -18,7 +18,7 @@ function PaymentProcessing() {
 
   const saveTransaction = async () => {
 
-    const res = await axios.post("https://microservice.quickt.com.au/save-transaction", {
+    const res = await axios.post("http://localhost:5000/save-transaction", {
       data: {
         session_id: localStorage.getItem("sessionId"),
         order_id: order_id,
@@ -58,7 +58,7 @@ function PaymentProcessing() {
   };
 
   const { data: transactionData, isLoading } = useQuery({
-    queryKey: 'transactionData',
+    queryKey: ['transactionData'],
     queryFn: saveTransaction,
     enabled: order_id ? true : false,
   });

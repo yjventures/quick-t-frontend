@@ -28,7 +28,7 @@ function PersonalInfoEdit() {
 
       try {
         const response = await axios.post(
-          "https://api.quickt.com.au/api/upload/",
+          "http://localhost:1337/api/upload/",
           formData
         );
         console.log(response.data);
@@ -67,7 +67,7 @@ function PersonalInfoEdit() {
 
       try {
         const response = await axios.post(
-          "https://api.quickt.com.au/api/upload/",
+          "http://localhost:1337/api/upload/",
           formData
         );
         console.log(response);
@@ -104,7 +104,7 @@ function PersonalInfoEdit() {
 
       try {
         const response = await axios.post(
-          "https://api.quickt.com.au/api/upload/",
+          "http://localhost:1337/api/upload/",
           formData
         );
         console.log(response);
@@ -131,7 +131,7 @@ function PersonalInfoEdit() {
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
     axios
-      .get(`https://api.quickt.com.au/api/users/${userId}?populate=*`)
+      .get(`http://localhost:1337/api/users/${userId}?populate=*`)
       .then((res) => {
         console.log(res.data);
         setUserData(res.data);
@@ -165,7 +165,7 @@ function PersonalInfoEdit() {
 
     const userId = localStorage.getItem("user_id");
     axios
-      .put(`https://api.quickt.com.au/api/users/${userId}`, {
+      .put(`http://localhost:1337/api/users/${userId}`, {
         username: userUserName,
         dob: userDOB,
         phone: userPhone,
@@ -174,7 +174,7 @@ function PersonalInfoEdit() {
       })
       .then((res) => {
         axios
-          .put(`https://api.quickt.com.au/api/kycs/${userKyc}`, {
+          .put(`http://localhost:1337/api/kycs/${userKyc}`, {
             data: {
               country: userNationality,
               street_address: userStreetAddress,
@@ -227,7 +227,7 @@ function PersonalInfoEdit() {
       showFailedAlert("Password must be at least 8 characters long");
     } else {
       axios
-        .put(`https://api.quickt.com.au/api/users/${userId}`, {
+        .put(`http://localhost:1337/api/users/${userId}`, {
           data: {
             password: confirmPassword,
           },

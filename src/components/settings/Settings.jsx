@@ -50,19 +50,19 @@ export default function Settings(props) {
       setNavigation([
         { name: 'Dashboard', href: '/personalInfo', icon: HomeIcon, current: true },
         { name: 'Transaction History', href: '/transactionHistory', icon: ChartPieIcon, current: false },
-        { name: 'Update Information', href: '/editPersonalInfo', icon: DocumentDuplicateIcon, current: false },
+        // { name: 'Update Information', href: '/editPersonalInfo', icon: DocumentDuplicateIcon, current: false },
       ]);
     } else if (location.pathname === '/transactionHistory') {
       setNavigation([
         { name: 'Dashboard', href: '/personalInfo', icon: HomeIcon, current: false },
         { name: 'Transaction History', href: '/transactionHistory', icon: ChartPieIcon, current: true },
-        { name: 'Update Information', href: '/editPersonalInfo', icon: DocumentDuplicateIcon, current: false },
+        // { name: 'Update Information', href: '/editPersonalInfo', icon: DocumentDuplicateIcon, current: false },
       ]);
     } else if (location.pathname === '/editPersonalInfo') {
       setNavigation([
         { name: 'Dashboard', href: '/personalInfo', icon: HomeIcon, current: false },
         { name: 'Transaction History', href: '/transactionHistory', icon: ChartPieIcon, current: false },
-        { name: 'Update Information', href: '/editPersonalInfo', icon: DocumentDuplicateIcon, current: true },
+        // { name: 'Update Information', href: '/editPersonalInfo', icon: DocumentDuplicateIcon, current: true },
       ]);
     }
   }, [location.pathname]);
