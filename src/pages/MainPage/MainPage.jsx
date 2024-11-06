@@ -26,7 +26,7 @@ function MainPage() {
   const { isPending: pendingKycApproved, error: kycApprovedError, data: kycApprovedData } = useQuery({
     queryKey: ['kyc-approved', user_id, location],
     queryFn: () =>
-      fetch(`http://localhost:1337/api/users/${user_id}`, {
+      fetch(`https://api.quickt.com.au/api/users/${user_id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
@@ -40,7 +40,7 @@ function MainPage() {
   const { isPending: pendingGeneralSettings, error: generalSettingsError, data: generalSettings } = useQuery({
     queryKey: ['general-settings'],
     queryFn: () =>
-      fetch('http://localhost:1337/api/general-settings?populate=*')
+      fetch('https://api.quickt.com.au/api/general-settings?populate=*')
         .then(res => res.json())
         .then(data => data?.data?.[0]?.attributes),
   })

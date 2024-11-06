@@ -15,7 +15,7 @@ export default function Alert({ user_id, reference, verificationStatus }) {
             if (loading) return;
             setLoading(true);
 
-            const userDetails = await axios.get(`http://localhost:1337/api/users/${user_id}`, {
+            const userDetails = await axios.get(`https://api.quickt.com.au/api/users/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                 },
@@ -46,7 +46,7 @@ export default function Alert({ user_id, reference, verificationStatus }) {
                 return;
             }
             if (shuftiData?.data?.event === "verification.accepted") {
-                await axios.put(`http://localhost:1337/api/users/${user_id}`,
+                await axios.put(`https://api.quickt.com.au/api/users/${user_id}`,
                     { kyc_approved: true },
                     { headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` } }
                 );
@@ -69,7 +69,7 @@ export default function Alert({ user_id, reference, verificationStatus }) {
             const reference = res.data.reference;
             const verification_url = res.data.verification_url;
 
-            await axios.put(`http://localhost:1337/api/users/${user_id}`,
+            await axios.put(`https://api.quickt.com.au/api/users/${user_id}`,
                 { reference: reference },
                 { headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` } }
             );

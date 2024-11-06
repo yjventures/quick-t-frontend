@@ -7,7 +7,7 @@ function TransactionHistory() {
   const [transactionData, setTransactionData] = useState([]);
   useEffect(() => {
     let userId = localStorage.getItem("user_id");
-    axios.get(`http://localhost:1337/api/transactions?populate=*&filters[users_permissions_user][id][$eq]=${userId}`, {
+    axios.get(`https://api.quickt.com.au/api/transactions?populate=*&filters[users_permissions_user][id][$eq]=${userId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`
       }

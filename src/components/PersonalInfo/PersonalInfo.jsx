@@ -15,7 +15,7 @@ function PersonalInfo() {
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
     axios
-      .get(`http://localhost:1337/api/users/${userId}?populate=*`, {
+      .get(`https://api.quickt.com.au/api/users/${userId}?populate=*`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
