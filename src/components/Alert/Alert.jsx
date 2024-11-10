@@ -60,7 +60,8 @@ export default function Alert({ user_id, reference, verificationStatus }) {
         }
     };
 
-    const handleVerifyAccount = async () => {
+    const handleVerifyAccount = async (e) => {
+        e.preventDefault();
         try {
             if (loading) return;
             setLoading(true);
