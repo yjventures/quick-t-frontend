@@ -110,7 +110,7 @@ function SendingMoney() {
       firstNameRef.value = "";
       middleNameRef.value = "";
       lastNameRef.value = "";
-      countryRef.value = "";
+      countryRef.value = "Lebanon";
       zipCodeRef.value = "";
       streetAddressRef.value = "";
       cityRef.value = "";
@@ -139,7 +139,7 @@ function SendingMoney() {
       firstNameRef.value = first_name;
       middleNameRef.value = middle_name;
       lastNameRef.value = last_name;
-      countryRef.value = country;
+      countryRef.value = 'Lebanon';
       zipCodeRef.value = zip_code;
       streetAddressRef.value = street_address;
       cityRef.value = city;
@@ -416,6 +416,7 @@ function SendingMoney() {
                 <label className="transectionLabel">Country</label>
                 <input
                   type="text"
+                  value="Lebanon"
                   className="block w-full sendingInputField"
                   ref={(input) => (countryRef = input)}
                 />
