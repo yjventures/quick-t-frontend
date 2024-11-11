@@ -9,9 +9,11 @@ export default function Alert({ user_id, reference, verificationStatus }) {
     const [allowResubmit, setAllowResubmit] = useState(false);
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
+    const [buttonNoClicked, setButtonNoClicked] = useState(1);
 
     const handleSaveShuftiData = async () => {
         try {
+            setButtonNoClicked(1);
             if (loading) return;
             setLoading(true);
 
@@ -61,6 +63,7 @@ export default function Alert({ user_id, reference, verificationStatus }) {
     };
 
     const handleVerifyAccount = async (e) => {
+        setButtonNoClicked(2);
         e.preventDefault();
         try {
             if (loading) return;
@@ -75,6 +78,7 @@ export default function Alert({ user_id, reference, verificationStatus }) {
                 { headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` } }
             );
 
+            setAllowResubmit(false);
             window.open(verification_url, "_blank");
         } catch (error) {
             showFailedAlert(error.response.data.error);
@@ -89,31 +93,54 @@ export default function Alert({ user_id, reference, verificationStatus }) {
                 <div className="flex-shrink-0">
                     <ShieldExclamationIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
                 </div>
-                <div className="ml-3 flex justify-between w-full flex-col md:flex-row ">
+                <div className="ml-3 flex justify-between items-center w-full flex-col md:flex-row ">
                     <div>
                         <h3 className="text-sm font-medium text-green-800">
-                            {reference !== null && !verificationStatus && !allowResubmit ? "Verification Incomplete" : "Account Verification Needed"}
+                            Account Verification Needed
                         </h3>
                         <div className="mt-2 text-sm text-green-700">
                             <p>
-                                {reference !== null && !verificationStatus && !allowResubmit
-                                    ? "Have you completed the verification process? Please confirm below."
-                                    : "Without verifying your identification, you can't complete a transaction!"}
+                                Have you completed the verification process? Please confirm here
                             </p>
                         </div>
                     </div>
                     <div className="mt-4 md:mt-0">
-                        {
-                            (reference !== null && !verificationStatus && !allowResubmit) ? (
-                                <div className="flex space-x-2">
-                                    <button
-                                        onClick={() => setAllowResubmit(true)}
-                                        className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white"
-                                    >
-                                        <X className="h-4 w-4 inline-block mr-2" />
-                                        No
-                                    </button>
+                        <div className="flex space-x-2">
+                            <button
+                                onClick={handleVerifyAccount}
+                                className="rounded-md bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 transition cursor-pointer"
+                            >
+                                {(loading && buttonNoClicked == 2) ? "Please wait..." : "Verify Account"}
+                                <ArrowRight className="h-4 w-4 inline-block ml-2" />
+                            </button>
+                            {
+                                !allowResubmit &&
+                                <button
+                                    onClick={handleSaveShuftiData}
+                                    className="rounded-md bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 transition cursor-pointer"
+                                >
+                                    <CheckCheckIcon className="h-4 w-4 inline-block mr-2" />
+                                    {(loading && buttonNoClicked == 1) ? "Checking Status..." : "Completed Verification"}
 
+                                </button>
+                            }
+
+                        </div>
+
+                        {/* {
+                            (!verificationStatus && !allowResubmit) ? (
+                                <div className="flex space-x-2">
+                                   
+                                    <button
+                                        onClick={() => {
+                                            setAllowResubmit(true)
+                                            handleVerifyAccount()
+                                        }}
+                                        className="rounded-md bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 transition cursor-pointer"
+                                    >
+                                        {loading ? "Checking Status..." : verificationStatus ? 'Confirm Submission' : "Verify Account"}
+                                        <ArrowRight className="h-4 w-4 inline-block ml-2" />
+                                    </button>
                                     <button
                                         onClick={handleSaveShuftiData}
                                         className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white"
@@ -122,16 +149,18 @@ export default function Alert({ user_id, reference, verificationStatus }) {
                                         Yes
                                     </button>
                                 </div>
-                            ) : (
-                                <button
-                                    onClick={handleVerifyAccount}
-                                    className="rounded-md bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 transition cursor-pointer"
-                                >
-                                    {loading ? "Checking Status..." : verificationStatus ? 'Confirm Submission' : "Verify Account"}
-                                    <ArrowRight className="h-4 w-4 inline-block ml-2" />
-                                </button>
-                            )
-                        }
+                            ) 
+                            :
+                                (
+                                    <button
+                                        onClick={handleVerifyAccount}
+                                        className="rounded-md bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 transition cursor-pointer"
+                                    >
+                                        {loading ? "Checking Status..." : verificationStatus ? 'Confirm Submission' : "Verify Account"}
+                                        <ArrowRight className="h-4 w-4 inline-block ml-2" />
+                                    </button>
+                                )
+                        } */}
                     </div>
                 </div>
             </div>
