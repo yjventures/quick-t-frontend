@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Headers from "../../components/Headers";
 import NewsLetter from "../newsLetter/NewsLetter";
 import HeroSection from "../HeroSection/HeroSection";
@@ -17,70 +17,25 @@ import { useLocation } from "react-router-dom";
 function MainPage() {
   const [user_id, setUser] = useState(localStorage.getItem("user_id"));
   const location = useLocation();
-  const [kycApprovedData, setKycApprovedData] = useState(null);
-  const [isTabVisible, setIsTabVisible] = useState(!document.hidden); // Initial state based on document visibility
-
+  // console.log(location)
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user_id")));
   }, [user_id]);
 
 
-  // const { isPending: pendingKycApproved, error: kycApprovedError, data: kycApprovedData } = useQuery({
-  //   queryKey: ['kyc-approved', user_id, location],
-  //   queryFn: () =>
-  //     fetch(`https://api.quickt.com.au/api/users/${user_id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-  //       },
-  //     })
-  //       .then(res => res.json())
-  //       .then(data => data),
-  // })
-  // Effect to update user_id on path or tab visibility change
+  const { isPending: pendingKycApproved, error: kycApprovedError, data: kycApprovedData } = useQuery({
+    queryKey: ['kyc-approved', user_id, location],
+    queryFn: () =>
+      fetch(`https://api.quickt.com.au/api/users/${user_id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then(res => res.json())
+        .then(data => data),
+  })
 
-  // Track visibility change to update `isTabVisible` state
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      setIsTabVisible(!document.hidden);
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []);
-
-  // Fetch KYC data when the tab becomes visible or path changes
-  useLayoutEffect(() => {
-    const fetchKycApproved = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.quickt.com.au/api/users/${user_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-            },
-          }
-        );
-        setKycApprovedData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchKycApproved()
-    // if (isTabVisible) ;  // Fetch only when the tab is visible
-  }, [isTabVisible, location.pathname, user_id]);  // Trigger on tab visibility and path change
-
-  console.log(kycApprovedData)
-  // kyc_approved == false then refresh 
-  useEffect(() => {
-    if (kycApprovedData?.kyc_approved == false) {
-      window.location.reload();
-    }
-  }, [])
-
+  // console.log(kycApprovedData)
   // get general setting api using react query
   const { isPending: pendingGeneralSettings, error: generalSettingsError, data: generalSettings } = useQuery({
     queryKey: ['general-settings'],
